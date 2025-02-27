@@ -6,7 +6,6 @@ export async function googleAuthentication() {
         showPlayServicesUpdateDialog: true,
     })
     const signInResult = (await GoogleSignin.signIn()) as any
-
     let idToken = signInResult.data?.idToken
     if (!idToken) {
         idToken = signInResult.idToken
@@ -18,4 +17,10 @@ export async function googleAuthentication() {
     const googleCredential = auth.GoogleAuthProvider.credential(signInResult.data!.idToken)
 
     return auth().signInWithCredential(googleCredential)
+}
+
+export async function signOut() {
+    auth().signOut()
+    await GoogleSignin.revokeAccess()
+    await GoogleSignin.signOut()
 }

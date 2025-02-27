@@ -1,5 +1,5 @@
 import { Wrapper } from "@/components"
-import { googleAuthentication } from "@/func/googleAuth"
+import { googleAuthentication, signOut } from "@/func/googleAuth"
 import { logger } from "@/utils"
 import { Button, Image, Text } from "@rneui/themed"
 import React, { useCallback } from "react"
@@ -14,6 +14,10 @@ const SignIn = () => {
     const handleLoginGoogle = useCallback(async () => {
         const credential = await googleAuthentication()
         logger.info("credential", credential)
+    }, [])
+
+    const handleSignOut = useCallback(async () => {
+        await signOut()
     }, [])
 
     return (
