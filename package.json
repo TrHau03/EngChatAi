@@ -11,7 +11,8 @@
         "clean-watch": "watchman watch-del-all",
         "clean-node": "rm -rf node_modules package-lock.json yarn.lock",
         "clean-ios": "rm -rf ios/build ios/Pods ios/Podfile.lock ios/DerivedData",
-        "clean-cache-ios": "./scripts/clean-cache-ios.sh",
+        "clean-cache-ios": "node ./scripts/clean-cache-ios.js",
+        "setup:dev": "node ./scripts/setup.js dev",
         "clean-android": "rm -rf android/app/build android/build",
         "clean-all": "yarn clean-node && yarn clean-ios && yarn clean-android && yarn clean-watch"
     },
