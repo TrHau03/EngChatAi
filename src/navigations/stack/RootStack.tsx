@@ -1,9 +1,15 @@
 import { SignIn } from "@/screens/Auth"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack"
 import React from "react"
-import RootTab from "./bottom/RootTab"
+import RootTab from "../bottom/RootTab"
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
+
+interface ScreenProps {
+    name: RootStackParamEnum
+    component: React.ComponentType<any>
+    option: NativeStackNavigationOptions
+}
 
 export enum RootStackParamEnum {
     Auth = "Auth",
@@ -15,11 +21,13 @@ export type RootStackParamList = {
     [RootStackParamEnum.Tab]: undefined
 }
 
-export const screens = [
+export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.Auth,
         component: SignIn,
-        option: {},
+        option: {
+            headerShown: false,
+        },
     },
     {
         name: RootStackParamEnum.Tab,

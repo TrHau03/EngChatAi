@@ -1,7 +1,7 @@
 import { Colors } from "@rneui/base"
 
 export const lightColors: Partial<Colors> = {
-    primary: "#E7FECC",
+    primary: "#F8FBFF",
     secondary: "#E9E9EB",
     background: "#E9E9EB",
     black: "#000",
@@ -10,7 +10,7 @@ export const lightColors: Partial<Colors> = {
 export const darkColors: Partial<Colors> = {
     primary: "#E7FECC",
     secondary: "#E9E9EB",
-    background: "#E9E9EB",
+    background: "#1D1D1D",
     black: "#000",
     disabled: "#BDBDBD",
 }

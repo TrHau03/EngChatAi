@@ -1,1 +1,2 @@
-export * from './googleAuth';
+export * from "./device"
+export * from "./logger"
