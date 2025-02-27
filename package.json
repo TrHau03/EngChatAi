@@ -1,39 +1,63 @@
 {
-  "name": "EngChatGemini",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest"
-  },
-  "dependencies": {
-    "react": "19.0.0",
-    "react-native": "0.78.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "15.0.1",
-    "@react-native-community/cli-platform-android": "15.0.1",
-    "@react-native-community/cli-platform-ios": "15.0.1",
-    "@react-native/babel-preset": "0.78.0",
-    "@react-native/eslint-config": "0.78.0",
-    "@react-native/metro-config": "0.78.0",
-    "@react-native/typescript-config": "0.78.0",
-    "@types/jest": "^29.5.13",
-    "@types/react": "^19.0.0",
-    "@types/react-test-renderer": "^19.0.0",
-    "eslint": "^8.19.0",
-    "jest": "^29.6.3",
-    "prettier": "2.8.8",
-    "react-test-renderer": "19.0.0",
-    "typescript": "5.0.4"
-  },
-  "engines": {
-    "node": ">=18"
-  }
+    "name": "EngChatGemini",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "android": "react-native run-android",
+        "ios": "react-native run-ios",
+        "lint": "eslint .",
+        "start": "react-native start",
+        "test": "jest",
+        "clean-watch": "watchman watch-del-all",
+        "clean-node": "rm -rf node_modules package-lock.json yarn.lock",
+        "clean-ios": "rm -rf ios/build ios/Pods ios/Podfile.lock ios/DerivedData",
+        "clean-cache-ios": "./scripts/clean-cache-ios.sh",
+        "clean-android": "rm -rf android/app/build android/build",
+        "clean-all": "yarn clean-node && yarn clean-ios && yarn clean-android && yarn clean-watch"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.22.0",
+        "@react-native-firebase/app": "^21.11.0",
+        "@react-native-firebase/auth": "^21.11.0",
+        "@react-native-google-signin/google-signin": "^13.2.0",
+        "@react-navigation/material-top-tabs": "^7.1.0",
+        "@react-navigation/native": "^7.0.14",
+        "@react-navigation/native-stack": "^7.2.0",
+        "@reduxjs/toolkit": "^2.6.0",
+        "@rneui/base": "^4.0.0-rc.7",
+        "@rneui/themed": "^4.0.0-rc.8",
+        "react": "19.0.0",
+        "react-native": "0.78.0",
+        "react-native-pager-view": "^6.7.0",
+        "react-native-safe-area-context": "^5.2.0",
+        "react-native-screens": "^4.9.1",
+        "react-native-vector-icons": "^10.2.0",
+        "react-redux": "^9.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.25.2",
+        "@babel/preset-env": "^7.25.3",
+        "@babel/runtime": "^7.25.0",
+        "@react-native-community/cli": "15.0.1",
+        "@react-native-community/cli-platform-android": "15.0.1",
+        "@react-native-community/cli-platform-ios": "15.0.1",
+        "@react-native/babel-preset": "0.78.0",
+        "@react-native/eslint-config": "0.78.0",
+        "@react-native/metro-config": "0.78.0",
+        "@react-native/typescript-config": "0.78.0",
+        "@types/jest": "^29.5.13",
+        "@types/node": "^22.13.5",
+        "@types/react": "^19.0.0",
+        "@types/react-test-renderer": "^19.0.0",
+        "babel-plugin-module-resolver": "^5.0.2",
+        "react-native-svg-transformer": "^1.5.0",
+        "eslint": "^8.19.0",
+        "jest": "^29.6.3",
+        "prettier": "2.8.8",
+        "react-test-renderer": "19.0.0",
+        "typescript": "5.0.4"
+    },
+    "engines": {
+        "node": ">=18"
+    }
 }
