@@ -57,6 +57,9 @@ const RootTab = () => {
             initialRouteName={RootTabParamsEnum.Home}
             backBehavior="none"
             tabBar={(props) => <BottomTab {...props} />}
+            screenOptions={{
+                headerShown: false,
+            }}
         >
             {screens.map((screen) => (
                 <Tab.Screen key={screen.name} name={screen.name} component={screen.component} options={screen.option} />

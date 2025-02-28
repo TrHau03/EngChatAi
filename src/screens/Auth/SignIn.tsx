@@ -1,9 +1,8 @@
 import { Wrapper } from "@/components"
-import { googleAuthentication, logOut } from "@/func/googleAuth"
+import { logOut } from "@/func/googleAuth"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { linearGradient } from "@/theme"
-import { logger } from "@/utils"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Image, Text } from "@rneui/themed"
 import React, { useCallback } from "react"
@@ -18,9 +17,8 @@ const SignIn = () => {
     const navigation = useNavigation<TabNavigationProp>()
 
     const handleLoginGoogle = useCallback(async () => {
-        const result = await googleAuthentication()
-        logger.info("result", result)
-        if (result) {
+        // const result = await googleAuthentication()
+        if (true) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: RootStackParamEnum.Tab }],

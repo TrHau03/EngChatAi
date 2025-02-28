@@ -1,9 +1,11 @@
 import { RootStack } from "@/navigation/stack/RootStack"
 import { theme } from "@/theme/index"
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
 import { initializeApp } from "firebase/app"
+import { getReactNativePersistence, initializeAuth } from "firebase/auth"
 import i18n from "i18next"
 import React from "react"
 import { initReactI18next } from "react-i18next"
@@ -18,12 +20,16 @@ const firebaseConfig = {
     appId: "1:797630589124:web:b0b96e17779bf58617c191",
 }
 
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
+initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+})
 
 Reactotron.configure({}).useReactNative().connect()
 
 GoogleSignin.configure({
     iosClientId: process.env.IOS_CLIENT,
+    webClientId: process.env.WEB_CLIENT,
 })
 
 i18n.use(initReactI18next).init(() => {

@@ -46,7 +46,12 @@ export type SettingsProps = NativeStackScreenProps<RootStackParamList, RootStack
 
 export const RootStack = () => {
     return (
-        <Stack.Navigator initialRouteName={RootStackParamEnum.Auth}>
+        <Stack.Navigator
+            initialRouteName={RootStackParamEnum.Auth}
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
             {screens.map((screen) => (
                 <Stack.Screen
                     key={screen.name}

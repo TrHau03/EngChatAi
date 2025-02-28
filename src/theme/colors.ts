@@ -15,4 +15,4 @@ export const darkColors: Partial<Colors> = {
     disabled: "#BDBDBD",
 }
 
-export const linearGradient = ["#20E8E7", "#4FA4FE", "#F353F9"]
+export const linearGradient = ["#203965", "#4FA4FE", "#F353F9"]
