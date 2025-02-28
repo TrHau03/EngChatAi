@@ -30,6 +30,8 @@ const SignIn = () => {
                 </Text>
             </View>
             <Button onPress={handleLoginGoogle} title={t("signInWithGoogle")} containerStyle={styles.btnLoginGoogle} />
+            <Button onPress={handleSignOut} title={t("signoutWithGoogle")} containerStyle={styles.btnLoginGoogle} />
+            
             <View style={styles.circle} />
         </Wrapper>
     )
