@@ -1,5 +1,9 @@
 import { SignIn } from "@/screens/Auth"
-import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack"
+import {
+    createNativeStackNavigator,
+    NativeStackNavigationOptions,
+    NativeStackScreenProps,
+} from "@react-navigation/native-stack"
 import React from "react"
 import RootTab from "../bottom/RootTab"
 
@@ -35,6 +39,10 @@ export const screens: ScreenProps[] = [
         option: {},
     },
 ]
+
+export type HomeProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.Tab>
+export type ChatProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.Tab>
+export type SettingsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.Tab>
 
 export const RootStack = () => {
     return (

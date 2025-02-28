@@ -6,6 +6,15 @@ export const fontSize = {
     medium: normalize(16),
     normal: normalize(18),
     large: normalize(20),
+    xl: normalize(24),
+    xxl: normalize(28),
+    xxxl: normalize(32),
+}
+export const spacing = {
+    small: normalize(4),
+    base: normalize(8),
+    medium: normalize(12),
+    large: normalize(16),
 }
 export const borderRadius = {
     small: normalize(4),

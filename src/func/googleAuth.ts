@@ -1,8 +1,10 @@
-import auth from "@react-native-firebase/auth"
+import { logger } from "@/utils"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
+import { GoogleAuthProvider, getAuth, signInWithCredential, signOut } from "firebase/auth"
 
 export async function googleAuthentication() {
-    const res = await GoogleSignin.hasPlayServices({
+    const auth = getAuth()
+    await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
     })
     const signInResult = (await GoogleSignin.signIn()) as any
@@ -13,14 +15,20 @@ export async function googleAuthentication() {
     if (!idToken) {
         throw new Error("No ID token found")
     }
-
-    const googleCredential = auth.GoogleAuthProvider.credential(signInResult.data!.idToken)
-
-    return auth().signInWithCredential(googleCredential)
+    const credential = GoogleAuthProvider.credential(idToken)
+    const signInWithPopupResult = await signInWithCredential(auth, credential)
+    return signInWithPopupResult
 }
 
-export async function signOut() {
-    auth().signOut()
-    await GoogleSignin.revokeAccess()
+export async function logOut() {
+    const auth = getAuth()
     await GoogleSignin.signOut()
+    await GoogleSignin.revokeAccess()
+    try {
+        await signOut(auth)
+        return true
+    } catch (error: any) {
+        logger.error("Logout error", error)
+        return false
+    }
 }
