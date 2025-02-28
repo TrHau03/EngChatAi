@@ -5,9 +5,9 @@ const mode = process.argv[2] // 'dev' or 'prod'
 
 const setup = () => {
     if (mode === "dev") {
-        copyFile("google-services.json", "android/app")
-        copyFile("GoogleService-Info.plist", "ios")
-        copyFile(".env.dev", ".env")
+        copyFile("config/dev/google-services.json", "android/app")
+        copyFile("config/dev/GoogleService-Info.plist", "ios")
+        copyFile("config/dev/.env.dev", ".env")
     } else if (mode === "prod") {
         copyFile("configs/prod/google-services.json", "android/app")
         copyFile("configs/prod/GoogleService-Info.plist", "ios")
