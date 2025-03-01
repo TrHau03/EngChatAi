@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Wrapper: React.FC<Props> = ({ children, edges = ["bottom", "top"], isSafeArea, containerStyle }) => {
-    if (isSafeArea) {
+    if (!isSafeArea) {
         return <View style={[{ flex: 1 }, containerStyle]}>{children}</View>
     }
     return (

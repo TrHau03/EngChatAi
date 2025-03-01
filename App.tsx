@@ -1,35 +1,35 @@
 import { RootStack } from "@/navigation/stack/RootStack"
 import { theme } from "@/theme/index"
-import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
+import { envApp } from "@/utils/envConfigs"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
-import { initializeApp } from "firebase/app"
-import { getReactNativePersistence, initializeAuth } from "firebase/auth"
 import i18n from "i18next"
 import React from "react"
 import { initReactI18next } from "react-i18next"
 import Reactotron from "reactotron-react-native"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBlb3F5EA7rQGX7Ko2QkxRtJOKeUyUM6uE",
     authDomain: "engchatai-8d022.firebaseapp.com",
     projectId: "engchatai-8d022",
     storageBucket: "engchatai-8d022.firebasestorage.app",
     messagingSenderId: "797630589124",
-    appId: "1:797630589124:web:b0b96e17779bf58617c191",
 }
 
-const app = initializeApp(firebaseConfig)
-initializeAuth(app, {
-    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-})
+// const app = initializeApp({
+//     apiKey: envApp.API_KEY,
+//     appId: envApp.APP_ID,
+//     ...firebaseConfig,
+// })
+// initializeAuth(app, {
+//     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+// })
 
 Reactotron.configure({}).useReactNative().connect()
 
 GoogleSignin.configure({
-    iosClientId: process.env.IOS_CLIENT,
-    webClientId: process.env.WEB_CLIENT,
+    iosClientId: envApp.IOS_CLIENT,
+    webClientId: envApp.WEB_CLIENT,
 })
 
 i18n.use(initReactI18next).init(() => {

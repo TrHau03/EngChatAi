@@ -2,7 +2,7 @@ import { Wrapper } from "@/components"
 import { logOut } from "@/func/googleAuth"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
-import { linearGradient } from "@/theme"
+import { linearGradientSignIn } from "@/theme"
 import { useNavigation } from "@react-navigation/native"
 import { Button, Image, Text } from "@rneui/themed"
 import React, { useCallback } from "react"
@@ -40,8 +40,12 @@ const SignIn = () => {
                 </Text>
             </View>
             <Button onPress={handleLoginGoogle} title={t("signInWithGoogle")} containerStyle={styles.btnLoginGoogle} />
-            <Button onPress={handleSignOut} title={t("signInWithGoogle")} containerStyle={styles.btnLoginGoogle} />
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={linearGradient} style={styles.circle} />
+            <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={linearGradientSignIn}
+                style={styles.circle}
+            />
         </Wrapper>
     )
 }

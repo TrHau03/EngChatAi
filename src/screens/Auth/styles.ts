@@ -22,13 +22,13 @@ export const useStyles = makeStyles(({ colors }) => {
         },
         textTitle: {
             fontSize: fontSize.xxxl,
-            color: colors.white,
+            color: colors.black,
             fontWeight: fontWeight.bold as any,
         },
         textSubTitle: {
             textAlign: "center",
             fontSize: fontSize.medium,
-            color: colors.white,
+            color: colors.black,
         },
         circle: {
             width: device().width * 2,

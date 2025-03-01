@@ -5,7 +5,7 @@ import { borderRadius, fontSize, padding } from "./font"
 export const theme = createTheme({
     lightColors: lightColors,
     darkColors: darkColors,
-    mode: "light",
+    mode: "dark",
     components: {
         Text: (props, theme) => {
             return {

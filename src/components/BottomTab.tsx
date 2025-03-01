@@ -1,4 +1,4 @@
-import { linearGradient } from "@/theme"
+import { linearGradient, linearGradientDark } from "@/theme"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import { Pressable, View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
@@ -7,13 +7,17 @@ import AppIcon from "./AppIcon"
 
 export function BottomTab({ state, descriptors, navigation }: any) {
     const {
-        theme: { colors },
+        theme: { colors, mode },
     } = useTheme()
     const insets = useSafeAreaInsets()
     const styles = useStyles()
 
     return (
-        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={linearGradient}>
+        <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={mode === "dark" ? linearGradientDark : linearGradient}
+        >
             <View style={[styles.container, { paddingBottom: insets.bottom, paddingTop: insets.bottom / 2 }]}>
                 {state.routes.map((route: any, index: number) => {
                     const { options } = descriptors[route.key]
@@ -58,9 +62,9 @@ export function BottomTab({ state, descriptors, navigation }: any) {
                                 name="home"
                                 type="ionicon"
                                 isPaddingIcon={false}
-                                color={isFocused ? colors.primary : colors.grey5}
+                                color={isFocused ? colors.primary : colors.disabled}
                             />
-                            <Text style={{ color: isFocused ? colors.primary : colors.grey5 }}>{label}</Text>
+                            <Text style={{ color: isFocused ? colors.primary : colors.disabled }}>{label}</Text>
                         </Pressable>
                     )
                 })}
