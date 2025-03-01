@@ -8,11 +8,15 @@ export async function googleAuthentication() {
         showPlayServicesUpdateDialog: true,
     })
     const signInResult = (await GoogleSignin.signIn()) as any
+    console.log("UserInfo : " + signInResult)
+    console.table(signInResult)
+
     let idToken = signInResult.data?.idToken
     if (!idToken) {
         idToken = signInResult.idToken
     }
     if (!idToken) {
+        logger.info("Error ID token", idToken)
         throw new Error("No ID token found")
     }
     const credential = GoogleAuthProvider.credential(idToken)
