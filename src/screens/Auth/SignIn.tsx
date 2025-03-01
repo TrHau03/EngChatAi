@@ -1,23 +1,33 @@
 import { Wrapper } from "@/components"
-import { googleAuthentication, signOut } from "@/func/googleAuth"
-import { logger } from "@/utils"
+import { logOut } from "@/func/googleAuth"
+import { TabNavigationProp } from "@/navigation/bottom/RootTab"
+import { RootStackParamEnum } from "@/navigation/stack/RootStack"
+import { linearGradientSignIn } from "@/theme"
+import { useNavigation } from "@react-navigation/native"
 import { Button, Image, Text } from "@rneui/themed"
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { View } from "react-native"
+import LinearGradient from "react-native-linear-gradient"
 import { useStyles } from "./styles"
 
 const SignIn = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
+    const navigation = useNavigation<TabNavigationProp>()
 
     const handleLoginGoogle = useCallback(async () => {
-        const credential = await googleAuthentication()
-        logger.info("credential", credential)
+        // const result = await googleAuthentication()
+        if (true) {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: RootStackParamEnum.Tab }],
+            })
+        }
     }, [])
 
     const handleSignOut = useCallback(async () => {
-        await signOut()
+        await logOut()
     }, [])
 
     return (
@@ -30,7 +40,12 @@ const SignIn = () => {
                 </Text>
             </View>
             <Button onPress={handleLoginGoogle} title={t("signInWithGoogle")} containerStyle={styles.btnLoginGoogle} />
-            <View style={styles.circle} />
+            <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={linearGradientSignIn}
+                style={styles.circle}
+            />
         </Wrapper>
     )
 }

@@ -1,5 +1,6 @@
-import { RootStack } from "@/navigations"
+import { RootStack } from "@/navigation/stack/RootStack"
 import { theme } from "@/theme/index"
+import { envApp } from "@/utils/envConfigs"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
@@ -8,10 +9,27 @@ import React from "react"
 import { initReactI18next } from "react-i18next"
 import Reactotron from "reactotron-react-native"
 
+const firebaseConfig = {
+    authDomain: "engchatai-8d022.firebaseapp.com",
+    projectId: "engchatai-8d022",
+    storageBucket: "engchatai-8d022.firebasestorage.app",
+    messagingSenderId: "797630589124",
+}
+
+// const app = initializeApp({
+//     apiKey: envApp.API_KEY,
+//     appId: envApp.APP_ID,
+//     ...firebaseConfig,
+// })
+// initializeAuth(app, {
+//     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+// })
+
 Reactotron.configure({}).useReactNative().connect()
 
 GoogleSignin.configure({
-    iosClientId: process.env.IOS_CLIENT,
+    iosClientId: envApp.IOS_CLIENT,
+    webClientId: envApp.ANDROID_CLIENT,
 })
 
 i18n.use(initReactI18next).init(() => {

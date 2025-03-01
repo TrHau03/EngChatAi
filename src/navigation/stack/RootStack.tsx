@@ -1,5 +1,10 @@
+import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
-import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack"
+import {
+    createNativeStackNavigator,
+    NativeStackNavigationOptions,
+    NativeStackNavigationProp,
+} from "@react-navigation/native-stack"
 import React from "react"
 import RootTab from "../bottom/RootTab"
 
@@ -14,11 +19,13 @@ interface ScreenProps {
 export enum RootStackParamEnum {
     Auth = "Auth",
     Tab = "Tab",
+    NewChat = "NewChat",
 }
 
 export type RootStackParamList = {
     [RootStackParamEnum.Auth]: undefined
     [RootStackParamEnum.Tab]: undefined
+    [RootStackParamEnum.NewChat]: undefined
 }
 
 export const screens: ScreenProps[] = [
@@ -34,11 +41,26 @@ export const screens: ScreenProps[] = [
         component: RootTab,
         option: {},
     },
+    {
+        name: RootStackParamEnum.NewChat,
+        component: NewChat,
+        option: {},
+    },
 ]
+
+export type HomeProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
+export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
+export type SettingsProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
+export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
 
 export const RootStack = () => {
     return (
-        <Stack.Navigator initialRouteName={RootStackParamEnum.Auth}>
+        <Stack.Navigator
+            initialRouteName={RootStackParamEnum.Auth}
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
             {screens.map((screen) => (
                 <Stack.Screen
                     key={screen.name}

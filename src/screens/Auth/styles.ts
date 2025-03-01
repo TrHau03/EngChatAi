@@ -1,11 +1,11 @@
-import { padding } from "@/theme"
+import { fontSize, fontWeight, padding, spacing } from "@/theme"
 import { device } from "@/utils"
 import { makeStyles, normalize } from "@rneui/themed"
 
 export const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
-            backgroundColor: colors.background,
+            backgroundColor: "#1a1a1a",
             alignItems: "center",
             paddingHorizontal: padding.medium,
         },
@@ -18,16 +18,23 @@ export const useStyles = makeStyles(({ colors }) => {
             maxWidth: "80%",
             justifyContent: "flex-start",
             alignItems: "center",
+            gap: spacing.base,
         },
-        textTitle: {},
+        textTitle: {
+            fontSize: fontSize.xxxl,
+            color: colors.black,
+            fontWeight: fontWeight.bold as any,
+        },
         textSubTitle: {
             textAlign: "center",
+            fontSize: fontSize.medium,
+            color: colors.black,
         },
         circle: {
             width: device().width * 2,
             aspectRatio: 1,
             borderRadius: device().width,
-            backgroundColor: colors.black,
+            backgroundColor: "transparent",
             position: "absolute",
             bottom: -device().height / 1.8,
         },
