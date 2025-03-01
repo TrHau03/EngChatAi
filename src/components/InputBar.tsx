@@ -10,6 +10,7 @@ const InputBar = () => {
         theme: { colors },
     } = useTheme()
     const [input, setInput] = useState("")
+
     return (
         <View style={styles.container}>
             <View style={styles.containerInput}>
