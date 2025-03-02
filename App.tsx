@@ -29,7 +29,7 @@ Reactotron.configure({}).useReactNative().connect()
 
 GoogleSignin.configure({
     iosClientId: envApp.IOS_CLIENT,
-    webClientId: envApp.WEB_CLIENT,
+    webClientId: envApp.ANDROID_CLIENT,
 })
 
 i18n.use(initReactI18next).init(() => {

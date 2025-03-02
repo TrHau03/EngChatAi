@@ -1,5 +1,6 @@
 import { linearGradient, linearGradientDark } from "@/theme"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
+import React from "react"
 import { Pressable, View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
 import { useSafeAreaInsets } from "react-native-safe-area-context"

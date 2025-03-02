@@ -1,7 +1,17 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+<<<<<<< HEAD
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+=======
+
+apply plugin: 'com.google.gms.google-services'
+
+def keystorePropertiesFile = file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+>>>>>>> origin/feat-settings
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -86,6 +96,12 @@ android {
         versionName "1.0"
     }
     signingConfigs {
+        release {
+            storeFile file(keystoreProperties["MYAPP_UPLOAD_STORE_FILE"])
+            storePassword keystoreProperties["MYAPP_UPLOAD_STORE_PASSWORD"]
+            keyAlias keystoreProperties["MYAPP_UPLOAD_KEY_ALIAS"]
+            keyPassword keystoreProperties["MYAPP_UPLOAD_KEY_PASSWORD"]
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -103,6 +119,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -110,7 +127,9 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
 
+    implementation("com.google.firebase:firebase-auth")
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

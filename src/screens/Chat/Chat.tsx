@@ -11,7 +11,7 @@ const Chat = () => {
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
-            <Text>Chat</Text>
+            <Text>Cha</Text>
             <Button title={"NewChat"} onPress={() => navigation.navigate(RootStackParamEnum.NewChat)} />
         </Wrapper>
     )
