@@ -26,9 +26,9 @@ const SignIn = () => {
         }
     }, [])
 
-    const handleSignOut = useCallback(async () => {
-        await logOut()
-    }, [])
+    // const handleSignOut = useCallback(async () => {
+    //     await logOut()
+    // }, [])
 
     return (
         <Wrapper containerStyle={styles.container}>

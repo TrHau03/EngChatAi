@@ -5,7 +5,7 @@ import { makeStyles, normalize } from "@rneui/themed"
 export const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
-            backgroundColor: "#1a1a1a",
+            backgroundColor: colors.background,
             alignItems: "center",
             paddingHorizontal: padding.medium,
         },
