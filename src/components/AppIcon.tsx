@@ -17,10 +17,11 @@ interface AppIconProps {
     isPaddingIcon?: boolean
     containerStyles?: StyleProp<ViewStyle>
     color?: number | ColorValue | undefined
-    size?: number
+    size?:number
+    onPress?: () => void
 }
 
-const AppIcon: React.FC<AppIconProps> = ({ name, type, size, isPaddingIcon = true, containerStyles, color }) => {
+const AppIcon: React.FC<AppIconProps> = ({ name, type, size,isPaddingIcon = true, containerStyles, color, onPress }) => {
     return (
         <Icon
             name={name}
@@ -28,6 +29,7 @@ const AppIcon: React.FC<AppIconProps> = ({ name, type, size, isPaddingIcon = tru
             color={color}
             size={size}
             containerStyle={[containerStyles, { padding: isPaddingIcon ? 8 : 0 }]}
+            onPress={onPress}
         />
     )
 }

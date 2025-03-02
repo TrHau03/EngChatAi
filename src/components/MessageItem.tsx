@@ -1,16 +1,13 @@
+import { Message } from "@/entities/message"
+import { Role } from "@/utils"
 import { makeStyles, Text } from "@rneui/themed"
 import React from "react"
 import { View } from "react-native"
 
-interface MessageItemProps {
-    isOwner: boolean
-    content: string
-}
+const MessageItem: React.FC<Message> = ({ role, content }) => {
+    const styles = useStyles(role)
 
-const MessageItem: React.FC<MessageItemProps> = ({ isOwner, content }) => {
-    const styles = useStyles(isOwner)
-
-    if (isOwner) {
+    if (role === Role.USER) {
         return (
             <View style={[styles.container, styles.containerOwner]}>
                 <Text>{content}</Text>
@@ -26,11 +23,11 @@ const MessageItem: React.FC<MessageItemProps> = ({ isOwner, content }) => {
 
 export default MessageItem
 
-const useStyles = makeStyles(({ colors }, isOwner) => {
+const useStyles = makeStyles(({ colors }, role) => {
     return {
         container: {
             maxWidth: "80%",
-            alignSelf: isOwner ? "flex-end" : "flex-start",
+            alignSelf: role === Role.USER ? "flex-end" : "flex-start",
         },
         containerOwner: {
             backgroundColor: colors.primary,

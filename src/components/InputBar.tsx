@@ -4,12 +4,21 @@ import React, { useState } from "react"
 import { TextInput, View } from "react-native"
 import AppIcon from "./AppIcon"
 
-const InputBar = () => {
+interface InputBarProps {
+    onSubmit: (value: string) => void
+}
+
+const InputBar: React.FC<InputBarProps> = (props) => {
     const styles = useStyles(0)
     const {
         theme: { colors },
     } = useTheme()
     const [input, setInput] = useState("")
+
+    const onSubmit = () => {
+        setInput("")
+        props.onSubmit(input)
+    }
 
     return (
         <View style={styles.container}>
@@ -29,6 +38,7 @@ const InputBar = () => {
                 type="ionicon"
                 color={colors.primary}
                 isPaddingIcon
+                onPress={onSubmit}
             />
         </View>
     )
@@ -40,6 +50,7 @@ const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
             flexDirection: "row",
+            paddingTop: spacing.base,
             gap: spacing.small,
         },
         containerInput: {

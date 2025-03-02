@@ -1,4 +1,4 @@
 export interface Message {
-    isOwner: boolean
+    role: "user" | "model"
     content: any
 }
