@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "797630589124",
+    "project_id": "engchatai-8d022",
+    "storage_bucket": "engchatai-8d022.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797630589124:android:7850ea02e5aeea6117c191",
+        "android_client_info": {
+          "package_name": "com.engchatgemini"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797630589124-7f10oehnhvb0fbeh5nvkvbot6lva6065.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.engchatgemini",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "797630589124-ge2d4b4joro4gsapl8pg0prmlbu7rg9d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn02FOJcwxg0iECon0FPPodjvhQ7sgmpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797630589124-ge2d4b4joro4gsapl8pg0prmlbu7rg9d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "797630589124-5c9dvukhvat1g1vagui9132p8fvkcr3p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.learn.EngChatAI"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
