@@ -1,78 +1,104 @@
 import React, { useState, useCallback } from "react";
-import { View, Switch, Modal, TouchableOpacity } from "react-native";
+import { View, Switch, Pressable, Image, PermissionsAndroid, Platform, Alert } from "react-native";
 import { Wrapper } from "@/components";
 import { logOut } from "@/func";
-import { SettingsScreenNavigationProp } from "@/navigation/bottom/RootTab";
-import { RootStackParamEnum } from "@/navigation/stack/RootStack";
+import { RootStackParamEnum, RootStackParamList, SettingsStackParamEnum } from "@/navigation/stack/RootStack";
 import { spacing } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
-import { Button, makeStyles, Text, useTheme } from "@rneui/themed";
-import Icon from "react-native-vector-icons/Ionicons";
+import { makeStyles, Text, useTheme } from "@rneui/themed";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { device } from "@/utils/device";
+import Icon from "react-native-vector-icons/Feather";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { launchImageLibrary } from 'react-native-image-picker';
+
+
+const requestPermission = async () => {
+    if (Platform.OS === "android") {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+    }
+    return true;
+};
+
+
 
 const Settings = () => {
-    const navigation = useNavigation<SettingsScreenNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const styles = useStyles();
     const { theme: { colors } } = useTheme();
-    
-    const [darkMode, setDarkMode] = useState(false);
-    const [notifications, setNotifications] = useState(true);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalType, setModalType] = useState("");
+
+    const [avatar, setAvatar] = useState<string | null>(null);
+
+    const handleSelectImage = async () => {
+        const hasPermission = await requestPermission();
+        if (!hasPermission) {
+            Alert.alert("Permission Denied", "You need to allow access to your photos.");
+            return;
+        }
+
+        launchImageLibrary({ mediaType: "photo", quality: 1 }, (response) => {
+            if (response.didCancel) {
+                console.log("User cancelled image picker");
+            } else if (response.errorMessage) {
+                console.log("ImagePicker Error: ", response.errorMessage);
+            } else if (response.assets && response.assets.length > 0) {
+                setAvatar(response.assets[0].uri || null);
+            }
+        });
+    };
 
     const handleLogout = useCallback(async () => {
         const result = await logOut();
         if (result) navigation.navigate(RootStackParamEnum.Auth);
     }, []);
 
-    const openModal = (type : any) => {
-        setModalType(type);
-        setModalVisible(true);
-    };
-
-    const closeModal = () => {
-        setModalVisible(false);
-        setModalType("");
-    };
-
     return (
         <Wrapper containerStyle={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
-                {modalVisible && (
-                    <TouchableOpacity onPress={closeModal}>
-                        <Icon name="arrow-back" size={24} color={colors.black} />
-                    </TouchableOpacity>
-                )}
                 <Text style={styles.title}>Settings</Text>
             </View>
 
-            {/* Dark Mode / Notifications */}
-            <View style={styles.row}>
-                <Text style={styles.label}>Dark Mode</Text>
-                <Switch value={darkMode} onValueChange={setDarkMode} />
+            <View style={styles.avatarContainer} >
+                <Pressable onPress={handleSelectImage}>
+                    <Image
+                        source={avatar ? { uri: avatar } : { uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" }}
+                        style={styles.avatar}
+                    />
+                </Pressable>
             </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Enable Notifications</Text>
-                <Switch value={notifications} onValueChange={setNotifications} />
-            </View>
-            
-            {/* Modal Options */}
-            <Button title="Customize Chat UI" onPress={() => openModal("chat_ui")} />
-            <Button title="Report an Issue" onPress={() => openModal("report_issue")} />
-            <Button title="Feedback & Review" onPress={() => openModal("feedback")} />
-            <Button title="Logout" onPress={handleLogout} />
 
-            {/* Modal */}
-            <Modal visible={modalVisible} animationType="slide" onRequestClose={closeModal}>
-                <Wrapper containerStyle={styles.modalContainer}>
-                    <TouchableOpacity onPress={closeModal}>
-                        <Icon name="arrow-back" size={24} color={colors.black} />
-                    </TouchableOpacity>
-                    {modalType === "chat_ui" && <Text>Customize Chat UI</Text>}
-                    {modalType === "report_issue" && <Text>Report an Issue</Text>}
-                    {modalType === "feedback" && <Text>Feedback & Review</Text>}
-                </Wrapper>
-            </Modal>
+            <Pressable
+                style={styles.row}
+                onPress={() => navigation.navigate(RootStackParamEnum.SettingsStack, { screen: SettingsStackParamEnum.DarkMode })}
+            >
+                <View style={styles.rowLeft}>
+                    <MaterialIcons name="dark-mode" size={24} color={colors.black} />
+                    <Text style={styles.label}>Dark Mode Toggle</Text>
+                </View>
+                <Icon name="chevron-right" size={24} color={colors.black} />
+            </Pressable>
+
+            <Pressable
+                style={styles.row}
+                onPress={() => navigation.navigate(RootStackParamEnum.SettingsStack, { screen: SettingsStackParamEnum.CustomizeChatUI })}
+            >
+                <View style={styles.rowLeft}>
+                    <MaterialIcons name="chat" size={24} color={colors.black} />
+                    <Text style={styles.label}>Customize Chat UI</Text>
+                </View>
+                <Icon name="chevron-right" size={24} color={colors.black} />
+            </Pressable>
+
+            <Pressable style={styles.row} onPress={handleLogout}>
+                <View style={styles.rowLeft}>
+                    <MaterialIcons name="logout" size={24} color={colors.black} />
+                    <Text style={styles.label}>Logout</Text>
+                </View>
+                <Icon name="chevron-right" size={24} color={colors.black} />
+            </Pressable>
         </Wrapper>
     );
 };
@@ -82,33 +108,53 @@ export default Settings;
 const useStyles = makeStyles(({ colors }) => ({
     container: {
         backgroundColor: colors.background,
-        paddingHorizontal: spacing.base,
+        paddingHorizontal: spacing.large,
     },
     header: {
-        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: spacing.large,
+        height: device().height * 0.13,
+        backgroundColor: colors.background,
     },
     title: {
         fontSize: 18,
         fontWeight: "bold",
         color: colors.black,
     },
+    avatarContainer: {
+        alignItems: "center",
+        marginBottom: spacing.large,
+    },
+    avatar: {
+        width: 170,
+        height: 170,
+        borderRadius: 100,
+        borderColor: colors.primary,
+    },
+    avatarEditIcon: {
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        backgroundColor: colors.primary,
+        borderRadius: 12,
+        padding: 5,
+    },
     row: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         paddingVertical: spacing.medium,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.greyOutline,
+        paddingHorizontal: spacing.base,
+    },
+    rowLeft: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     label: {
         fontSize: 16,
         color: colors.black,
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: colors.background,
+        marginLeft: 10,
     },
 }));
