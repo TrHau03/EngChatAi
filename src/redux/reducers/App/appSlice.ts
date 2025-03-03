@@ -6,12 +6,20 @@ interface AppState {
     isLoading: boolean
     mode: Mode
     language: Lang
+    tts: {
+        id: string
+        isSpeaking: boolean
+    }
 }
 
 const initialState: AppState = {
     isLoading: false,
     mode: Mode.dark,
     language: Lang.en,
+    tts: {
+        id: "",
+        isSpeaking: false,
+    },
 }
 
 const appSlice = createSlice({

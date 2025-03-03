@@ -24,7 +24,7 @@ const NewChat = () => {
     }
 
     const renderItem = useCallback(({ item }: any) => {
-        return <MessageItem role={item.role} content={item.content} />
+        return <MessageItem {...item} />
     }, [])
 
     const keyExtractor = useCallback((item: any) => item.id, [])

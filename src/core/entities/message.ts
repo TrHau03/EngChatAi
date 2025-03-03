@@ -1,5 +1,6 @@
 export interface Message {
     id: string
     role: "user" | "model"
-    content: any
+    content: string
+    content_translated?: string
 }

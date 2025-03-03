@@ -41,6 +41,7 @@ export const useNewChat = () => {
                     id: generateID(),
                     role: Role.AI,
                     content: response,
+                    content_translated: response_translated,
                 },
             ])
         } catch (error: any) {
