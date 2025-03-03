@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
-import { View, Switch, Pressable, Image, PermissionsAndroid, Platform, Alert } from "react-native";
+import { View, Pressable, Image, PermissionsAndroid, Platform, Alert } from "react-native";
 import { Wrapper } from "@/components";
 import { logOut } from "@/func";
-import { RootStackParamEnum, RootStackParamList, SettingsStackParamEnum } from "@/navigation/stack/RootStack";
-import { spacing } from "@/theme";
+import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack";
+import { fontSize, iconSize, spacing } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
 import { makeStyles, Text, useTheme } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -11,7 +11,6 @@ import { device } from "@/utils/device";
 import Icon from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { launchImageLibrary } from 'react-native-image-picker';
-
 
 const requestPermission = async () => {
     if (Platform.OS === "android") {
@@ -22,8 +21,6 @@ const requestPermission = async () => {
     }
     return true;
 };
-
-
 
 const Settings = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -50,6 +47,10 @@ const Settings = () => {
         });
     };
 
+    const handleNavigate = (screenType: "CustomizeChatUI" | "ReportIssue" | "FeedbackReview") => {
+        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
+    };
+
     const handleLogout = useCallback(async () => {
         const result = await logOut();
         if (result) navigation.navigate(RootStackParamEnum.Auth);
@@ -61,8 +62,8 @@ const Settings = () => {
                 <Text style={styles.title}>Settings</Text>
             </View>
 
-            <View style={styles.avatarContainer} >
-                <Pressable onPress={handleSelectImage}>
+            <View style={styles.avatarContainer}>
+                <Pressable onPress={handleSelectImage} style={styles.avatarWrapper}>
                     <Image
                         source={avatar ? { uri: avatar } : { uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" }}
                         style={styles.avatar}
@@ -70,35 +71,38 @@ const Settings = () => {
                 </Pressable>
             </View>
 
-            <Pressable
-                style={styles.row}
-                onPress={() => navigation.navigate(RootStackParamEnum.SettingsStack, { screen: SettingsStackParamEnum.DarkMode })}
-            >
+            <Pressable style={styles.row} onPress={() => handleNavigate("CustomizeChatUI")}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="dark-mode" size={24} color={colors.black} />
-                    <Text style={styles.label}>Dark Mode Toggle</Text>
+                    <MaterialIcons name="chat" size={iconSize.medium} color={colors.black} />
+                    <Text style={styles.label}>Customize Chat UI</Text>
                 </View>
                 <Icon name="chevron-right" size={24} color={colors.black} />
             </Pressable>
 
-            <Pressable
-                style={styles.row}
-                onPress={() => navigation.navigate(RootStackParamEnum.SettingsStack, { screen: SettingsStackParamEnum.CustomizeChatUI })}
-            >
+            <Pressable style={styles.row} onPress={() => handleNavigate("ReportIssue")}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="chat" size={24} color={colors.black} />
-                    <Text style={styles.label}>Customize Chat UI</Text>
+                    <MaterialIcons name="bug-report" size={iconSize.medium} color={colors.black} />
+                    <Text style={styles.label}>Report an Issue</Text>
+                </View>
+                <Icon name="chevron-right" size={24} color={colors.black} />
+            </Pressable>
+
+            <Pressable style={styles.row} onPress={() => handleNavigate("FeedbackReview")}>
+                <View style={styles.rowLeft}>
+                    <MaterialIcons name="feedback" size={iconSize.medium} color={colors.black} />
+                    <Text style={styles.label}>Feedback & Review</Text>
                 </View>
                 <Icon name="chevron-right" size={24} color={colors.black} />
             </Pressable>
 
             <Pressable style={styles.row} onPress={handleLogout}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="logout" size={24} color={colors.black} />
+                    <MaterialIcons name="logout" size={iconSize.medium} color={colors.black} />
                     <Text style={styles.label}>Logout</Text>
                 </View>
                 <Icon name="chevron-right" size={24} color={colors.black} />
             </Pressable>
+
         </Wrapper>
     );
 };
@@ -117,25 +121,26 @@ const useStyles = makeStyles(({ colors }) => ({
         backgroundColor: colors.background,
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "bold",
         color: colors.black,
     },
     avatarContainer: {
         alignItems: "center",
-        marginBottom: spacing.large,
+    },
+    avatarWrapper: {
+        position: "relative",
+        padding: 30,
     },
     avatar: {
         width: 170,
         height: 170,
-        borderRadius: 100,
-        borderColor: colors.primary,
+        borderRadius: 85,
     },
     avatarEditIcon: {
         position: "absolute",
-        bottom: 0,
-        right: 0,
-        backgroundColor: colors.primary,
+        bottom: 10,
+        right: 10,
         borderRadius: 12,
         padding: 5,
     },
@@ -143,7 +148,7 @@ const useStyles = makeStyles(({ colors }) => ({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: spacing.medium,
+        paddingVertical: spacing.xl,
         borderBottomWidth: 1,
         borderBottomColor: colors.greyOutline,
         paddingHorizontal: spacing.base,
@@ -153,7 +158,7 @@ const useStyles = makeStyles(({ colors }) => ({
         alignItems: "center",
     },
     label: {
-        fontSize: 16,
+        fontSize: fontSize.medium,
         color: colors.black,
         marginLeft: 10,
     },
