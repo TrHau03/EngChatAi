@@ -1,4 +1,4 @@
-import { BottomTab } from "@/components/BottomTab"
+import { BottomTab } from "@/core/components/BottomTab"
 import { Chat, Home } from "@/screens/index"
 import { Settings } from "@/screens/Settings"
 import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs"

@@ -2,17 +2,17 @@ import { Colors } from "@rneui/base"
 
 export const lightColors: Partial<Colors> = {
     primary: "#468CF7",
-    secondary: "#E9E9EB",
-    background: "#E9E9EB",
+    secondary: "#e9e9eb",
+    background: "#ffffff",
     black: "#0f0f0f",
-    disabled: "#9C9CA3",
+    disabled: "#c0c9d9",
 }
 export const darkColors: Partial<Colors> = {
     primary: "#468CF7",
-    secondary: "#E9E9EB",
+    secondary: "#262628",
     background: "#0f0f0f",
     black: "#fff",
-    disabled: "#9C9CA3",
+    disabled: "#c0c9d9",
 }
 
 export const linearGradientSignIn = ["#203965", "#4FA4FE", "#F353F9"]

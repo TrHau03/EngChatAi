@@ -1,4 +1,4 @@
-import { logOut } from "@/func"
+import { logOut } from "@/core/func"
 import { SettingsScreenNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"

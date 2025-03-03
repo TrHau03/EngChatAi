@@ -42,7 +42,7 @@ export const lineHeight = {
     base: normalize(14),
     medium: normalize(16),
     normal: normalize(18),
-    large: normalize(20),
+    large: normalize(22),
 }
 
 export const letterSpacing = {
