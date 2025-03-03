@@ -5,6 +5,7 @@ export const lightColors: Partial<Colors> = {
     secondary: "#E9E9EB",
     background: "#E9E9EB",
     black: "#0f0f0f",
+    white: "#fff",
     disabled: "#9C9CA3",
 }
 export const darkColors: Partial<Colors> = {
@@ -12,9 +13,11 @@ export const darkColors: Partial<Colors> = {
     secondary: "#E9E9EB",
     background: "#0f0f0f",
     black: "#fff",
+    white: "#0f0f0f",
     disabled: "#9C9CA3",
 }
 
 export const linearGradientSignIn = ["#203965", "#4FA4FE", "#F353F9"]
+export const linearGradientBanner = ["#203965", "#4FA4FE"]
 export const linearGradient = ["#ededed90", "#dbdbdb90", "#ededed90"]
 export const linearGradientDark = ["#0f0f0f", "#1c1c1b", "#0f0f0f"]

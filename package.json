@@ -34,8 +34,10 @@
         "react-native-config": "^1.5.5",
         "react-native-linear-gradient": "^2.8.3",
         "react-native-pager-view": "^6.7.0",
+        "react-native-progress": "^5.0.1",
         "react-native-safe-area-context": "^5.2.0",
         "react-native-screens": "^4.9.1",
+        "react-native-svg": "^15.11.2",
         "react-native-vector-icons": "^10.2.0",
         "react-redux": "^9.2.0"
     },
