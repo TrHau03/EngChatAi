@@ -1,7 +1,7 @@
 import { Message } from "@/core/entities/message"
 import { borderRadius, fontSize, lineHeight, spacing } from "@/core/theme"
 import { logger, Role } from "@/core/utils"
-import { Divider, makeStyles, normalize, Text, useTheme } from "@rneui/themed"
+import { Divider, makeStyles, normalize, Text, Tooltip, useTheme } from "@rneui/themed"
 import React, { useCallback, useState } from "react"
 import { View } from "react-native"
 import { useAppSelector, useTTS } from "../hooks"
@@ -49,16 +49,31 @@ const MessageItem: React.FC<Message> = ({ id, role, content, content_translated 
                     isPaddingIcon={false}
                     onPress={handleSpeak}
                 />
-                <AppIcon name="g-translate" type="material" isPaddingIcon={false} onPress={handleTranslate} />
+                <Tooltip
+                    visible={isTranslated && !!content_translated}
+                    onClose={handleTranslate}
+                    overlayColor={colors.background}
+                    backgroundColor={`${colors.grey5}`}
+                    containerStyle={{ width: "auto", maxWidth: "80%", height: "auto" }}
+                    popover={
+                        <View style={styles.containerTooltip}>
+                            <Text style={styles.content}>{content}</Text>
+                            <Divider color={colors.primary} />
+                            <Text style={styles.content}>{content_translated ?? ""}</Text>
+                        </View>
+                    }
+                >
+                    <AppIcon
+                        name="g-translate"
+                        color={isTranslated ? colors.primary : colors.black}
+                        type="material"
+                        isPaddingIcon={false}
+                        onPress={handleTranslate}
+                    />
+                </Tooltip>
             </View>
             <Divider color={colors.primary} />
             <Text style={styles.content}>{content}</Text>
-            {isTranslated && (
-                <>
-                    <Divider color={colors.primary} />
-                    <Text style={styles.content}>{content_translated ?? ""}</Text>
-                </>
-            )}
         </View>
     )
 }
@@ -68,16 +83,17 @@ export default MessageItem
 const useStyles = makeStyles(({ colors }, role) => {
     return {
         container: {
-            width: "80%",
             alignSelf: role === Role.USER ? "flex-end" : "flex-start",
             padding: spacing.medium,
             borderRadius: borderRadius.large,
             gap: spacing.base,
         },
         containerOwner: {
+            maxWidth: "80%",
             backgroundColor: colors.primary,
         },
         containerAI: {
+            width: "80%",
             backgroundColor: colors.secondary,
         },
         content: {
@@ -93,6 +109,9 @@ const useStyles = makeStyles(({ colors }, role) => {
             width: normalize(48),
             height: normalize(48),
             borderRadius: normalize(48),
+        },
+        containerTooltip: {
+            gap: spacing.base,
         },
     }
 })

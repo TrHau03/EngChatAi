@@ -17,7 +17,7 @@ export const useInitialTTS = () => {
             },
         )
         Tts.setIgnoreSilentSwitch("ignore")
-        Tts.setDefaultLanguage("en-US")
+        Tts.setDefaultLanguage("en_US")
         Tts.setDefaultRate(1, true)
         Tts.setDefaultPitch(0.7)
         Tts.addEventListener("tts-progress", (event) => {})
