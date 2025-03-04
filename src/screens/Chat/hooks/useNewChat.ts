@@ -9,6 +9,7 @@ export const useNewChat = () => {
             id: "1",
             role: "model",
             content: "Hehello",
+            content_translated: "Xin chào",
         },
         {
             id: "2",
@@ -19,6 +20,7 @@ export const useNewChat = () => {
             id: "3",
             role: "model",
             content: "Hehello",
+            content_translated: "Xin chào",
         },
     ])
     const model = useModel()
