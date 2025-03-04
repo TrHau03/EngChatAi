@@ -8,10 +8,8 @@ import RootTab from "../bottom/RootTab";
 import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-// Định nghĩa kiểu navigation cho Chat
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>;
 
-// Định nghĩa kiểu navigation cho NewChat
 export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>;
 
 
