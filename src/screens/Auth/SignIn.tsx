@@ -1,15 +1,15 @@
-import { Wrapper } from "@/components"
-import { logOut } from "@/func/googleAuth"
+import { Wrapper } from "@/core/components"
+import { logOut } from "@/core/func/googleAuth"
+import { fontSize, fontWeight, linearGradientSignIn, padding, spacing } from "@/core/theme"
+import { device } from "@/core/utils"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
-import { linearGradientSignIn } from "@/theme"
 import { useNavigation } from "@react-navigation/native"
-import { Button, Image, Text } from "@rneui/themed"
+import { Button, Image, makeStyles, normalize, Text } from "@rneui/themed"
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
-import { useStyles } from "./styles"
 
 const SignIn = () => {
     const styles = useStyles(0)
@@ -51,3 +51,46 @@ const SignIn = () => {
 }
 
 export default SignIn
+
+const useStyles = makeStyles(({ colors }) => {
+    return {
+        container: {
+            backgroundColor: "#1a1a1a",
+            alignItems: "center",
+            paddingHorizontal: padding.medium,
+        },
+        logo: {
+            width: normalize(280),
+            height: normalize(280),
+        },
+        containerTitle: {
+            flex: 2,
+            maxWidth: "80%",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: spacing.base,
+        },
+        textTitle: {
+            fontSize: fontSize.xxxl,
+            color: colors.black,
+            fontWeight: fontWeight.bold as any,
+        },
+        textSubTitle: {
+            textAlign: "center",
+            fontSize: fontSize.medium,
+            color: colors.black,
+        },
+        circle: {
+            width: device().width * 2,
+            aspectRatio: 1,
+            borderRadius: device().width,
+            backgroundColor: "transparent",
+            position: "absolute",
+            bottom: -device().height / 1.8,
+        },
+        btnLoginGoogle: {
+            flex: 1,
+            zIndex: 1,
+        },
+    }
+})

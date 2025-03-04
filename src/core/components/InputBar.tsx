@@ -1,4 +1,4 @@
-import { margin, spacing } from "@/theme"
+import { margin, spacing } from "@/core/theme"
 import { makeStyles, normalize, useTheme } from "@rneui/themed"
 import React, { useState } from "react"
 import { TextInput, View } from "react-native"
@@ -57,7 +57,7 @@ const useStyles = makeStyles(({ colors }) => {
             flex: 1,
             height: normalize(36),
             justifyContent: "center",
-            backgroundColor: `${colors.disabled}90`,
+            backgroundColor: `${colors.disabled}60`,
             borderRadius: normalize(36),
             paddingHorizontal: spacing.medium,
             marginBottom: margin.base,

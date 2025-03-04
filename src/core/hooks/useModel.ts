@@ -1,4 +1,4 @@
-import { envApp, logger } from "@/utils"
+import { envApp, logger } from "@/core/utils"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
 const genAI = new GoogleGenerativeAI(envApp.GEMINI_KEY)
@@ -10,7 +10,7 @@ const chat = model.startChat({
     history: [],
 })
 
-export const useModel = (data: any) => {
+export const useModel = () => {
     const parseTextToJSON = (text: string) => {
         const newText = text.replace(/^.*?\{/, "{").replace(/\}.*$/, "}")
         logger.info("newText", newText)

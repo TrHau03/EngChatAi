@@ -1,4 +1,5 @@
 export * from "./device"
 export * from "./envConfigs"
+export * from "./generateId"
 export * from "./logger"
 export * from "./role"
