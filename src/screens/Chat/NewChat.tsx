@@ -1,12 +1,12 @@
 import { MessageItem, Wrapper } from "@/core/components"
 import InputBar from "@/core/components/InputBar"
 import { spacing } from "@/core/theme"
-import { NewChatProps } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
 import { makeStyles } from "@rneui/themed"
 import React, { useCallback } from "react"
 import { FlatList, KeyboardAvoidingView, Platform } from "react-native"
 import { useNewChat } from "./hooks/useNewChat"
+import { NewChatProps } from "@/navigation/stack/RootStack"
 
 const NewChat = () => {
     const styles = useStyles()
