@@ -1,5 +1,5 @@
-import { fontSize, fontWeight, padding, spacing } from "@/theme"
-import { device } from "@/utils"
+import { fontSize, fontWeight, padding, spacing } from "@/core/theme"
+import { device } from "@/core/utils"
 import { makeStyles, normalize } from "@rneui/themed"
 
 export const useStyles = makeStyles(({ colors }) => {

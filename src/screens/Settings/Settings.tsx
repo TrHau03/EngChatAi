@@ -1,16 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { View, Pressable, Image, PermissionsAndroid, Platform, Alert } from "react-native";
-import { Wrapper } from "@/components";
-import { logOut } from "@/func";
 import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack";
-import { fontSize, iconSize, spacing } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
 import { makeStyles, Text, useTheme } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { device } from "@/utils/device";
 import Icon from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { launchImageLibrary } from 'react-native-image-picker';
+import { fontSize, iconSize, spacing } from "@/core/theme";
+import { device } from "@/core/utils";
+import { logOut } from "@/core/func";
+import { Wrapper } from "@/core/components";
 
 const requestPermission = async () => {
     if (Platform.OS === "android") {
