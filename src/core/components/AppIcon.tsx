@@ -17,15 +17,17 @@ interface AppIconProps {
     isPaddingIcon?: boolean
     containerStyles?: StyleProp<ViewStyle>
     color?: number | ColorValue | undefined
+    onPress?: () => void
 }
 
-const AppIcon: React.FC<AppIconProps> = ({ name, type, isPaddingIcon = true, containerStyles, color }) => {
+const AppIcon: React.FC<AppIconProps> = ({ name, type, isPaddingIcon = true, containerStyles, color, onPress }) => {
     return (
         <Icon
             name={name}
             type={type}
             color={color}
             containerStyle={[containerStyles, { padding: isPaddingIcon ? 8 : 0 }]}
+            onPress={onPress}
         />
     )
 }

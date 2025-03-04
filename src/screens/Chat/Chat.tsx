@@ -1,4 +1,4 @@
-import { Wrapper } from "@/components"
+import { Wrapper } from "@/core/components"
 import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
 import { Button, makeStyles } from "@rneui/themed"

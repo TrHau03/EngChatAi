@@ -1,4 +1,4 @@
-import { logger } from "@/utils"
+import { logger } from "@/core/utils"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { GoogleAuthProvider, getAuth, signInWithCredential, signOut } from "firebase/auth"
 
