@@ -1,16 +1,16 @@
-import { envApp, logger } from "@/utils"
+import { envApp, logger } from "@/core/utils"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
 const genAI = new GoogleGenerativeAI(envApp.GEMINI_KEY)
 const model = genAI.getGenerativeModel({
-    model: envApp.GEMINI_MODEL,
+    model: "gemini-2.0-flash",
     systemInstruction: `You are a teacher English. Your name is Jessica. you can teach English all level. All your response for me following { "response": "your response", "response_translated": "your response by Vietnamese"  }`,
 })
 const chat = model.startChat({
     history: [],
 })
 
-export const useModel = (data: any) => {
+export const useModel = () => {
     const parseTextToJSON = (text: string) => {
         const newText = text.replace(/^.*?\{/, "{").replace(/\}.*$/, "}")
         logger.info("newText", newText)

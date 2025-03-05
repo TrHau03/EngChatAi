@@ -1,55 +1,49 @@
-import { MessageItem, Wrapper } from "@/components"
-import InputBar from "@/components/InputBar"
-import { Message } from "@/entities/message"
-import { useModel } from "@/hooks"
+import { MessageItem, Wrapper } from "@/core/components"
+import InputBar from "@/core/components/InputBar"
+import { spacing } from "@/core/theme"
 import { NewChatProps } from "@/navigation/stack/RootStack"
-import { spacing } from "@/theme"
-import { logger, Role } from "@/utils"
 import { useNavigation } from "@react-navigation/native"
 import { makeStyles } from "@rneui/themed"
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import { FlatList, KeyboardAvoidingView, Platform } from "react-native"
+import { useNewChat } from "./hooks/useNewChat"
 
 const NewChat = () => {
     const styles = useStyles()
     const navigation = useNavigation<NewChatProps>()
-    const [data, setData] = useState<Message[]>([])
-    const model = useModel(data)
-
+    const flatListRef = React.useRef<FlatList>(null)
+    const { data, onSubmit } = useNewChat()
     const behavior = Platform.OS === "ios" ? "padding" : "height"
 
+    React.useEffect(() => {
+        scrollToBottom()
+    }, [data])
+
+    const scrollToBottom = () => {
+        flatListRef.current?.scrollToEnd({ animated: true })
+    }
+
     const renderItem = useCallback(({ item }: any) => {
-        return <MessageItem role={item.role} content={item.content} />
+        return <MessageItem {...item} />
     }, [])
 
-    const onSubmit = async (value: any) => {
-        setData((prev) => [
-            ...prev,
-            {
-                role: Role.USER,
-                content: value.toString(),
-            },
-        ])
-        try {
-            const { response, response_translated } = await model.fetchApiModel(value.toString())
-            logger.object({ response, response_translated })
-            setData((prev) => [
-                ...prev,
-                {
-                    role: Role.AI,
-                    content: response,
-                },
-            ])
-        } catch (error: any) {
-            logger.error("fetchAPIGemini", error)
-        }
-    }
+    const keyExtractor = useCallback((item: any) => item.id, [])
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={behavior}>
-                {/* <View style={{ flex: 1 }}></View> */}
-                <FlatList data={data} renderItem={renderItem} />
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={keyExtractor}
+                    extraData={data}
+                    showsVerticalScrollIndicator={false}
+                    maxToRenderPerBatch={10}
+                    initialNumToRender={10}
+                    windowSize={10}
+                    removeClippedSubviews
+                    contentContainerStyle={styles.containerList}
+                />
                 <InputBar onSubmit={onSubmit} />
             </KeyboardAvoidingView>
         </Wrapper>
@@ -62,7 +56,8 @@ const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
             backgroundColor: colors.background,
-            paddingHorizontal: spacing.base,
+            paddingHorizontal: spacing.medium,
         },
+        containerList: { flexGrow: 1, justifyContent: "flex-end", gap: spacing.base },
     }
 })

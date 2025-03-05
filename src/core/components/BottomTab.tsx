@@ -1,4 +1,4 @@
-import { linearGradient, linearGradientDark } from "@/theme"
+import { linearGradient, linearGradientDark } from "@/core/theme"
 import { makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
 import { Pressable, View } from "react-native"

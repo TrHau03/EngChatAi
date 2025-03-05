@@ -1,7 +1,8 @@
-import { margin, spacing } from "@/theme"
+import { margin, spacing } from "@/core/theme"
 import { makeStyles, normalize, useTheme } from "@rneui/themed"
 import React, { useState } from "react"
 import { TextInput, View } from "react-native"
+import { useSTT } from "../hooks"
 import AppIcon from "./AppIcon"
 
 interface InputBarProps {
@@ -13,6 +14,7 @@ const InputBar: React.FC<InputBarProps> = (props) => {
     const {
         theme: { colors },
     } = useTheme()
+    const { startSTT } = useSTT()
     const [input, setInput] = useState("")
 
     const onSubmit = () => {
@@ -38,7 +40,7 @@ const InputBar: React.FC<InputBarProps> = (props) => {
                 type="ionicon"
                 color={colors.primary}
                 isPaddingIcon
-                onPress={onSubmit}
+                onPress={startSTT}
             />
         </View>
     )
@@ -57,7 +59,7 @@ const useStyles = makeStyles(({ colors }) => {
             flex: 1,
             height: normalize(36),
             justifyContent: "center",
-            backgroundColor: `${colors.disabled}90`,
+            backgroundColor: `${colors.disabled}60`,
             borderRadius: normalize(36),
             paddingHorizontal: spacing.medium,
             marginBottom: margin.base,
