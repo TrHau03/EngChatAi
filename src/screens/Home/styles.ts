@@ -13,7 +13,6 @@ export const useStyles = makeStyles(({ colors }) => {
             paddingHorizontal: padding.medium,
         },
         header: {
-            width: "100%",
             height: "auto",
             marginTop: margin.base,
             flexDirection: "row",
@@ -24,6 +23,7 @@ export const useStyles = makeStyles(({ colors }) => {
             width: "100%",
             // backgroundColor: colors.primary,
             marginTop: margin.large,
+            paddingHorizontal: padding.medium,
             gap: spacing.medium,
         },
         rightHeader: {
@@ -81,7 +81,6 @@ export const useStyles = makeStyles(({ colors }) => {
             backgroundColor: "#bcd4e6",
         },
         processing: {
-            width: "100%",
             height: device().height / 6,
             borderRadius: borderRadius.base,
             backgroundColor: colors.black,
@@ -137,6 +136,29 @@ export const useStyles = makeStyles(({ colors }) => {
         processingTypeCourse: {
             fontSize: fontSize.small,
             color: colors.disabled,
+        },
+        listSkill: {
+            marginTop: margin.medium,
+            gap: spacing.medium,
+        },
+        title: {
+            fontSize: fontSize.large,
+            color: colors.black,
+            fontWeight: fontWeight.bold as any,
+            marginBottom: margin.small,
+        },
+        wrapSkill: {
+            borderRadius: borderRadius.small,
+            backgroundColor: colors.black,
+            paddingHorizontal: padding.medium,
+            gap: spacing.medium,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+        },
+        middelWrapSkill: {
+            flex: 1,
+            gap: spacing.small,
         },
     }
 })
