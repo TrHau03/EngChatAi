@@ -1,6 +1,10 @@
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
-import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
+import {
+    createNativeStackNavigator,
+    NativeStackNavigationOptions,
+    NativeStackNavigationProp,
+} from "@react-navigation/native-stack"
 import { useTheme } from "@rneui/themed"
 import React from "react"
 import RootTab from "../bottom/RootTab"
@@ -8,6 +12,11 @@ import RootTab from "../bottom/RootTab"
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
 export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
+export interface ScreenProps {
+    name: RootStackParamEnum
+    component: React.ComponentType<any>
+    option: NativeStackNavigationOptions
+}
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -28,7 +37,7 @@ export type RootStackParamList = {
     [RootStackParamEnum.Settings]: undefined
     [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" }
 }
-export const screens = [
+export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.Auth,
         component: SignIn,
