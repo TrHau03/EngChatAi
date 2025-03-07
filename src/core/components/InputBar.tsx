@@ -11,15 +11,24 @@ interface InputBarProps {
 
 const InputBar: React.FC<InputBarProps> = (props) => {
     const styles = useStyles(0)
+
     const {
         theme: { colors },
     } = useTheme()
-    const { startSTT } = useSTT()
+    const { isRecording, startSTT, stopSTT } = useSTT()
     const [input, setInput] = useState("")
 
     const onSubmit = () => {
         setInput("")
         props.onSubmit(input)
+    }
+
+    const handleVoice = () => {
+        if (!isRecording) {
+            startSTT()
+        } else {
+            stopSTT()
+        }
     }
 
     return (
@@ -40,7 +49,7 @@ const InputBar: React.FC<InputBarProps> = (props) => {
                 type="ionicon"
                 color={colors.primary}
                 isPaddingIcon
-                onPress={startSTT}
+                onPress={input.trim().length > 0 ? onSubmit : handleVoice}
             />
         </View>
     )
