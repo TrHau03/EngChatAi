@@ -46,6 +46,9 @@ i18n.createInstance()
             en: {
                 translation: require("./src/assets/languages/en.json"),
             },
+            vi: {
+                translation: require("@/assets/languages/vi.json"),
+            },
         },
         fallbackLng: "en",
         compatibilityJSON: "v4",

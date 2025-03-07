@@ -35,6 +35,7 @@ const AppIcon: React.FC<AppIconProps> = ({
             name={name}
             type={type}
             color={color}
+            size={size}
             containerStyle={[containerStyles, { padding: isPaddingIcon ? 8 : 0 }]}
             size={normalize(size)}
             onPress={onPress}

@@ -1,35 +1,34 @@
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
-import {
-    createNativeStackNavigator,
-    NativeStackNavigationOptions,
-    NativeStackNavigationProp,
-} from "@react-navigation/native-stack"
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { useTheme } from "@rneui/themed"
 import React from "react"
 import RootTab from "../bottom/RootTab"
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
-interface ScreenProps {
-    name: RootStackParamEnum
-    component: React.ComponentType<any>
-    option: NativeStackNavigationOptions
-}
+export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export enum RootStackParamEnum {
     Auth = "Auth",
     Tab = "Tab",
     NewChat = "NewChat",
+    Chat = "Chat",
+    Settings = "Settings",
+    SettingsDetailScreen = "SettingsDetailScreen",
 }
 
 export type RootStackParamList = {
     [RootStackParamEnum.Auth]: undefined
     [RootStackParamEnum.Tab]: undefined
     [RootStackParamEnum.NewChat]: undefined
+    [RootStackParamEnum.Chat]: undefined
+    [RootStackParamEnum.Settings]: undefined
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" }
 }
-
-export const screens: ScreenProps[] = [
+export const screens = [
     {
         name: RootStackParamEnum.Auth,
         component: SignIn,
@@ -52,11 +51,6 @@ export const screens: ScreenProps[] = [
         },
     },
 ]
-
-export type HomeProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type SettingsProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
 
 export const RootStack = () => {
     const {
