@@ -10,11 +10,17 @@ export const fontSize = {
     xxl: normalize(28),
     xxxl: normalize(32),
 }
+export const iconSize = {
+    small: normalize(20),
+    medium: normalize(24),
+    large: normalize(30),
+}
 export const spacing = {
     small: normalize(4),
     base: normalize(8),
     medium: normalize(12),
     large: normalize(16),
+    xl: normalize(20),
 }
 export const borderRadius = {
     small: normalize(4),

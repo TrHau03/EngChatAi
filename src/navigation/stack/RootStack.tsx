@@ -1,74 +1,48 @@
-import { NewChat } from "@/screens"
-import { SignIn } from "@/screens/Auth"
+import { NewChat, Settings } from "@/screens";
+import { SignIn } from "@/screens/Auth";
 import {
     createNativeStackNavigator,
-    NativeStackNavigationOptions,
-    NativeStackNavigationProp,
-} from "@react-navigation/native-stack"
-import React from "react"
-import RootTab from "../bottom/RootTab"
+} from "@react-navigation/native-stack";
+import React from "react";
+import RootTab from "../bottom/RootTab";
+import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>;
 
-interface ScreenProps {
-    name: RootStackParamEnum
-    component: React.ComponentType<any>
-    option: NativeStackNavigationOptions
-}
+export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>;
+
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export enum RootStackParamEnum {
     Auth = "Auth",
     Tab = "Tab",
     NewChat = "NewChat",
+    Chat = "Chat",
+    Settings = "Settings",
+    SettingsDetailScreen="SettingsDetailScreen",
 }
 
 export type RootStackParamList = {
-    [RootStackParamEnum.Auth]: undefined
-    [RootStackParamEnum.Tab]: undefined
-    [RootStackParamEnum.NewChat]: undefined
-}
+    [RootStackParamEnum.Auth]: undefined;
+    [RootStackParamEnum.Tab]: undefined;
+    [RootStackParamEnum.NewChat]: undefined;
+    [RootStackParamEnum.Chat]: undefined
+    [RootStackParamEnum.Settings]: undefined;
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" };
 
-export const screens: ScreenProps[] = [
-    {
-        name: RootStackParamEnum.Auth,
-        component: SignIn,
-        option: {
-            headerShown: false,
-        },
-    },
-    {
-        name: RootStackParamEnum.Tab,
-        component: RootTab,
-        option: {},
-    },
-    {
-        name: RootStackParamEnum.NewChat,
-        component: NewChat,
-        option: {},
-    },
-]
+};
 
-export type HomeProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type SettingsProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
 
 export const RootStack = () => {
     return (
-        <Stack.Navigator
-            initialRouteName={RootStackParamEnum.Auth}
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            {screens.map((screen) => (
-                <Stack.Screen
-                    key={screen.name}
-                    name={screen.name}
-                    component={screen.component}
-                    options={screen.option}
-                />
-            ))}
+        <Stack.Navigator initialRouteName={RootStackParamEnum.Auth} screenOptions={{ headerShown: false }}>
+            <Stack.Screen name={RootStackParamEnum.Auth} component={SignIn} />
+            <Stack.Screen name={RootStackParamEnum.Tab} component={RootTab} />
+            <Stack.Screen name={RootStackParamEnum.NewChat} component={NewChat} />
+            <Stack.Screen name={RootStackParamEnum.Settings} component={Settings} />
+            <Stack.Screen name={RootStackParamEnum.SettingsDetailScreen} component={SettingsDetailScreen} />
         </Stack.Navigator>
-    )
-}
+    );
+};
