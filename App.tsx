@@ -38,20 +38,21 @@ GoogleSignin.configure({
     webClientId: envApp.ANDROID_CLIENT,
 })
 
-i18n.use(initReactI18next).init(() => {
-    return {
+i18n.use(initReactI18next).init({
         resources: {
             en: {
                 translation: require("@/assets/languages/en.json"),
             },
+            vi:{
+                translation: require("@/assets/languages/vi.json")
+            }
         },
         lng: "en",
         fallbackLng: "en",
-        compatibilityJSON: "v3",
+        compatibilityJSON: "v4",
         interpolation: {
             escapeValue: false,
         },
-    }
 })
 function App(): React.JSX.Element {
     return (

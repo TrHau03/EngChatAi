@@ -4,13 +4,12 @@ import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootS
 import { useNavigation } from "@react-navigation/native";
 import { makeStyles, Text, useTheme } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import Icon from "react-native-vector-icons/Feather";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { fontSize, iconSize, spacing } from "@/core/theme";
 import { device } from "@/core/utils";
 import { logOut } from "@/core/func";
-import { Wrapper } from "@/core/components";
+import { AppIcon, Wrapper } from "@/core/components";
+import { useTranslation } from "react-i18next";
 
 const requestPermission = async () => {
     if (Platform.OS === "android") {
@@ -26,6 +25,8 @@ const Settings = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
     const styles = useStyles();
     const { theme: { colors } } = useTheme();
+    const { t } = useTranslation()
+
 
     const [avatar, setAvatar] = useState<string | null>(null);
 
@@ -47,7 +48,8 @@ const Settings = () => {
         });
     };
 
-    const handleNavigate = (screenType: "CustomizeChatUI" | "ReportIssue" | "FeedbackReview") => {
+    const handleNavigate = (screenType: "CustomizeChatUI" | "Speedvoice" | "Language") => {
+        
         navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
     };
 
@@ -59,7 +61,7 @@ const Settings = () => {
     return (
         <Wrapper containerStyle={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Settings</Text>
+                <Text style={styles.title}>{t("Settings")}</Text>
             </View>
 
             <View style={styles.avatarContainer}>
@@ -73,34 +75,34 @@ const Settings = () => {
 
             <Pressable style={styles.row} onPress={() => handleNavigate("CustomizeChatUI")}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="chat" size={iconSize.medium} color={colors.black} />
-                    <Text style={styles.label}>Customize Chat UI</Text>
+                    <AppIcon name="chat" size={iconSize.medium} color={colors.black} type={"material"} />
+                    <Text style={styles.label}>{t("CustomizeChatUI")}</Text>
                 </View>
-                <Icon name="chevron-right" size={24} color={colors.black} />
+                <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
-            <Pressable style={styles.row} onPress={() => handleNavigate("ReportIssue")}>
+            <Pressable style={styles.row} onPress={() => handleNavigate("Speedvoice")}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="bug-report" size={iconSize.medium} color={colors.black} />
-                    <Text style={styles.label}>Report an Issue</Text>
+                    <AppIcon name="speed" size={iconSize.medium} color={colors.black} type={"material"} />
+                    <Text style={styles.label}>{t("Speedvoice")}</Text>
                 </View>
-                <Icon name="chevron-right" size={24} color={colors.black} />
+                <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
-            <Pressable style={styles.row} onPress={() => handleNavigate("FeedbackReview")}>
+            <Pressable style={styles.row} onPress={() => handleNavigate("Language")}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="feedback" size={iconSize.medium} color={colors.black} />
-                    <Text style={styles.label}>Feedback & Review</Text>
+                    <AppIcon name="language" size={iconSize.medium} color={colors.black} type={"material"} />
+                    <Text style={styles.label}>{t("Language")}</Text>
                 </View>
-                <Icon name="chevron-right" size={24} color={colors.black} />
+                <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
             <Pressable style={styles.row} onPress={handleLogout}>
                 <View style={styles.rowLeft}>
-                    <MaterialIcons name="logout" size={iconSize.medium} color={colors.black} />
-                    <Text style={styles.label}>Logout</Text>
+                    <AppIcon name="logout" size={iconSize.medium} color={colors.black} type={"material"} />
+                    <Text style={styles.label}>{t("Logout")}</Text>
                 </View>
-                <Icon name="chevron-right" size={24} color={colors.black} />
+                <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
         </Wrapper>

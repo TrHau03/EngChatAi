@@ -30,7 +30,7 @@ export type RootStackParamList = {
     [RootStackParamEnum.NewChat]: undefined;
     [RootStackParamEnum.Chat]: undefined
     [RootStackParamEnum.Settings]: undefined;
-    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "ReportIssue" | "FeedbackReview" };
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" };
 
 };
 
