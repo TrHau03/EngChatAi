@@ -49,7 +49,6 @@ const Settings = () => {
     };
 
     const handleNavigate = (screenType: "CustomizeChatUI" | "Speedvoice" | "Language") => {
-        
         navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
     };
 

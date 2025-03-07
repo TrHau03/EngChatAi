@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
-import { makeStyles, useTheme } from "@rneui/themed";
+import { makeStyles, Slider, useTheme } from "@rneui/themed";
 import { fontSize, spacing } from "@/core/theme";
 import { device } from "@/core/utils";
-import Slider from "@react-native-community/slider";
 import { useAppDispatch, useAppSelector } from "@/core/hooks";
 import SettingItem from "@/core/components/SettingItem";
 import { appActions } from "@/redux/reducers/App/appSlice";
@@ -23,7 +22,6 @@ const SettingsDetailScreen = () => {
     const mode = useAppSelector((state) => state.root.app.mode);
     const language = useAppSelector((state) => state.root.app.language);
     const speed = useAppSelector((state) => state.root.app.speed);
-
 
     const { t, i18n } = useTranslation();
 
@@ -52,8 +50,6 @@ const SettingsDetailScreen = () => {
     }
 
     const handleSelected = (item: string) => {
-        console.log("Selected Item:", item);
-
         switch (screenType) {
             case "CustomizeChatUI":
                 dispatch(appActions.updateState({ mode: item.toLowerCase() }));
