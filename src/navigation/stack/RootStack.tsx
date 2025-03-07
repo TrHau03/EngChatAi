@@ -5,6 +5,7 @@ import {
     NativeStackNavigationOptions,
     NativeStackNavigationProp,
 } from "@react-navigation/native-stack"
+import { useTheme } from "@rneui/themed"
 import React from "react"
 import RootTab from "../bottom/RootTab"
 
@@ -44,7 +45,11 @@ export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.NewChat,
         component: NewChat,
-        option: {},
+        option: {
+            headerShown: true,
+            headerTransparent: true,
+            headerBackButtonDisplayMode: "generic",
+        },
     },
 ]
 
@@ -54,6 +59,9 @@ export type SettingsProps = NativeStackNavigationProp<RootStackParamList, RootSt
 export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
 
 export const RootStack = () => {
+    const {
+        theme: { colors },
+    } = useTheme()
     return (
         <Stack.Navigator
             initialRouteName={RootStackParamEnum.Auth}
@@ -66,7 +74,11 @@ export const RootStack = () => {
                     key={screen.name}
                     name={screen.name}
                     component={screen.component}
-                    options={screen.option}
+                    options={{
+                        ...screen.option,
+                        headerStyle: { backgroundColor: colors.background },
+                        headerTitleStyle: { color: colors.black },
+                    }}
                 />
             ))}
         </Stack.Navigator>
