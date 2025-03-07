@@ -1,12 +1,12 @@
 import { MessageItem, Wrapper } from "@/core/components"
 import InputBar from "@/core/components/InputBar"
 import { spacing } from "@/core/theme"
-import { useNavigation } from "@react-navigation/native"
+import { NewChatProps } from "@/navigation/stack/RootStack"
+import { useNavigation, usePreventRemove } from "@react-navigation/native"
 import { makeStyles } from "@rneui/themed"
 import React, { useCallback } from "react"
-import { FlatList, KeyboardAvoidingView, Platform } from "react-native"
+import { Alert, FlatList, KeyboardAvoidingView, Platform } from "react-native"
 import { useNewChat } from "./hooks/useNewChat"
-import { NewChatProps } from "@/navigation/stack/RootStack"
 
 const NewChat = () => {
     const styles = useStyles()
@@ -14,6 +14,20 @@ const NewChat = () => {
     const flatListRef = React.useRef<FlatList>(null)
     const { data, onSubmit } = useNewChat()
     const behavior = Platform.OS === "ios" ? "padding" : "height"
+
+    usePreventRemove(true, (e) => {
+        Alert.alert("Are you sure you want to leave this chat?", "You will lose all your messages.", [
+            {
+                text: "Cancel",
+                style: "cancel",
+            },
+            {
+                text: "Leave",
+                style: "destructive",
+                onPress: () => navigation.dispatch(e.data.action),
+            },
+        ])
+    })
 
     React.useEffect(() => {
         scrollToBottom()
@@ -30,7 +44,7 @@ const NewChat = () => {
     const keyExtractor = useCallback((item: any) => item.id, [])
 
     return (
-        <Wrapper isSafeArea containerStyle={styles.container}>
+        <Wrapper isSafeArea edges={["bottom"]} containerStyle={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={behavior}>
                 <FlatList
                     data={data}
