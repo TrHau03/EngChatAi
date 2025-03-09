@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
-import { makeStyles, Slider, useTheme } from "@rneui/themed";
+import { makeStyles, useTheme } from "@rneui/themed";
 import { fontSize, spacing } from "@/core/theme";
 import { device } from "@/core/utils";
 import { useAppDispatch, useAppSelector } from "@/core/hooks";
 import SettingItem from "@/core/components/SettingItem";
 import { appActions } from "@/redux/reducers/App/appSlice";
 import { useTranslation } from "react-i18next"
+import { Mode } from "@/core/const/mode";
+import { Lang } from "@/core/const/lang";
 
 
 const SettingsDetailScreen = () => {
@@ -29,41 +31,73 @@ const SettingsDetailScreen = () => {
         i18n.changeLanguage(language);
     }, [language]);
 
-    let title = t("settings");
+    let title = "settings";
     let options: any[] = [];
-    let isSlider = false;
 
     switch (screenType) {
         case "CustomizeChatUI":
-            title = t("CustomizeChatUI");
-            options = [t("Dark"), t("Light"), t("System")];
+            title = "CustomizeChatUI";
+            options = [
+                { title: Mode.dark, value: Mode.dark },
+                { title: Mode.light, value: Mode.light },
+                { title: Mode.system, value: Mode.system },
+            ];
             break;
-        case "Speedvoice":
-            title = t("Speedvoice");
-            isSlider = true;
-            options = ["0.25x", "0.5x", "1x", "1.5x", "2x"];
+        case "Speed":
+            title = "Speed";
+            options = [
+                { title: "0.25x", value: 0.25 },
+                { title: "0.5x", value: 0.5 },
+                { title: "0.75x", value: 0.75 },
+                { title: "1x", value: 1.0 },
+                { title: "1.25x", value: 1.25 },
+                { title: "1.5x", value: 1.5 },
+                { title: "1.75x", value: 1.75 },
+                { title: "2x", value: 2.0 },
+            ];
             break;
         case "Language":
-            title = t("Language");
-            options = ["vi", "en"];
+            title = "Language";
+            options = [
+                { title: Lang.vi, value: Lang.vi },
+                { title: Lang.en, value: Lang.en },
+            ];
             break;
     }
 
     const handleSelected = (item: string) => {
         switch (screenType) {
             case "CustomizeChatUI":
-                dispatch(appActions.updateState({ mode: item.toLowerCase() }));
+                dispatch(appActions.updateState({ mode: item }));
                 break;
-            case "Speedvoice":
+            case "Speed":
                 dispatch(appActions.updateState({ speed: parseFloat(item) }));
                 break;
             case "Language":
-                dispatch(appActions.updateState({ language: item.toLowerCase() }));
+                dispatch(appActions.updateState({ language: item }));
                 i18n.changeLanguage(item);
                 break;
         }
-
     };
+
+    const renderItem = useCallback(({ item }: any) => {
+        const isSelected =
+            screenType === "CustomizeChatUI" ? mode === item.value :
+                screenType === "Language" ? language === item.value :
+                    screenType === "Speed" ? parseFloat(item.value) === speed :
+                        false;
+
+        return (
+            <SettingItem
+                title={t(item.title)}
+                isSelected={isSelected}
+                onPress={() => handleSelected(item.value)}
+            />
+        );
+    }, [screenType, mode, language, speed, t, handleSelected]);
+
+    const keyExtractor = useCallback((item: any) => item.value, [])
+
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -71,66 +105,15 @@ const SettingsDetailScreen = () => {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Icon name="chevron-left" size={26} color={colors.black} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>{title}</Text>
+                <Text style={styles.headerTitle}>{t(title)}</Text>
             </View>
 
-            {isSlider ? (
-                <View style={styles.sliderContainer}>
-                    <Text style={styles.sliderText}>{t("Speed")}: {speed.toFixed(2)}x</Text>
-                    <Slider
-                        style={styles.slider}
-                        minimumValue={0.25}
-                        maximumValue={2}
-                        step={0.05}
-                        value={speed}
-                        onSlidingComplete={(value) => dispatch(appActions.updateState({ speed: value }))}
-                        minimumTrackTintColor={colors.primary}
-                        maximumTrackTintColor={colors.grey3}
-                        thumbTintColor={colors.primary}
-                    />
-                    <View style={styles.optionList}>
-                        <FlatList
-                            data={options}
-                            keyExtractor={(item) => item}
-                            renderItem={({ item }) => {
-                                const isSelected = parseFloat(item) === speed;
-                                return (
-                                    <TouchableOpacity
-                                        style={[styles.item, isSelected && styles.selectedItem]}
-                                        onPress={() => handleSelected(item)}
-                                    >
-                                        <Text style={[styles.itemText, isSelected && styles.selectedItemText]}>
-                                            {item}
-                                        </Text>
-                                        {isSelected && <Icon name="check" size={20} style={styles.checkIcon} />}
-                                    </TouchableOpacity>
-                                );
-                            }}
-                            contentContainerStyle={styles.listContent}
-                        />
-                    </View>
-                </View>
-            ) : (
-                <FlatList
-                    data={options}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => {
-                        const isSelected =
-                            screenType === "CustomizeChatUI" ? mode.toLowerCase() === item.toLowerCase() :
-                                screenType === "Language" ? language.toLowerCase() === item.toLowerCase() :
-                                    false;
-                        return (
-                            <SettingItem
-                                name={item}
-                                isSelected={isSelected}
-                                onPress={() => handleSelected(item)}
-                            />
-                        );
-                    }}
-                    contentContainerStyle={styles.listContent}
-                />
-            )}
-
+            <FlatList
+                data={options}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                contentContainerStyle={styles.listContent}
+            />
         </View>
     );
 };
@@ -155,18 +138,6 @@ const useStyles = makeStyles(({ colors }) => ({
         textAlign: "center",
         color: colors.black,
         top: device().height * 0.013,
-    },
-    sliderContainer: {
-        alignItems: "center",
-        marginVertical: spacing.large,
-    },
-    sliderText: {
-        fontSize: fontSize.medium,
-        marginBottom: spacing.medium,
-        color: colors.black,
-    },
-    slider: {
-        width: "90%",
     },
     optionList: {
         width: "100%",

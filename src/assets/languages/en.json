@@ -3,10 +3,10 @@
     "Settings": "Settings",
     "CustomizeChatUI": "Customize Chat UI",
     "Language": "Language",
-    "Speedvoice": "Speed voice",
+    "Speed": "Speed voice",
     "Logout": "Logout",
-    "Dark": "Dark",
-    "Light": "Light",
-    "System": "System",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
     "": ""
 }

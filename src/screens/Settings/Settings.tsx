@@ -48,7 +48,7 @@ const Settings = () => {
         });
     };
 
-    const handleNavigate = (screenType: "CustomizeChatUI" | "Speedvoice" | "Language") => {
+    const handleNavigate = (screenType: "CustomizeChatUI" | "Speed" | "Language") => {
         navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
     };
 
@@ -58,7 +58,7 @@ const Settings = () => {
     }, []);
 
     return (
-        <Wrapper containerStyle={styles.container}>
+        <Wrapper isSafeArea containerStyle={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>{t("Settings")}</Text>
             </View>
@@ -80,7 +80,7 @@ const Settings = () => {
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
-            <Pressable style={styles.row} onPress={() => handleNavigate("Speedvoice")}>
+            <Pressable style={styles.row} onPress={() => handleNavigate("Speed")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="speed" size={iconSize.medium} color={colors.black} type={"material"} />
                     <Text style={styles.label}>{t("Speedvoice")}</Text>
@@ -113,7 +113,6 @@ export default Settings;
 const useStyles = makeStyles(({ colors }) => ({
     container: {
         backgroundColor: colors.background,
-        paddingHorizontal: spacing.large,
     },
     header: {
         alignItems: "center",

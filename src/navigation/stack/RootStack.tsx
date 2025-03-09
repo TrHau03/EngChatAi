@@ -8,6 +8,7 @@ import {
 import { useTheme } from "@rneui/themed"
 import React from "react"
 import RootTab from "../bottom/RootTab"
+import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
@@ -35,7 +36,7 @@ export type RootStackParamList = {
     [RootStackParamEnum.NewChat]: undefined
     [RootStackParamEnum.Chat]: undefined
     [RootStackParamEnum.Settings]: undefined
-    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" }
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
 }
 export const screens: ScreenProps[] = [
     {
@@ -59,7 +60,14 @@ export const screens: ScreenProps[] = [
             headerBackButtonDisplayMode: "generic",
         },
     },
+    {
+        name: RootStackParamEnum.SettingsDetailScreen,
+        component: SettingsDetailScreen,
+        option:{},
+    }
 ]
+
+
 
 export const RootStack = () => {
     const {
