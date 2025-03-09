@@ -75,7 +75,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("CustomizeChatUI")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="chat" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("CustomizeChatUI")}</Text>
+                    <Text style={styles.label}>{t("customizechatUI")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -83,7 +83,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("Speed")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="speed" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Speedvoice")}</Text>
+                    <Text style={styles.label}>{t("speed")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -91,7 +91,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("Language")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="language" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Language")}</Text>
+                    <Text style={styles.label}>{t("language")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -99,7 +99,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={handleLogout}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="logout" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Logout")}</Text>
+                    <Text style={styles.label}>{t("logout")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>

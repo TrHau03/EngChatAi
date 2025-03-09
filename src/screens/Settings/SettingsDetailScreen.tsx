@@ -35,16 +35,16 @@ const SettingsDetailScreen = () => {
     let options: any[] = [];
 
     switch (screenType) {
-        case "CustomizeChatUI":
-            title = "CustomizeChatUI";
+        case "customizechatUI":
+            title = "customizechatUI";
             options = [
                 { title: Mode.dark, value: Mode.dark },
                 { title: Mode.light, value: Mode.light },
                 { title: Mode.system, value: Mode.system },
             ];
             break;
-        case "Speed":
-            title = "Speed";
+        case "speed":
+            title = "speed";
             options = [
                 { title: "0.25x", value: 0.25 },
                 { title: "0.5x", value: 0.5 },
@@ -56,8 +56,8 @@ const SettingsDetailScreen = () => {
                 { title: "2x", value: 2.0 },
             ];
             break;
-        case "Language":
-            title = "Language";
+        case "language":
+            title = "language";
             options = [
                 { title: Lang.vi, value: Lang.vi },
                 { title: Lang.en, value: Lang.en },
@@ -67,13 +67,13 @@ const SettingsDetailScreen = () => {
 
     const handleSelected = (item: string) => {
         switch (screenType) {
-            case "CustomizeChatUI":
+            case "customizechatUI":
                 dispatch(appActions.updateState({ mode: item }));
                 break;
-            case "Speed":
+            case "speed":
                 dispatch(appActions.updateState({ speed: parseFloat(item) }));
                 break;
-            case "Language":
+            case "language":
                 dispatch(appActions.updateState({ language: item }));
                 i18n.changeLanguage(item);
                 break;
@@ -82,9 +82,9 @@ const SettingsDetailScreen = () => {
 
     const renderItem = useCallback(({ item }: any) => {
         const isSelected =
-            screenType === "CustomizeChatUI" ? mode === item.value :
-                screenType === "Language" ? language === item.value :
-                    screenType === "Speed" ? parseFloat(item.value) === speed :
+            screenType === "customizechatUI" ? mode === item.value :
+                screenType === "language" ? language === item.value :
+                    screenType === "speed" ? parseFloat(item.value) === speed :
                         false;
 
         return (
