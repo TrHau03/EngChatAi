@@ -1,47 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { View, ScrollView, ImageSourcePropType, TouchableOpacity, Pressable } from "react-native"
 import { useTranslation } from "react-i18next"
 import { Text, Avatar, Button, Icon, Image } from "@rneui/themed"
-import { linearGradientBanner } from "@/theme"
+import { linearGradientBanner } from "@/core/theme"
 import * as Progress from "react-native-progress"
+import { getCourses } from "@/api"
 
 import { useStyles } from "./styles"
-import { Wrapper } from "@/components"
+import { Wrapper } from "@/core/components"
 import LinearGradient from "react-native-linear-gradient"
-
-export interface Skill {
-    id: number
-    name: string
-    description: string
-    image: ImageSourcePropType
-}
-
-export const skills: Skill[] = [
-    {
-        id: 1,
-        name: "Từ vựng",
-        description: "Trắc nghiệm và điền vào ô trống",
-        image: require("@/assets/images/logo.png"),
-    },
-    {
-        id: 2,
-        name: "Ngữ pháp",
-        description: "Học các cấu trúc câu phổ biến",
-        image: require("@/assets/images/logo.png"),
-    },
-    {
-        id: 3,
-        name: "Luyện nói",
-        description: "Luyện nói cùng với AI",
-        image: require("@/assets/images/logo.png"),
-    },
-]
-
+import VoiceRecorder from "@/core/components/Voice"
 const Home = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
     const learningProgress: number = 0.75
-    console.log("Log này sẽ hiển thị trong React Native Debugger hoặc Logcat")
+    const courses = getCourses()
+
     return (
         <Wrapper containerStyle={styles.container}>
             {/* Header */}
@@ -60,6 +34,7 @@ const Home = () => {
             <ScrollView contentContainerStyle={{ flexGrow: 1, width: "100%" }}>
                 {/* Body */}
                 <View style={styles.body}>
+                    <VoiceRecorder />
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
@@ -127,13 +102,17 @@ const Home = () => {
                     </View>
                     <View style={styles.listSkill}>
                         <Text style={styles.title}>Kỹ năng</Text>
-                        {skills.map((item) => (
+                        {courses.map((item) => (
                             <TouchableOpacity
                                 onPress={() => console.log(item.name)}
                                 key={item.id}
                                 style={styles.wrapSkill}
                             >
-                                <Image source={item.image} style={styles.logo} resizeMode="contain" />
+                                <Image
+                                    source={require("@/assets/images/logo.png")}
+                                    style={styles.logo}
+                                    resizeMode="contain"
+                                />
                                 <View style={styles.middelWrapSkill}>
                                     <Text style={styles.processingNameCourse}>{item.name}</Text>
                                     <Text numberOfLines={1} style={styles.processingTypeCourse}>

@@ -1,9 +1,7 @@
-import { fontSize, fontWeight, padding, spacing, margin, borderRadius, shadow } from "@/theme"
+import { fontSize, fontWeight, padding, spacing, margin, borderRadius, shadow } from "@/core/theme"
 
-import { device } from "@/utils"
-import { color } from "@rneui/base"
+import { device } from "@/core/utils"
 import { makeStyles, normalize } from "@rneui/themed"
-import { Colors } from "react-native/Libraries/NewAppScreen"
 
 export const useStyles = makeStyles(({ colors }) => {
     return {

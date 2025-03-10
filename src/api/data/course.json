@@ -1,0 +1,25 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "name": "Từ vựng",
+            "description": "Trắc nghiệm và điền vào ô trống",
+            "image": "@/assets/images/logo.png",
+            "lessons": 20
+        },
+        {
+            "id": 2,
+            "name": "Ngữ pháp",
+            "description": "Học các cấu trúc câu phổ biến",
+            "image": "@/assets/images/logo.png",
+            "lessons": 20
+        },
+        {
+            "id": 3,
+            "name": "Luyện nói",
+            "description": "Luyện nói cùng với AI",
+            "image": "@/assets/images/logo.png",
+            "lessons": 20
+        }
+    ]
+}
