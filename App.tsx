@@ -8,7 +8,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
 import i18n from "i18next"
-import React, { useEffect } from "react"
+import React from "react"
 import { initReactI18next } from "react-i18next"
 import { Appearance } from "react-native"
 import { Provider } from "react-redux"
@@ -69,10 +69,7 @@ function App(): React.JSX.Element {
 
 const RootNavigation = () => {
     const mode = useAppSelector((state) => state.root.app.mode)
-    const { initialTts } = useInitialTTS()
-    useEffect(() => {
-        initialTts()
-    }, [])
+    useInitialTTS()
     const systemMode = Appearance.getColorScheme()
     return (
         <ThemeProvider theme={getTheme({ mode: mode === Mode.system ? systemMode : mode })}>

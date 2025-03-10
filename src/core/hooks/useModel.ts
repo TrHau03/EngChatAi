@@ -6,7 +6,7 @@ const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: `You are a teacher English. Your name is Jessica. you can teach English all level. All your response for me following { "response": "your response", "response_translated": "your response by Vietnamese"  }`,
     generationConfig: {
-        maxOutputTokens: 100,
+        maxOutputTokens: 200,
         temperature: 0.5,
         responseMimeType: "application/json",
     },
@@ -35,7 +35,7 @@ export const useModel = () => {
     }
 
     const formatPrompt = (prompt: string) => {
-        return `${prompt}. Your response for me following { "response": "your response", "response_translated": "your response by Vietnamese"  }`
+        return `${prompt}.Short answer and your response following { "response": "your response", "response_translated": "your response by Vietnamese"  }`
     }
 
     const fetchApiModel = async (prompt: string) => {

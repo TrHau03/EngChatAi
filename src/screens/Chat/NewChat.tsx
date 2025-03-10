@@ -1,28 +1,33 @@
-import { MessageItem, Wrapper } from "@/core/components"
+import { AppIcon, MessageItem, Wrapper } from "@/core/components"
 import InputBar from "@/core/components/InputBar"
-import { spacing } from "@/core/theme"
+import { fontSize, spacing } from "@/core/theme"
 import { NewChatProps } from "@/navigation/stack/RootStack"
 import { useNavigation, usePreventRemove } from "@react-navigation/native"
-import { makeStyles } from "@rneui/themed"
+import { makeStyles, useTheme } from "@rneui/themed"
 import React, { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { Alert, FlatList, KeyboardAvoidingView, Platform } from "react-native"
 import { useNewChat } from "./hooks/useNewChat"
 
 const NewChat = () => {
     const styles = useStyles()
+    const {
+        theme: { colors },
+    } = useTheme()
+    const { t } = useTranslation()
     const navigation = useNavigation<NewChatProps>()
     const flatListRef = React.useRef<FlatList>(null)
     const { data, onSubmit } = useNewChat()
     const behavior = Platform.OS === "ios" ? "padding" : "height"
 
     usePreventRemove(true, (e) => {
-        Alert.alert("Are you sure you want to leave this chat?", "You will lose all your messages.", [
+        Alert.alert(t("doYouWantToLeaveThisChat"), t("youCanNotRecoverThisChat"), [
             {
-                text: "Cancel",
+                text: t("cancel"),
                 style: "cancel",
             },
             {
-                text: "Leave",
+                text: t("leave"),
                 style: "destructive",
                 onPress: () => navigation.dispatch(e.data.action),
             },
@@ -30,12 +35,18 @@ const NewChat = () => {
     })
 
     React.useEffect(() => {
-        scrollToBottom()
-    }, [data])
+        navigation.setOptions({
+            headerRight: () => <AppIcon name="checkmark-done-sharp" type="ionicon" color={colors.primary} />,
+        })
+    }, [navigation, t])
 
-    const scrollToBottom = () => {
+    React.useEffect(() => {
+        scrollToBottom()
+    }, [data.length])
+
+    const scrollToBottom = useCallback(() => {
         flatListRef.current?.scrollToEnd({ animated: true })
-    }
+    }, [])
 
     const renderItem = useCallback(({ item }: any) => {
         return <MessageItem {...item} />
@@ -47,6 +58,7 @@ const NewChat = () => {
         <Wrapper isSafeArea edges={["bottom"]} containerStyle={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={behavior}>
                 <FlatList
+                    ref={flatListRef}
                     data={data}
                     renderItem={renderItem}
                     keyExtractor={keyExtractor}
@@ -57,6 +69,9 @@ const NewChat = () => {
                     windowSize={10}
                     removeClippedSubviews
                     contentContainerStyle={styles.containerList}
+                    onLayout={scrollToBottom}
+                    snapToEnd
+                    onContentSizeChange={scrollToBottom}
                 />
                 <InputBar onSubmit={onSubmit} />
             </KeyboardAvoidingView>
@@ -73,5 +88,11 @@ const useStyles = makeStyles(({ colors }) => {
             paddingHorizontal: spacing.medium,
         },
         containerList: { flexGrow: 1, justifyContent: "flex-end", gap: spacing.base },
+        textSave: {
+            color: colors.primary,
+            fontSize: fontSize.medium,
+            fontWeight: "bold",
+            backgroundColor: "red",
+        },
     }
 })

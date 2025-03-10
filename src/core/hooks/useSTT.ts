@@ -1,45 +1,41 @@
 import { useEffect, useState } from "react"
-import { NativeModules } from "react-native"
-import { logger } from "../utils"
+import { NativeEventEmitter, NativeModules } from "react-native"
 const { SpeechToTextModule } = NativeModules
+const SpeechToTextEvent = new NativeEventEmitter(SpeechToTextModule)
 
 export const useSTT = () => {
     const [isRecording, setIsRecording] = useState(false)
+
     useEffect(() => {
-        const requestPermission = async () => {
-            SpeechToTextModule.requestPermission((error: any, result: any) => {
-                if (error) {
-                    logger.error("Request permission", error)
-                } else {
-                    logger.info("Permission granted:", result)
-                }
-            })
+        const startSubscription = SpeechToTextEvent.addListener("onSpeechStart", (event) => {
+            console.log("onSpeechStart", event)
+        })
+        const endSubscription = SpeechToTextEvent.addListener("onSpeechEnd", (event) => {
+            console.log("onSpeechEnd", event)
+            setIsRecording(false)
+        })
+        const resultSubscription = SpeechToTextEvent.addListener("onSpeechResults", (event) => {
+            console.log("onSpeechResult", event)
+            SpeechToTextModule.stopListening()
+        })
+        return () => {
+            startSubscription.remove()
+            endSubscription.remove()
+            resultSubscription.remove()
         }
-        requestPermission()
     }, [])
 
     const startSTT = async () => {
         setIsRecording(true)
         try {
-            SpeechToTextModule.startListening((error: any, result: any) => {
-                if (error) {
-                    logger.error("Start listening", error)
-                } else {
-                    logger.info("Start listening", result)
-                    setIsRecording(false)
-                }
-            })
+            await SpeechToTextModule.startListening()
         } catch (error) {}
     }
     const stopSTT = async () => {
         setIsRecording(false)
-        SpeechToTextModule.stopListening((error: any, result: any) => {
-            if (error) {
-                logger.error("Stop listening", error)
-            } else {
-                logger.info("Stop listening", result)
-            }
-        })
+        try {
+            await SpeechToTextModule.stopListening()
+        } catch (error) {}
     }
     return {
         startSTT,

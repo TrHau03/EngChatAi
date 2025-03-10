@@ -1,5 +1,6 @@
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
+import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
@@ -58,6 +59,11 @@ export const screens: ScreenProps[] = [
             headerTransparent: true,
             headerBackButtonDisplayMode: "generic",
         },
+    },
+    {
+        name: RootStackParamEnum.SettingsDetailScreen,
+        component: SettingsDetailScreen,
+        option: {},
     },
 ]
 

@@ -1,7 +1,6 @@
 package com.engchatgemini
 
 import android.app.Application
-import com.engchatgemini.com.voice.VoicePackage
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
@@ -21,7 +20,6 @@ class MainApplication : Application(), ReactApplication {
             PackageList(this).packages.apply {
               // Packages that cannot be autolinked yet can be added manually here, for example:
               // add(MyReactNativePackage())
-              add(VoicePackage())
             }
 
         override fun getJSMainModuleName(): String = "index"

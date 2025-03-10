@@ -13,8 +13,8 @@
         "clean-ios": "rm -rf ios/build ios/Pods ios/Podfile.lock ios/DerivedData",
         "clean-cache-ios": "node ./scripts/clean-cache-ios.js",
         "setup:dev": "node ./scripts/setup.js dev",
-        "clean-android": "rm -rf android/app/build android/build",
-        "clean-all": "yarn clean-node && yarn clean-ios && yarn clean-android && yarn clean-watch"
+        "clean-android": "sudo rm -rf android/app/build android/build",
+        "clean-all": "sudo yarn clean-node && yarn clean-ios && yarn clean-android && yarn clean-watch"
     },
     "dependencies": {
         "@google/generative-ai": "^0.22.0",

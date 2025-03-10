@@ -1,34 +1,30 @@
 import { appActions } from "@/redux/reducers/App/appSlice"
-import Tts from "react-native-tts"
+import { useEffect } from "react"
+import { NativeEventEmitter, NativeModules } from "react-native"
+import { logger } from "../utils"
 import { useAppDispatch } from "./useRedux"
+const { TextToSpeechModule } = NativeModules
+const ttsEvent = new NativeEventEmitter(TextToSpeechModule)
 
 export const useInitialTTS = () => {
     const dispatch = useAppDispatch()
-    const initialTts = async () => {
-        Tts.getInitStatus().then(
-            (e) => {
-                console.log("ALL OK TTS ✅")
-            },
-            (err) => {
-                if (err.code === "no_engine") {
-                    console.log("NO ENGINE TTS ✅")
-                    Tts.requestInstallEngine()
-                }
-            },
-        )
-        Tts.setIgnoreSilentSwitch("ignore")
-        Tts.setDefaultLanguage("en_US")
-        Tts.setDefaultRate(1, true)
-        Tts.setDefaultPitch(0.7)
-        Tts.addEventListener("tts-progress", (event) => {})
-        Tts.addEventListener("tts-finish", (event) => {
+    useEffect(() => {
+        const startSubscription = ttsEvent.addListener("onSpeechStart", (event) => {
+            logger.object({ event })
+        })
+
+        const endSubscription = ttsEvent.addListener("onSpeechEnd", (event) => {
+            logger.object({ event })
+            TextToSpeechModule.stop()
             dispatch(appActions.updateState({ tts: { id: "", isSpeaking: false } }))
         })
-        Tts.addEventListener("tts-cancel", (event) => {
-            dispatch(appActions.updateState({ tts: { id: "", isSpeaking: false } }))
-        })
-    }
-    return {
-        initialTts,
-    }
+        TextToSpeechModule.setDefaultLanguage("en-US")
+        TextToSpeechModule.setDefaultRate(0.5)
+        TextToSpeechModule.setDefaultPitch(1.0)
+        return () => {
+            startSubscription.remove()
+            endSubscription.remove()
+        }
+    }, [])
+    return {}
 }

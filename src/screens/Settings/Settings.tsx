@@ -1,62 +1,60 @@
-import React, { useState, useCallback } from "react";
-import { View, Pressable, Image, PermissionsAndroid, Platform, Alert } from "react-native";
-import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack";
-import { useNavigation } from "@react-navigation/native";
-import { makeStyles, Text, useTheme } from "@rneui/themed";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { launchImageLibrary } from 'react-native-image-picker';
-import { fontSize, iconSize, spacing } from "@/core/theme";
-import { device } from "@/core/utils";
-import { logOut } from "@/core/func";
-import { AppIcon, Wrapper } from "@/core/components";
-import { useTranslation } from "react-i18next";
+import { AppIcon, Wrapper } from "@/core/components"
+import { logOut } from "@/core/func"
+import { fontSize, iconSize, spacing } from "@/core/theme"
+import { device } from "@/core/utils"
+import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack"
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { makeStyles, Text, useTheme } from "@rneui/themed"
+import React, { useCallback, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { Alert, Image, PermissionsAndroid, Platform, Pressable, View } from "react-native"
+import { launchImageLibrary } from "react-native-image-picker"
 
 const requestPermission = async () => {
     if (Platform.OS === "android") {
-        const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
-        );
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES)
+        return granted === PermissionsAndroid.RESULTS.GRANTED
     }
-    return true;
-};
+    return true
+}
 
 const Settings = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const styles = useStyles();
-    const { theme: { colors } } = useTheme();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+    const styles = useStyles()
+    const {
+        theme: { colors },
+    } = useTheme()
     const { t } = useTranslation()
 
-
-    const [avatar, setAvatar] = useState<string | null>(null);
+    const [avatar, setAvatar] = useState<string | null>(null)
 
     const handleSelectImage = async () => {
-        const hasPermission = await requestPermission();
+        const hasPermission = await requestPermission()
         if (!hasPermission) {
-            Alert.alert("Permission Denied", "You need to allow access to your photos.");
-            return;
+            Alert.alert("Permission Denied", "You need to allow access to your photos.")
+            return
         }
 
         launchImageLibrary({ mediaType: "photo", quality: 1 }, (response) => {
             if (response.didCancel) {
-                console.log("User cancelled image picker");
+                console.log("User cancelled image picker")
             } else if (response.errorMessage) {
-                console.log("ImagePicker Error: ", response.errorMessage);
+                console.log("ImagePicker Error: ", response.errorMessage)
             } else if (response.assets && response.assets.length > 0) {
-                setAvatar(response.assets[0].uri || null);
+                setAvatar(response.assets[0].uri || null)
             }
-        });
-    };
+        })
+    }
 
     const handleNavigate = (screenType: "CustomizeChatUI" | "Speedvoice" | "Language") => {
-        
-        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
-    };
+        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType })
+    }
 
     const handleLogout = useCallback(async () => {
-        const result = await logOut();
-        if (result) navigation.navigate(RootStackParamEnum.Auth);
-    }, []);
+        const result = await logOut()
+        if (result) navigation.navigate(RootStackParamEnum.Auth)
+    }, [])
 
     return (
         <Wrapper containerStyle={styles.container}>
@@ -67,7 +65,13 @@ const Settings = () => {
             <View style={styles.avatarContainer}>
                 <Pressable onPress={handleSelectImage} style={styles.avatarWrapper}>
                     <Image
-                        source={avatar ? { uri: avatar } : { uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg" }}
+                        source={
+                            avatar
+                                ? { uri: avatar }
+                                : {
+                                      uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+                                  }
+                        }
                         style={styles.avatar}
                     />
                 </Pressable>
@@ -104,12 +108,11 @@ const Settings = () => {
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
-
         </Wrapper>
-    );
-};
+    )
+}
 
-export default Settings;
+export default Settings
 
 const useStyles = makeStyles(({ colors }) => ({
     container: {
@@ -164,4 +167,4 @@ const useStyles = makeStyles(({ colors }) => ({
         color: colors.black,
         marginLeft: 10,
     },
-}));
+}))
