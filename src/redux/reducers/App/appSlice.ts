@@ -6,6 +6,7 @@ interface AppState {
     isLoading: boolean
     mode: Mode
     language: Lang
+    speed: number
     tts: {
         id: string
         isSpeaking: boolean
@@ -15,7 +16,8 @@ interface AppState {
 const initialState: AppState = {
     isLoading: false,
     mode: Mode.dark,
-    language: Lang.en,
+    language: Lang.vi,
+    speed: 1,
     tts: {
         id: "",
         isSpeaking: false,

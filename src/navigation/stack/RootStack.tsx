@@ -5,29 +5,38 @@ import {
     NativeStackNavigationOptions,
     NativeStackNavigationProp,
 } from "@react-navigation/native-stack"
+import { useTheme } from "@rneui/themed"
 import React from "react"
 import RootTab from "../bottom/RootTab"
 
-const Stack = createNativeStackNavigator<RootStackParamList>()
+export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
-interface ScreenProps {
+export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
+export interface ScreenProps {
     name: RootStackParamEnum
     component: React.ComponentType<any>
     option: NativeStackNavigationOptions
 }
 
+const Stack = createNativeStackNavigator<RootStackParamList>()
+
 export enum RootStackParamEnum {
     Auth = "Auth",
     Tab = "Tab",
     NewChat = "NewChat",
+    Chat = "Chat",
+    Settings = "Settings",
+    SettingsDetailScreen = "SettingsDetailScreen",
 }
 
 export type RootStackParamList = {
     [RootStackParamEnum.Auth]: undefined
     [RootStackParamEnum.Tab]: undefined
     [RootStackParamEnum.NewChat]: undefined
+    [RootStackParamEnum.Chat]: undefined
+    [RootStackParamEnum.Settings]: undefined
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" }
 }
-
 export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.Auth,
@@ -44,16 +53,18 @@ export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.NewChat,
         component: NewChat,
-        option: {},
+        option: {
+            headerShown: true,
+            headerTransparent: true,
+            headerBackButtonDisplayMode: "generic",
+        },
     },
 ]
 
-export type HomeProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type SettingsProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Tab>
-export type NewChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.NewChat>
-
 export const RootStack = () => {
+    const {
+        theme: { colors },
+    } = useTheme()
     return (
         <Stack.Navigator
             initialRouteName={RootStackParamEnum.Auth}
@@ -66,7 +77,11 @@ export const RootStack = () => {
                     key={screen.name}
                     name={screen.name}
                     component={screen.component}
-                    options={screen.option}
+                    options={{
+                        ...screen.option,
+                        headerStyle: { backgroundColor: colors.background },
+                        headerTitleStyle: { color: colors.black },
+                    }}
                 />
             ))}
         </Stack.Navigator>
