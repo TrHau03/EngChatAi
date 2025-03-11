@@ -7,24 +7,24 @@ import { View } from "react-native"
 import { useAppSelector, useTTS } from "../hooks"
 import AppIcon from "./AppIcon"
 
-const MessageItem: React.FC<Message> = ({ id, role, content, content_translated }) => {
+const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated }) => {
     const styles = useStyles(role)
     const {
         theme: { colors },
     } = useTheme()
     const { speak, stop } = useTTS()
     const isSpeaking = useAppSelector((state) => {
-        return state.root.app.tts.id === id && state.root.app.tts.isSpeaking
+        return state.root.app.tts.id === _id.toHexString() && state.root.app.tts.isSpeaking
     })
     const [isTranslated, setIsTranslated] = useState(false)
 
-    logger.info("render MessageItem", id)
+    logger.info("render MessageItem", _id)
 
     const handleSpeak = useCallback(() => {
         if (isSpeaking) {
             stop()
         } else {
-            speak(id, content)
+            speak(_id.toHexString(), content)
         }
     }, [isSpeaking])
 

@@ -1,57 +1,40 @@
-import { Message } from "@/core/entities/message"
 import { useModel } from "@/core/hooks"
-import { generateID, logger, Role } from "@/core/utils"
-import { useState } from "react"
+import { logger, Role } from "@/core/utils"
+import { NewChat } from "@/db/NewChat"
+import { useQuery, useRealm } from "@realm/react"
 
 export const useNewChat = () => {
-    const [data, setData] = useState<Message[]>([
-        {
-            id: "1",
-            role: "model",
-            content: "Hehello",
-            content_translated: "Xin chào",
-        },
-        {
-            id: "2",
-            role: "user",
-            content: "Hello How are you to day?",
-        },
-        {
-            id: "3",
-            role: "model",
-            content: "Hehello",
-            content_translated: "Xin chào",
-        },
-    ])
+    const realm = useRealm()
+    const newChat = useQuery(NewChat)
     const model = useModel()
 
     const onSubmit = async (value: any) => {
-        setData((prev) => [
-            ...prev,
-            {
-                id: generateID(),
+        realm.write(() => {
+            const data = {
                 role: Role.USER,
                 content: value.toString(),
-            },
-        ])
+                content_translated: "", // Input from user is not translated
+            }
+            realm.create("NewChat", NewChat.generate(data))
+        })
         try {
             const { response, response_translated } = await model.fetchApiModel(value.toString())
             logger.object({ response, response_translated })
-            setData((prev) => [
-                ...prev,
-                {
-                    id: generateID(),
+            realm.write(() => {
+                const data = {
                     role: Role.AI,
                     content: response,
                     content_translated: response_translated,
-                },
-            ])
+                }
+                realm.create("NewChat", NewChat.generate(data))
+            })
         } catch (error: any) {
             logger.error("fetchAPIGemini", error)
         }
     }
     return {
-        data,
+        realm,
+        data: newChat,
         onSubmit,
     }
 }

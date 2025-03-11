@@ -2,10 +2,13 @@ import { Mode } from "@/core/const/mode"
 import { useAppSelector, useInitialTTS } from "@/core/hooks"
 import { getTheme } from "@/core/theme/index"
 import { envApp } from "@/core/utils/envConfigs"
+import { Chat } from "@/db/Chat"
+import { NewChat } from "@/db/NewChat"
 import { RootStack } from "@/navigation/stack/RootStack"
 import { persistor, store } from "@/redux/store"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
+import { RealmProvider } from "@realm/react"
 import { ThemeProvider } from "@rneui/themed"
 import i18n from "i18next"
 import React from "react"
@@ -59,11 +62,13 @@ i18n.createInstance()
 global.Buffer = require("buffer").Buffer
 function App(): React.JSX.Element {
     return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <RootNavigation />
-            </PersistGate>
-        </Provider>
+        <RealmProvider schema={[NewChat, Chat]}>
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <RootNavigation />
+                </PersistGate>
+            </Provider>
+        </RealmProvider>
     )
 }
 

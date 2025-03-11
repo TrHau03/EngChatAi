@@ -1,34 +1,23 @@
 import { AppIcon, Wrapper } from "@/core/components"
+import { Message } from "@/core/entities/message"
 import { fontSize, padding, spacing } from "@/core/theme"
+import { logger } from "@/core/utils"
 import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
 import { Divider, makeStyles, Text, useTheme } from "@rneui/themed"
 import React, { useCallback } from "react"
 import { FlatList, View } from "react-native"
-
-const sampleData = [
-    {
-        id: 1,
-        firstMessage: "John Doe",
-    },
-    {
-        id: 2,
-        firstMessage: "Jane Doe",
-    },
-    {
-        id: 3,
-        firstMessage: "John Doe",
-    },
-]
+import { useChat } from "./hooks/useChat"
 
 interface ItemType {
-    id: any
-    firstMessage: string
+    _id: Realm.BSON.ObjectId
+    messages: Message[]
 }
 
 const Chat = () => {
     const navigation = useNavigation<ChatProps>()
     const styles = useStyles(0)
+    const { data } = useChat()
     const {
         theme: { colors },
     } = useTheme()
@@ -38,9 +27,10 @@ const Chat = () => {
     }, [])
 
     const renderItem = useCallback(({ item }: { item: ItemType }) => {
+        logger.object({ item })
         return (
             <View style={styles.containerItem}>
-                <Text style={styles.textItem}>{item.firstMessage}</Text>
+                <Text style={styles.textItem}>{item._id.toHexString()}</Text>
                 <Divider />
             </View>
         )
@@ -57,7 +47,11 @@ const Chat = () => {
                 color={colors.primary}
                 onPress={handleNavigate}
             />
-            <FlatList data={sampleData} keyExtractor={(item) => item.id.toString()} renderItem={renderItem} />
+            <FlatList
+                data={data.sorted("createdAt") as unknown as ItemType[]}
+                keyExtractor={(item: ItemType) => item._id.toHexString()}
+                renderItem={renderItem}
+            />
         </Wrapper>
     )
 }
