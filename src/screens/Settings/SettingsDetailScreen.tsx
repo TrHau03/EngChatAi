@@ -71,7 +71,7 @@ const SettingsDetailScreen = () => {
                 dispatch(appActions.updateState({ mode: item }));
                 break;
             case "speed":
-                dispatch(appActions.updateState({ speed: parseFloat(item) }));
+                dispatch(appActions.updateState({ speed: parseFloat(item) / 2 }));
                 break;
             case "language":
                 dispatch(appActions.updateState({ language: item }));
