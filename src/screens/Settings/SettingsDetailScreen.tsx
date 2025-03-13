@@ -23,10 +23,10 @@ const SettingsDetailScreen = () => {
     let title = screenType;
     let options: any[] = [];
 
-    const dispatch = useAppDispatch();
-    const mode = useAppSelector((state) => state.root.app.mode);
-    const language = useAppSelector((state) => state.root.app.language);
-    const speed = useAppSelector((state) => state.root.app.speed);
+    const dispatch = useAppDispatch()
+    const mode = useAppSelector((state) => state.root.app.mode)
+    const language = useAppSelector((state) => state.root.app.language)
+    const speed = useAppSelector((state) => state.root.app.speed)
 
     switch (screenType) {
         case "CustomizeChatUI":
@@ -108,8 +108,8 @@ const SettingsDetailScreen = () => {
                 contentContainerStyle={styles.listContent}
             />
         </View>
-    );
-};
+    )
+}
 
 const useStyles = makeStyles(({ colors }) => ({
     header: {
@@ -117,10 +117,10 @@ const useStyles = makeStyles(({ colors }) => ({
         alignItems: "center",
         padding: spacing.large,
         margin: spacing.large,
-        height: device().height * 0.1
+        height: device().height * 0.1,
     },
     backButton: {
-        position: 'absolute',
+        position: "absolute",
         top: device().height * 0.05,
         zIndex: 10,
     },
@@ -164,7 +164,6 @@ const useStyles = makeStyles(({ colors }) => ({
     checkIcon: {
         color: colors.primary,
     },
-}));
+}))
 
-
-export default SettingsDetailScreen;
+export default SettingsDetailScreen

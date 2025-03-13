@@ -11,6 +11,8 @@
 		422EBE387165B575E2908601 /* Pods_EngChatGemini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFFA262FB4640EBC2B03ACF /* Pods_EngChatGemini.framework */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		D630021C2D7DF9570088F2B4 /* TextToSpeechModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D630021B2D7DF9570088F2B4 /* TextToSpeechModule.m */; };
+		D630021E2D7DF9740088F2B4 /* RCTNativeSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */; };
 		D6863C692D6F734C00052E0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6863C682D6F734C00052E0C /* GoogleService-Info.plist */; };
 		D6FC51E82D78668300B0DAA3 /* RCTNativeVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC51E72D78668300B0DAA3 /* RCTNativeVoice.swift */; };
 		D6FC51EF2D7873C700B0DAA3 /* SpeechToTextModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC51EE2D7873C700B0DAA3 /* SpeechToTextModule.m */; };
@@ -26,6 +28,9 @@
 		629350AE029B74931424B6BE /* Pods-EngChatGemini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngChatGemini.release.xcconfig"; path = "Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini.release.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = EngChatGemini/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EngChatGemini/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D630021B2D7DF9570088F2B4 /* TextToSpeechModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextToSpeechModule.m; sourceTree = "<group>"; };
+		D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTNativeSpeech.swift; sourceTree = "<group>"; };
+		D630021F2D7DFFFF0088F2B4 /* EngChatGemini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngChatGemini-Bridging-Header.h"; sourceTree = "<group>"; };
 		D6863C682D6F734C00052E0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D6FC51E72D78668300B0DAA3 /* RCTNativeVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTNativeVoice.swift; sourceTree = "<group>"; };
 		D6FC51EE2D7873C700B0DAA3 /* SpeechToTextModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextModule.m; sourceTree = "<group>"; };
@@ -78,6 +83,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D630021A2D7DF9110088F2B4 /* Speech */,
 				D6FC51E62D78662B00B0DAA3 /* Voice */,
 				13B07FAE1A68108700A75B9A /* EngChatGemini */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -105,6 +111,16 @@
 				629350AE029B74931424B6BE /* Pods-EngChatGemini.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D630021A2D7DF9110088F2B4 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				D630021F2D7DFFFF0088F2B4 /* EngChatGemini-Bridging-Header.h */,
+				D630021B2D7DF9570088F2B4 /* TextToSpeechModule.m */,
+				D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */,
+			);
+			path = Speech;
 			sourceTree = "<group>";
 		};
 		D6FC51E62D78662B00B0DAA3 /* Voice */ = {
@@ -270,8 +286,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				D630021C2D7DF9570088F2B4 /* TextToSpeechModule.m in Sources */,
 				D6FC51E82D78668300B0DAA3 /* RCTNativeVoice.swift in Sources */,
 				D6FC51EF2D7873C700B0DAA3 /* SpeechToTextModule.m in Sources */,
+				D630021E2D7DF9740088F2B4 /* RCTNativeSpeech.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

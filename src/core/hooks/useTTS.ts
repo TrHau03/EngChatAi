@@ -1,18 +1,24 @@
 import { appActions } from "@/redux/reducers/App/appSlice"
-import Tts from "react-native-tts"
+import { useEffect } from "react"
+import { NativeModules } from "react-native"
 import { logger } from "../utils"
 import { useAppDispatch } from "./useRedux"
+const { TextToSpeechModule } = NativeModules
+
 export const useTTS = () => {
     const dispatch = useAppDispatch()
-    const speak = (id: string = "", text: string) => {
+    useEffect(() => {}, [])
+
+    const speak = async (id: string = "", text: string) => {
         logger.object({ id, text })
         if (!text || !id) return
-        Tts.stop()
-        Tts.speak(text)
         dispatch(appActions.updateState({ tts: { id, isSpeaking: true } }))
+        TextToSpeechModule.speak(text)
     }
     const stop = () => {
-        Tts.stop()
+        try {
+            TextToSpeechModule.stop()
+        } catch (error) {}
         dispatch(appActions.updateState({ tts: { id: "", isSpeaking: false } }))
     }
     return {

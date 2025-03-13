@@ -1,53 +1,113 @@
-import { MessageItem, Wrapper } from "@/core/components"
+import { AppIcon, MessageItem, Wrapper } from "@/core/components"
 import InputBar from "@/core/components/InputBar"
-import { spacing } from "@/core/theme"
+import { Message } from "@/core/entities/message"
+import { useAppDispatch } from "@/core/hooks"
+import { fontSize, padding, spacing } from "@/core/theme"
+import { generateID, logger } from "@/core/utils"
 import { NewChatProps } from "@/navigation/stack/RootStack"
-import { useNavigation, usePreventRemove } from "@react-navigation/native"
-import { makeStyles } from "@rneui/themed"
-import React, { useCallback } from "react"
+import { appActions } from "@/redux/reducers/App/appSlice"
+import { chatActions } from "@/redux/reducers/Chat/chatSlice"
+import { usePreventRemove } from "@react-navigation/native"
+import { makeStyles, useTheme } from "@rneui/themed"
+import React, { useCallback, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Alert, FlatList, KeyboardAvoidingView, Platform } from "react-native"
 import { useNewChat } from "./hooks/useNewChat"
 
-const NewChat = () => {
+const NewChat = ({ route, navigation }: NewChatProps) => {
     const styles = useStyles()
-    const navigation = useNavigation<NewChatProps>()
+    const {
+        params: { type, messages },
+    } = route
+    const isNewChat = type === "new"
+    const {
+        theme: { colors },
+    } = useTheme()
+    const dispatch = useAppDispatch()
+    const { t } = useTranslation()
     const flatListRef = React.useRef<FlatList>(null)
-    const { data, onSubmit } = useNewChat()
+    const { data, onSubmit, setData } = useNewChat()
+    const [isNext, setIsNext] = useState(false)
     const behavior = Platform.OS === "ios" ? "padding" : "height"
 
-    usePreventRemove(true, (e) => {
-        Alert.alert("Are you sure you want to leave this chat?", "You will lose all your messages.", [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-            {
-                text: "Leave",
-                style: "destructive",
-                onPress: () => navigation.dispatch(e.data.action),
-            },
-        ])
+    usePreventRemove(isNewChat, (e) => {
+        if (data.length > 0 && !isNext) {
+            Alert.alert(t("doYouWantToLeaveThisChat"), t("youCanNotRecoverThisChat"), [
+                {
+                    text: t("cancel"),
+                    style: "cancel",
+                },
+                {
+                    text: t("leave"),
+                    style: "destructive",
+                    onPress: () => handleGoBack(e),
+                },
+            ])
+        } else {
+            navigation.dispatch(e.data.action)
+        }
     })
+
+    React.useEffect(() => {
+        logger.object(data)
+        navigation.setOptions({
+            headerShown: true,
+            headerRight: () => {
+                if (isNewChat && data.length > 0) {
+                    return (
+                        <AppIcon
+                            name="checkmark-done-sharp"
+                            type="ionicon"
+                            color={colors.primary}
+                            onPress={handleSave}
+                        />
+                    )
+                } else {
+                    return null
+                }
+            },
+        })
+    }, [navigation, t, data])
 
     React.useEffect(() => {
         scrollToBottom()
     }, [data])
 
-    const scrollToBottom = () => {
-        flatListRef.current?.scrollToEnd({ animated: true })
+    const handleGoBack = useCallback(
+        (e: any) => {
+            navigation.dispatch(e.data.action)
+            isNewChat && setData([])
+        },
+        [data, navigation],
+    )
+
+    const handleSave = () => {
+        dispatch(appActions.updateState({ isLoading: true }))
+        setIsNext(true)
+        dispatch(chatActions.updateChat({ _id: generateID(), messages: data }))
+        setTimeout(() => {
+            dispatch(appActions.updateState({ isLoading: false }))
+            navigation.goBack()
+        }, 1000)
     }
+
+    const scrollToBottom = useCallback(() => {
+        flatListRef.current?.scrollToEnd({ animated: true })
+    }, [flatListRef.current])
 
     const renderItem = useCallback(({ item }: any) => {
         return <MessageItem {...item} />
     }, [])
 
-    const keyExtractor = useCallback((item: any) => item.id, [])
+    const keyExtractor = useCallback((item: Message) => item._id.toString(), [])
 
     return (
         <Wrapper isSafeArea edges={["bottom"]} containerStyle={styles.container}>
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={behavior}>
                 <FlatList
-                    data={data}
+                    contentInsetAdjustmentBehavior="automatic"
+                    ref={flatListRef}
+                    data={isNewChat ? data : (messages as any)}
                     renderItem={renderItem}
                     keyExtractor={keyExtractor}
                     extraData={data}
@@ -57,8 +117,11 @@ const NewChat = () => {
                     windowSize={10}
                     removeClippedSubviews
                     contentContainerStyle={styles.containerList}
+                    onLayout={scrollToBottom}
+                    snapToEnd
+                    onContentSizeChange={scrollToBottom}
                 />
-                <InputBar onSubmit={onSubmit} />
+                {isNewChat && <InputBar onSubmit={onSubmit} />}
             </KeyboardAvoidingView>
         </Wrapper>
     )
@@ -70,8 +133,13 @@ const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
             backgroundColor: colors.background,
-            paddingHorizontal: spacing.medium,
+            paddingHorizontal: padding.medium,
         },
-        containerList: { flexGrow: 1, justifyContent: "flex-end", gap: spacing.base },
+        containerList: { flexGrow: 1, justifyContent: "flex-end", gap: spacing.base, paddingVertical: padding.base },
+        textSave: {
+            color: colors.primary,
+            fontSize: fontSize.medium,
+            fontWeight: "bold",
+        },
     }
 })

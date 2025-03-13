@@ -1,4 +1,6 @@
 export { default as AppIcon } from "./AppIcon"
+export { default as AppLoading } from "./AppLoading"
 export { BottomTab } from "./BottomTab"
+export * from "./ErrorBoundary"
 export { default as MessageItem } from "./MessageItem"
 export { default as Wrapper } from "./Wrapper"
