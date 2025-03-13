@@ -6,7 +6,7 @@ const persistConfig = {
     key: "root",
     storage: AsyncStorage,
     blacklist: [],
-    whitelist: [],
+    whitelist: ["app"],
     timeout: 10000,
 }
 

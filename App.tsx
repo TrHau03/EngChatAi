@@ -1,5 +1,5 @@
 import { Mode } from "@/core/const/mode"
-import { useAppSelector, useInitialTTS } from "@/core/hooks"
+import { useAppSelector, useInit } from "@/core/hooks"
 import { getTheme } from "@/core/theme/index"
 import { envApp } from "@/core/utils/envConfigs"
 import { RootStack } from "@/navigation/stack/RootStack"
@@ -38,24 +38,7 @@ GoogleSignin.configure({
     webClientId: envApp.ANDROID_CLIENT,
 })
 
-i18n.createInstance()
-    .use(initReactI18next)
-    .init({
-        lng: "en",
-        resources: {
-            en: {
-                translation: require("./src/assets/languages/en.json"),
-            },
-            vi: {
-                translation: require("@/assets/languages/vi.json"),
-            },
-        },
-        fallbackLng: "en",
-        compatibilityJSON: "v4",
-        interpolation: {
-            escapeValue: false,
-        },
-    })
+
 global.Buffer = require("buffer").Buffer
 function App(): React.JSX.Element {
     return (
@@ -69,10 +52,14 @@ function App(): React.JSX.Element {
 
 const RootNavigation = () => {
     const mode = useAppSelector((state) => state.root.app.mode)
-    const { initialTts } = useInitialTTS()
+    const { language, initialTts, initI18Next } = useInit()
     useEffect(() => {
         initialTts()
     }, [])
+
+    useEffect(() => {
+        initI18Next()
+    }, [language])
     const systemMode = Appearance.getColorScheme()
     return (
         <ThemeProvider theme={getTheme({ mode: mode === Mode.system ? systemMode : mode })}>

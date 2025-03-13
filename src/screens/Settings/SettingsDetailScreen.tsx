@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import { makeStyles, useTheme } from "@rneui/themed";
 import { fontSize, spacing } from "@/core/theme";
-import { device } from "@/core/utils";
+import { device, logger } from "@/core/utils";
 import { useAppDispatch, useAppSelector } from "@/core/hooks";
 import SettingItem from "@/core/components/SettingItem";
 import { appActions } from "@/redux/reducers/App/appSlice";
@@ -16,34 +16,28 @@ import { Lang } from "@/core/const/lang";
 const SettingsDetailScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
+    const styles = useStyles();
     const { screenType } = route.params as { screenType: string };
     const { theme: { colors } } = useTheme();
-    const styles = useStyles();
+    const { t, i18n } = useTranslation();
+    let title = screenType;
+    let options: any[] = [];
 
     const dispatch = useAppDispatch();
     const mode = useAppSelector((state) => state.root.app.mode);
     const language = useAppSelector((state) => state.root.app.language);
     const speed = useAppSelector((state) => state.root.app.speed);
 
-    const { t, i18n } = useTranslation();
-
-    useEffect(() => {
-        i18n.changeLanguage(language);
-    }, [language]);
-
-    let title = "settings";
-    let options: any[] = [];
-
     switch (screenType) {
-        case "customizechatUI":
+        case "CustomizeChatUI":
             title = "customizechatUI";
             options = [
-                { title: Mode.dark, value: Mode.dark },
-                { title: Mode.light, value: Mode.light },
-                { title: Mode.system, value: Mode.system },
+                { title: "Dark Mode", value: Mode.dark },
+                { title: "Light Mode", value: Mode.light },
+                { title: "System Default", value: Mode.system },
             ];
             break;
-        case "speed":
+        case "Speed":
             title = "speed";
             options = [
                 { title: "0.25x", value: 0.25 },
@@ -56,35 +50,34 @@ const SettingsDetailScreen = () => {
                 { title: "2x", value: 2.0 },
             ];
             break;
-        case "language":
+        case "Language":
             title = "language";
             options = [
-                { title: Lang.vi, value: Lang.vi },
-                { title: Lang.en, value: Lang.en },
+                { title: "VI", value: Lang.vi },
+                { title: "EN", value: Lang.en },
             ];
             break;
     }
-
-    const handleSelected = (item: string) => {
-        switch (screenType) {
-            case "customizechatUI":
-                dispatch(appActions.updateState({ mode: item }));
-                break;
-            case "speed":
-                dispatch(appActions.updateState({ speed: parseFloat(item) / 2 }));
-                break;
-            case "language":
-                dispatch(appActions.updateState({ language: item }));
-                i18n.changeLanguage(item);
-                break;
+    const handleSelected = useCallback((value: string | number) => {
+        const keyMap = {
+            CustomizeChatUI: "mode",
+            Speed: "speed",
+            Language: "language",
+        } as const;
+    
+        if (screenType in keyMap) {
+            const key = keyMap[screenType as keyof typeof keyMap];
+    
+            dispatch(appActions.updateState({ [key]: value }));
         }
-    };
+    }, [screenType, dispatch, i18n]);
+    
 
     const renderItem = useCallback(({ item }: any) => {
         const isSelected =
-            screenType === "customizechatUI" ? mode === item.value :
-                screenType === "language" ? language === item.value :
-                    screenType === "speed" ? parseFloat(item.value) === speed :
+            screenType === "CustomizeChatUI" ? mode === item.value :
+                screenType === "Language" ? language === item.value :
+                    screenType === "Speed" ? parseFloat(item.value) === speed :
                         false;
 
         return (

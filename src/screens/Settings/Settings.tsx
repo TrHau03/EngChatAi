@@ -27,7 +27,6 @@ const Settings = () => {
     const { theme: { colors } } = useTheme();
     const { t } = useTranslation()
 
-
     const [avatar, setAvatar] = useState<string | null>(null);
 
     const handleSelectImage = async () => {
@@ -60,7 +59,7 @@ const Settings = () => {
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>{t("Settings")}</Text>
+                <Text style={styles.title}>{t("settings")}</Text>
             </View>
 
             <View style={styles.avatarContainer}>
@@ -117,11 +116,10 @@ const useStyles = makeStyles(({ colors }) => ({
     header: {
         alignItems: "center",
         justifyContent: "center",
-        height: device().height * 0.13,
-        backgroundColor: colors.background,
+        height: device().height * 0.05,
     },
     title: {
-        fontSize: 20,
+        fontSize: fontSize.xl,
         fontWeight: "bold",
         color: colors.black,
     },

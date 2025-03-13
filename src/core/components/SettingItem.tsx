@@ -26,8 +26,8 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, isSelected, onPress })
                 <AppIcon
                     name="checkmark"
                     type="ionicon"
+                    isPaddingIcon={false}
                     color={colors.black}
-                    isPaddingIcon
                     size={spacing.large}
                 />
             )}
