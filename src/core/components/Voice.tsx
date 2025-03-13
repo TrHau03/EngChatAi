@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { View, Text, TouchableOpacity, PermissionsAndroid, Alert } from "react-native"
-import { NativeModules } from "react-native"
+import { View, Text, TouchableOpacity, PermissionsAndroid, Alert, NativeModules } from "react-native"
 import Sound from "react-native-sound"
 
 const { VoiceModule } = NativeModules
