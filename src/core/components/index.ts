@@ -1,3 +1,4 @@
+export { default as AppActionSheet } from "./AppActionSheet"
 export { default as AppIcon } from "./AppIcon"
 export { default as AppLoading } from "./AppLoading"
 export { BottomTab } from "./BottomTab"
