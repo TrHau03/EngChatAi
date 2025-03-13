@@ -1,3 +1,4 @@
+import { AppLoading, ErrorBoundary } from "@/core/components"
 import { Mode } from "@/core/const/mode"
 import { useAppSelector, useInitialTTS } from "@/core/hooks"
 import { getTheme } from "@/core/theme/index"
@@ -8,7 +9,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
 import i18n from "i18next"
-import React, { useEffect } from "react"
+import React from "react"
 import { initReactI18next } from "react-i18next"
 import { Appearance } from "react-native"
 import { Provider } from "react-redux"
@@ -21,7 +22,6 @@ const firebaseConfig = {
     storageBucket: "engchatai-8d022.firebasestorage.app",
     messagingSenderId: "797630589124",
 }
-
 // const app = initializeApp({
 //     apiKey: envApp.API_KEY,
 //     appId: envApp.APP_ID,
@@ -59,25 +59,26 @@ i18n.createInstance()
 global.Buffer = require("buffer").Buffer
 function App(): React.JSX.Element {
     return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <RootNavigation />
-            </PersistGate>
-        </Provider>
+        <ErrorBoundary>
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <RootNavigation />
+                </PersistGate>
+            </Provider>
+        </ErrorBoundary>
     )
 }
 
 const RootNavigation = () => {
     const mode = useAppSelector((state) => state.root.app.mode)
-    const { initialTts } = useInitialTTS()
-    useEffect(() => {
-        initialTts()
-    }, [])
+    const isLoading = useAppSelector((state) => state.root.app.isLoading)
+    useInitialTTS()
     const systemMode = Appearance.getColorScheme()
     return (
         <ThemeProvider theme={getTheme({ mode: mode === Mode.system ? systemMode : mode })}>
             <NavigationContainer>
                 <RootStack />
+                <AppLoading isLoading={isLoading} />
             </NavigationContainer>
         </ThemeProvider>
     )

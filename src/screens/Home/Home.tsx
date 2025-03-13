@@ -9,7 +9,7 @@ import { getCourses } from "@/api"
 import { useStyles } from "./styles"
 import { Wrapper } from "@/core/components"
 import LinearGradient from "react-native-linear-gradient"
-const { TTPModule } = NativeModules
+
 const Home = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
@@ -34,10 +34,6 @@ const Home = () => {
             <ScrollView contentContainerStyle={{ flexGrow: 1, width: "100%" }}>
                 {/* Body */}
                 <View style={styles.body}>
-                    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                        <Button title="Speak" onPress={() => TTPModule.speak("Hello from React Native!")} />
-                        <Button title="Stop" onPress={() => TTPModule.stop()} />
-                    </View>
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
