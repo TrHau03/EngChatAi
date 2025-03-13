@@ -6,6 +6,7 @@ interface Props {
     children: React.ReactNode
     edges?: Edges
     isSafeArea?: boolean
+    isLoading?: boolean
     containerStyle?: StyleProp<ViewStyle>
 }
 

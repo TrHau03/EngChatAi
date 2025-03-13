@@ -14,7 +14,7 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
     } = useTheme()
     const { speak, stop } = useTTS()
     const isSpeaking = useAppSelector((state) => {
-        return state.root.app.tts.id === _id.toHexString() && state.root.app.tts.isSpeaking
+        return state.root.app.tts.id === _id.toString() && state.root.app.tts.isSpeaking
     })
     const [isTranslated, setIsTranslated] = useState(false)
 
@@ -24,7 +24,7 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
         if (isSpeaking) {
             stop()
         } else {
-            speak(_id.toHexString(), content)
+            speak(_id.toString(), content)
         }
     }, [isSpeaking])
 

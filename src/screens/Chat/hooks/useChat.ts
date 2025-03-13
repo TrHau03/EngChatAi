@@ -1,8 +1,8 @@
-import { Chat } from "@/db/Chat"
-import { useQuery } from "@realm/react"
+import { useAppSelector } from "@/core/hooks"
 
 export const useChat = () => {
-    const chat = useQuery(Chat)
+    const chat = useAppSelector((state) => state.root.chat.chat)
+
     return {
         data: chat,
     }
