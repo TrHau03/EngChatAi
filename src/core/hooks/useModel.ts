@@ -2,6 +2,7 @@ import { envApp, logger } from "@/core/utils"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
 const genAI = new GoogleGenerativeAI(envApp.GEMINI_KEY)
+
 const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
     systemInstruction: `You are a teacher English. Your name is Jessica. you can teach English all level. All your response for me following { "response": "your response", "response_translated": "your response by Vietnamese"  }`,

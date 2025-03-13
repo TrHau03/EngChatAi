@@ -1,7 +1,6 @@
 import { Message } from "@/core/entities/message"
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
-import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
@@ -12,6 +11,7 @@ import { useTheme } from "@rneui/themed"
 import React from "react"
 import { List } from "realm"
 import RootTab from "../bottom/RootTab"
+import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
@@ -43,7 +43,7 @@ export type RootStackParamList = {
     }
     [RootStackParamEnum.Chat]: undefined
     [RootStackParamEnum.Settings]: undefined
-    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speedvoice" | "Language" }
+    [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
 }
 export const screens: ScreenProps[] = [
     {
@@ -73,6 +73,8 @@ export const screens: ScreenProps[] = [
         option: {},
     },
 ]
+
+
 
 export const RootStack = () => {
     const {

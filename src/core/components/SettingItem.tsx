@@ -3,29 +3,31 @@ import React from 'react'
 import { fontSize, spacing } from '../theme';
 import { makeStyles, useTheme } from '@rneui/themed';
 import AppIcon from './AppIcon';
+import { useTranslation } from 'react-i18next';
 
 interface SettingItemProps {
-    name: string,
+    title: string,
     isSelected: boolean,
     onPress?: (name: string) => void;
 }
 
-const SettingItem: React.FC<SettingItemProps> = ({ name, isSelected, onPress }) => {
+const SettingItem: React.FC<SettingItemProps> = ({ title, isSelected, onPress }) => {
     const styles = useStyles();
     const { theme: { colors } } = useTheme();
+    const { t } = useTranslation();
 
     return (
         <TouchableOpacity style={styles.item} onPress={() => {
-            console.log("Item Pressed:", name);
-            if (onPress) onPress(name);
+            console.log("Item Pressed:", title);
+            if (onPress) onPress(title);
         }}>
-            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.name}>{t(title)}</Text>
             {isSelected && (
                 <AppIcon
                     name="checkmark"
                     type="ionicon"
+                    isPaddingIcon={false}
                     color={colors.black}
-                    isPaddingIcon
                     size={spacing.large}
                 />
             )}

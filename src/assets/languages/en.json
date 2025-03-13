@@ -1,12 +1,14 @@
 {
+    "settings": "Settings",
+    "customizechatUI": "Customize Chat UI",
+    "language": "Language",
+    "speed": "Speed voice",
+    "logout": "Logout",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
     "educationIsFree": "Education is free",
-    "Settings": "Settings",
-    "CustomizeChatUI": "Customize Chat UI",
-    "Language": "Language",
-    "Speedvoice": "Speed voice",
-    "Logout": "Logout",
-    "Dark": "Dark",
-    "Light": "Light",
-    "System": "System",
-    "": ""
+    "signInWithGoogle": "Sign in with Google",
+    "learnEnglishSmarter": "Learn English Smarter with AI – Your Personal AI Teacher!",
+    "":""
 }

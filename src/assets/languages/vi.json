@@ -1,13 +1,15 @@
 {
     "educationIsFree" : "Giáo dục cho tất cả",
-    "CustomizeChatUI":"Tùy chỉnh giao diện người dùng",
-    "Language":"Ngôn ngữ",
-    "Logout":"Đăng xuất",
-    "Settings":"Cài đặt",
-    "Speedvoice":"Tốc độ",
-    "Dark":"Tối",
-    "Light":"Sáng",
-    "System":"Hệ thống",
+    "customizechatUI":"Tùy chỉnh giao diện người dùng",
+    "language":"Ngôn ngữ",
+    "logout":"Đăng xuất",
+    "settings":"Cài đặt",
+    "speed":"Tốc độ",
+    "dark":"Tối",
+    "light":"Sáng",
+    "system":"Hệ thống",
+    "signInWithGoogle": "Đăng nhập bằng google",
+    "learnEnglishSmarter":"Học Tiếng Anh Thông Minh Hơn Cùng AI Gia Sư AI Cá Nhân Của Bạn!",
     "":""
     
 }
