@@ -1,5 +1,4 @@
 {
-    "educationIsFree": "Education is free",
     "settings": "Settings",
     "customizechatUI": "Customize Chat UI",
     "language": "Language",
@@ -8,5 +7,8 @@
     "dark": "Dark",
     "light": "Light",
     "system": "System",
-    "": ""
+    "educationIsFree": "Education is free",
+    "signInWithGoogle": "Sign in with Google",
+    "learnEnglishSmarter": "Learn English Smarter with AI – Your Personal AI Teacher!",
+    "":""
 }
