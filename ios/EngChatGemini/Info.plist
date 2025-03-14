@@ -88,8 +88,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSSpeechRecognitionUsageDescription</key>
-<string>We need access to speech recognition</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>We need access to the microphone</string>
+	<string>We need access to speech recognition</string>
 </dict>
 </plist>

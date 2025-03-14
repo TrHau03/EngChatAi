@@ -1,5 +1,4 @@
 import { Wrapper } from "@/core/components"
-import { logOut } from "@/core/func/googleAuth"
 import { fontSize, fontWeight, linearGradientSignIn, padding, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
