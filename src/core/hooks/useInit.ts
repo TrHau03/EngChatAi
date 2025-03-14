@@ -1,5 +1,3 @@
-import { appActions } from "@/redux/reducers/App/appSlice"
-import Tts from "react-native-tts"
 import { useAppDispatch, useAppSelector } from "./useRedux"
 import { initReactI18next } from "react-i18next"
 import i18n from "i18next"

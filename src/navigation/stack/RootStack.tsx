@@ -1,6 +1,7 @@
 import { Message } from "@/core/entities/message"
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
+import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
@@ -9,13 +10,15 @@ import {
 } from "@react-navigation/native-stack"
 import { useTheme } from "@rneui/themed"
 import React from "react"
+import { useTranslation } from "react-i18next"
 import { List } from "realm"
 import RootTab from "../bottom/RootTab"
-import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
 export type NewChatProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.NewChat>
+
+export type DetailSettingsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.SettingsDetailScreen>
 
 export interface ScreenProps {
     name: RootStackParamEnum
@@ -70,21 +73,23 @@ export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.SettingsDetailScreen,
         component: SettingsDetailScreen,
-        option: {},
+        option: {
+            headerShown: true,
+        },
     },
 ]
-
-
 
 export const RootStack = () => {
     const {
         theme: { colors },
     } = useTheme()
+    const { t } = useTranslation()
     return (
         <Stack.Navigator
             initialRouteName={RootStackParamEnum.Auth}
             screenOptions={{
                 headerShown: false,
+                headerBackTitle: t("back"),
             }}
         >
             {screens.map((screen) => (
