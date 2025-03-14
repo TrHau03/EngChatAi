@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Text, View } from "react-native"
 
 const Home = () => {
-    const [visible, setVisible] = useState(true)
+    const [visible, setVisible] = useState(false)
     return (
         <View>
             <Text>Home</Text>

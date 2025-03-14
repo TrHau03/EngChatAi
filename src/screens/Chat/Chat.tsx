@@ -1,16 +1,19 @@
 import { AppActionSheet, AppIcon, Wrapper } from "@/core/components"
 import { Message } from "@/core/entities/message"
-import { fontSize, padding, spacing } from "@/core/theme"
+import { fontSize, margin, padding, spacing } from "@/core/theme"
 import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
-import { Divider, makeStyles, Text, useTheme } from "@rneui/themed"
+import { makeStyles, normalize, Text, useTheme } from "@rneui/themed"
+import LottieView from "lottie-react-native"
 import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, Pressable, View } from "react-native"
+import { FlatList, View } from "react-native"
+import ChatItem from "./components/ChatItem"
 import { useChat } from "./hooks/useChat"
 
-interface ItemType {
+export interface ChatType {
     _id: string
+    name: string
     messages: Message[]
 }
 
@@ -27,25 +30,34 @@ const Chat = () => {
         navigation.navigate(RootStackParamEnum.NewChat, { type: type, messages: data })
     }, [])
 
-    const renderItem = useCallback(({ item }: { item: ItemType }) => {
-        return (
-            <Pressable style={styles.containerItem} onPress={() => handleNavigate("view", item.messages ?? [])}>
-                <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.textItem} numberOfLines={1}>
-                        {item.messages[0]?.content?.toString() ?? ""}
-                    </Text>
-                    <AppIcon
-                        name="ellipsis-horizontal-sharp"
-                        type="ionicon"
-                        color={colors.black}
-                        isPaddingIcon={false}
-                        onPress={handleToggle}
-                    />
-                </View>
-                <Divider />
-            </Pressable>
-        )
+    const renderItem = useCallback(({ item }: { item: ChatType }) => {
+        return <ChatItem item={item} handleToggle={handleToggle} handleNavigate={handleNavigate} />
     }, [])
+
+    if (data.length === 0) {
+        return (
+            <Wrapper isSafeArea containerStyle={styles.container}>
+                <AppIcon
+                    name="add"
+                    type="ionicon"
+                    isPaddingIcon
+                    size={32}
+                    containerStyles={styles.addIcon}
+                    color={colors.primary}
+                    onPress={() => handleNavigate("new")}
+                />
+                <View style={styles.containerEmpty}>
+                    <LottieView
+                        source={require("@/assets/animations/empty.json")}
+                        autoPlay
+                        loop
+                        style={{ width: normalize(248), aspectRatio: 1 }}
+                    />
+                    <Text style={styles.textEmpty}>{t("notThings")}</Text>
+                </View>
+            </Wrapper>
+        )
+    }
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
@@ -60,8 +72,10 @@ const Chat = () => {
             />
             <FlatList
                 data={data.reverse() ?? []}
-                keyExtractor={(item: ItemType, index) => index.toString()}
+                keyExtractor={(item: ChatType, index) => index.toString()}
                 renderItem={renderItem}
+                extraData={data}
+                maxToRenderPerBatch={10}
             />
             <AppActionSheet
                 visible={isVisible}
@@ -82,14 +96,13 @@ const useStyles = makeStyles(({ colors }) => {
             paddingHorizontal: padding.base,
         },
         addIcon: { alignSelf: "flex-end" },
-        textItem: {
+        containerEmpty: {
             flex: 1,
-            fontSize: fontSize.large,
-        },
-        containerItem: {
-            paddingHorizontal: padding.base,
-            paddingVertical: padding.small,
+            justifyContent: "center",
+            alignItems: "center",
             gap: spacing.base,
+            paddingHorizontal: padding.medium,
         },
+        textEmpty: { fontSize: fontSize.large, fontWeight: "bold", marginBottom: margin.medium },
     }
 })

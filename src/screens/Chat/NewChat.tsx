@@ -84,7 +84,7 @@ const NewChat = ({ route, navigation }: NewChatProps) => {
     const handleSave = () => {
         dispatch(appActions.updateState({ isLoading: true }))
         setIsNext(true)
-        dispatch(chatActions.updateChat({ _id: generateID(), messages: data }))
+        dispatch(chatActions.updateChat({ _id: generateID(), name: data[0].content, messages: data }))
         setTimeout(() => {
             dispatch(appActions.updateState({ isLoading: false }))
             navigation.goBack()
