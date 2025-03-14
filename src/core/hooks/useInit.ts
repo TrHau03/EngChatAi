@@ -3,12 +3,10 @@ import Tts from "react-native-tts"
 import { useAppDispatch, useAppSelector } from "./useRedux"
 import { initReactI18next } from "react-i18next"
 import i18n from "i18next"
-import { logger } from "../utils"
 
 export const useInit = () => {
     const dispatch = useAppDispatch()
     const language = useAppSelector((state) => state.root.app.language)
-    logger.info("language" , language)
     const initialTts = async () => {
         Tts.getInitStatus().then(
             (e) => {
