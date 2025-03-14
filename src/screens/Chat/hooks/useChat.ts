@@ -9,7 +9,7 @@ export const useChat = () => {
         setIsVisible((prev) => !prev)
     }, [])
 
-    const handleDelete = useCallback((id: string) => {
+    const handleDelete = useCallback((_id: string) => {
         setIsVisible(false)
     }, [])
 
