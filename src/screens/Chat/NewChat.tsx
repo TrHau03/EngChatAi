@@ -26,7 +26,7 @@ const NewChat = ({ route, navigation }: NewChatProps) => {
     const dispatch = useAppDispatch()
     const { t } = useTranslation()
     const flatListRef = React.useRef<FlatList>(null)
-    const { data, onSubmit, setData } = useNewChat()
+    const { data, onSubmit, setData } = useNewChat(type)
     const [isNext, setIsNext] = useState(false)
     const behavior = Platform.OS === "ios" ? "padding" : "height"
 

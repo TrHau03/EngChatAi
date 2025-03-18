@@ -39,8 +39,9 @@ const AppActionSheet: React.FC<AppActionSheetProps> = (props) => {
                         {props.actions &&
                             props.actions.map((action, index) => {
                                 return (
-                                    <View
+                                    <Pressable
                                         key={index}
+                                        onPress={action.onPress}
                                         style={[
                                             styles.containerAction,
                                             { borderTopWidth: !props.descriptions && index === 0 ? 0 : 1 },
@@ -56,7 +57,7 @@ const AppActionSheet: React.FC<AppActionSheetProps> = (props) => {
                                         >
                                             {t(action.title)}
                                         </Text>
-                                    </View>
+                                    </Pressable>
                                 )
                             })}
                     </View>

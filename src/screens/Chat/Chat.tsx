@@ -5,7 +5,7 @@ import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
 import { makeStyles, normalize, Text, useTheme } from "@rneui/themed"
 import LottieView from "lottie-react-native"
-import React, { useCallback } from "react"
+import React, { useCallback, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { FlatList, View } from "react-native"
 import ChatItem from "./components/ChatItem"
@@ -21,17 +21,26 @@ const Chat = () => {
     const navigation = useNavigation<ChatProps>()
     const { t } = useTranslation()
     const styles = useStyles(0)
-    const { data, isVisible, handleToggle, handleDelete } = useChat()
     const {
         theme: { colors },
     } = useTheme()
-
+    const { data, isVisible, handleToggle, handleDelete } = useChat()
+    const itemId = useRef<string>("")
     const handleNavigate = useCallback((type: "new" | "view", data?: any) => {
         navigation.navigate(RootStackParamEnum.NewChat, { type: type, messages: data })
     }, [])
 
     const renderItem = useCallback(({ item }: { item: ChatType }) => {
-        return <ChatItem item={item} handleToggle={handleToggle} handleNavigate={handleNavigate} />
+        return (
+            <ChatItem
+                item={item}
+                handleToggle={() => {
+                    handleToggle()
+                    itemId.current = item._id
+                }}
+                handleNavigate={handleNavigate}
+            />
+        )
     }, [])
 
     if (data.length === 0) {
@@ -71,17 +80,26 @@ const Chat = () => {
                 onPress={() => handleNavigate("new")}
             />
             <FlatList
-                data={data.reverse() ?? []}
+                data={[...data].reverse() ?? []}
                 keyExtractor={(item: ChatType, index) => index.toString()}
                 renderItem={renderItem}
                 extraData={data}
                 maxToRenderPerBatch={10}
+                initialNumToRender={10}
             />
             <AppActionSheet
                 visible={isVisible}
                 onClose={handleToggle}
                 onBackdropPress={handleToggle}
-                actions={[{ title: t("delete"), type: "destructive", onPress: () => {} }]}
+                actions={[
+                    {
+                        title: t("delete"),
+                        type: "destructive",
+                        onPress: () => {
+                            handleDelete(itemId.current)
+                        },
+                    },
+                ]}
             />
         </Wrapper>
     )
