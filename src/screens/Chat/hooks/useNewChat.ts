@@ -3,7 +3,7 @@ import { useModel } from "@/core/hooks"
 import { generateID, logger, Role } from "@/core/utils"
 import { useEffect, useState } from "react"
 
-export const useNewChat = () => {
+export const useNewChat = (type: "new" | "view") => {
     const model = useModel()
     const [data, setData] = useState<Message[]>([])
 
@@ -24,7 +24,7 @@ export const useNewChat = () => {
                 logger.error("fetchAPIGemini", error)
             }
         }
-        handleFirstPrompt()
+        type === "new" && handleFirstPrompt()
     }, [])
 
     const onSubmit = async (value: any) => {

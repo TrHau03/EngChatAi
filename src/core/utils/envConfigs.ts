@@ -8,4 +8,5 @@ export const envApp = {
     APP_ID: Config.APP_ID,
     GEMINI_KEY: Config.GEMINI_KEY,
     GEMINI_MODEL: Config.GEMINI_MODEL,
+    BASEURL: Config.BASEURL,
 }
