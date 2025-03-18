@@ -26,7 +26,7 @@ const NewChat = ({ route, navigation }: NewChatProps) => {
     const dispatch = useAppDispatch()
     const { t } = useTranslation()
     const flatListRef = React.useRef<FlatList>(null)
-    const { data, onSubmit, setData } = useNewChat()
+    const { data, onSubmit, setData } = useNewChat(type)
     const [isNext, setIsNext] = useState(false)
     const behavior = Platform.OS === "ios" ? "padding" : "height"
 
@@ -84,7 +84,7 @@ const NewChat = ({ route, navigation }: NewChatProps) => {
     const handleSave = () => {
         dispatch(appActions.updateState({ isLoading: true }))
         setIsNext(true)
-        dispatch(chatActions.updateChat({ _id: generateID(), messages: data }))
+        dispatch(chatActions.updateChat({ _id: generateID(), name: data[0].content, messages: data }))
         setTimeout(() => {
             dispatch(appActions.updateState({ isLoading: false }))
             navigation.goBack()

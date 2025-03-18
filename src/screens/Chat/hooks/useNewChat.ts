@@ -1,11 +1,31 @@
 import { Message } from "@/core/entities/message"
 import { useModel } from "@/core/hooks"
 import { generateID, logger, Role } from "@/core/utils"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const useNewChat = () => {
+export const useNewChat = (type: "new" | "view") => {
     const model = useModel()
     const [data, setData] = useState<Message[]>([])
+
+    useEffect(() => {
+        const prompt = "My name is Hau. I need to learn English. Can you say hello and ask me a question?"
+        const handleFirstPrompt = async () => {
+            try {
+                const { response, response_translated } = await model.fetchApiModel(prompt)
+                logger.object({ response, response_translated })
+                const data = {
+                    _id: generateID(),
+                    role: Role.AI,
+                    content: response,
+                    content_translated: response_translated,
+                }
+                setData((prev) => [...prev, data])
+            } catch (error: any) {
+                logger.error("fetchAPIGemini", error)
+            }
+        }
+        type === "new" && handleFirstPrompt()
+    }, [])
 
     const onSubmit = async (value: any) => {
         setData((prev) => {

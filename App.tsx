@@ -1,6 +1,7 @@
-import { AppLoading, ErrorBoundary } from "@/core/components"
+import { AppLoading, ErrorBoundary, I18NProvider } from "@/core/components"
 import { Mode } from "@/core/const/mode"
-import { useAppSelector, useInitialTTS } from "@/core/hooks"
+import { useAppSelector } from "@/core/hooks"
+import { useInitialTTS } from "@/core/hooks/useInitialTTS"
 import { getTheme } from "@/core/theme/index"
 import { envApp } from "@/core/utils/envConfigs"
 import { RootStack } from "@/navigation/stack/RootStack"
@@ -8,9 +9,7 @@ import { persistor, store } from "@/redux/store"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
-import i18n from "i18next"
 import React from "react"
-import { initReactI18next } from "react-i18next"
 import { Appearance } from "react-native"
 import { Provider } from "react-redux"
 import Reactotron from "reactotron-react-native"
@@ -38,31 +37,15 @@ GoogleSignin.configure({
     webClientId: envApp.ANDROID_CLIENT,
 })
 
-i18n.createInstance()
-    .use(initReactI18next)
-    .init({
-        lng: "en",
-        resources: {
-            en: {
-                translation: require("./src/assets/languages/en.json"),
-            },
-            vi: {
-                translation: require("@/assets/languages/vi.json"),
-            },
-        },
-        fallbackLng: "en",
-        compatibilityJSON: "v4",
-        interpolation: {
-            escapeValue: false,
-        },
-    })
 global.Buffer = require("buffer").Buffer
 function App(): React.JSX.Element {
     return (
         <ErrorBoundary>
             <Provider store={store}>
                 <PersistGate persistor={persistor}>
-                    <RootNavigation />
+                    <I18NProvider>
+                        <RootNavigation />
+                    </I18NProvider>
                 </PersistGate>
             </Provider>
         </ErrorBoundary>
@@ -71,9 +54,11 @@ function App(): React.JSX.Element {
 
 const RootNavigation = () => {
     const mode = useAppSelector((state) => state.root.app.mode)
-    const isLoading = useAppSelector((state) => state.root.app.isLoading)
     useInitialTTS()
+
+    const isLoading = useAppSelector((state) => state.root.app.isLoading)
     const systemMode = Appearance.getColorScheme()
+
     return (
         <ThemeProvider theme={getTheme({ mode: mode === Mode.system ? systemMode : mode })}>
             <NavigationContainer>

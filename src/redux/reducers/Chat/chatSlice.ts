@@ -1,11 +1,8 @@
-import { Message } from "@/core/entities/message"
+import { ChatType } from "@/screens/Chat/Chat"
 import { createSlice } from "@reduxjs/toolkit"
 
 interface ChatState {
-    chat: {
-        _id: string
-        messages: Message[]
-    }[]
+    chat: ChatType[]
 }
 
 const initialState: ChatState = {
@@ -18,6 +15,9 @@ const chatSlice = createSlice({
     reducers: {
         updateChat: (state, action) => {
             return { ...state, chat: [...state.chat, action.payload] }
+        },
+        deleteChat: (state, action) => {
+            return { ...state, chat: action.payload }
         },
     },
 })

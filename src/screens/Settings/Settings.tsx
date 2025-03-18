@@ -27,7 +27,7 @@ const Settings = () => {
     } = useTheme()
     const { t } = useTranslation()
 
-    const [avatar, setAvatar] = useState<string | null>(null)
+    const [avatar, setAvatar] = useState<string | null>(null);
 
     const handleSelectImage = async () => {
         const hasPermission = await requestPermission()
@@ -47,9 +47,9 @@ const Settings = () => {
         })
     }
 
-    const handleNavigate = (screenType: "CustomizeChatUI" | "Speedvoice" | "Language") => {
-        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType })
-    }
+    const handleNavigate = (screenType: "CustomizeChatUI" | "Speed" | "Language") => {
+        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
+    };
 
     const handleLogout = useCallback(async () => {
         const result = await logOut()
@@ -57,9 +57,9 @@ const Settings = () => {
     }, [])
 
     return (
-        <Wrapper containerStyle={styles.container}>
+        <Wrapper isSafeArea containerStyle={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>{t("Settings")}</Text>
+                <Text style={styles.title}>{t("settings")}</Text>
             </View>
 
             <View style={styles.avatarContainer}>
@@ -80,15 +80,15 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("CustomizeChatUI")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="chat" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("CustomizeChatUI")}</Text>
+                    <Text style={styles.label}>{t("customizechatUI")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
 
-            <Pressable style={styles.row} onPress={() => handleNavigate("Speedvoice")}>
+            <Pressable style={styles.row} onPress={() => handleNavigate("Speed")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="speed" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Speedvoice")}</Text>
+                    <Text style={styles.label}>{t("speed")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -96,7 +96,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("Language")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="language" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Language")}</Text>
+                    <Text style={styles.label}>{t("language")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -104,7 +104,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={handleLogout}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="logout" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("Logout")}</Text>
+                    <Text style={styles.label}>{t("logout")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
@@ -117,16 +117,14 @@ export default Settings
 const useStyles = makeStyles(({ colors }) => ({
     container: {
         backgroundColor: colors.background,
-        paddingHorizontal: spacing.large,
     },
     header: {
         alignItems: "center",
         justifyContent: "center",
-        height: device().height * 0.13,
-        backgroundColor: colors.background,
+        height: device().height * 0.05,
     },
     title: {
-        fontSize: 20,
+        fontSize: fontSize.xl,
         fontWeight: "bold",
         color: colors.black,
     },

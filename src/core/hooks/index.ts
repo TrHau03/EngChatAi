@@ -1,4 +1,3 @@
-export * from "./useInitialTTS"
 export * from "./useModel"
 export * from "./useRedux"
 export * from "./useSTT"

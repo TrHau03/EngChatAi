@@ -6,4 +6,5 @@ declare module "react-native-config" {
     export const APP_ID: string
     export const GEMINI_KEY: string
     export const GEMINI_MODEL: string
+    export const BASEURL: string
 }

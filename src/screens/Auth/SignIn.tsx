@@ -1,5 +1,4 @@
 import { Wrapper } from "@/core/components"
-import { logOut } from "@/core/func/googleAuth"
 import { fontSize, fontWeight, linearGradientSignIn, padding, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
@@ -36,7 +35,7 @@ const SignIn = () => {
             <View style={styles.containerTitle}>
                 <Text style={styles.textTitle}>{t("educationIsFree")}</Text>
                 <Text numberOfLines={2} style={styles.textSubTitle}>
-                    {t("Learn English Smarter with AI – Your Personal AI Teacher!")}
+                    {t("learnEnglishSmarter")}
                 </Text>
             </View>
             <Button onPress={handleLoginGoogle} title={t("signInWithGoogle")} containerStyle={styles.btnLoginGoogle} />
@@ -55,7 +54,7 @@ export default SignIn
 const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
-            backgroundColor: "#1a1a1a",
+            backgroundColor: colors.background,
             alignItems: "center",
             paddingHorizontal: padding.medium,
         },
