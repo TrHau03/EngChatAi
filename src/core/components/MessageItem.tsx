@@ -40,7 +40,6 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
             </View>
         )
     }
-
     return (
         <View style={[styles.container, styles.containerAI]}>
             <View style={styles.headerAI}>
