@@ -1721,7 +1721,7 @@ PODS:
     - React-logger (= 0.78.0)
     - React-perflogger (= 0.78.0)
     - React-utils (= 0.78.0)
-  - RealmJS (20.1.0):
+  - RealmJS (12.14.1):
     - React
   - RNCAsyncStorage (1.24.0):
     - DoubleConversion
@@ -1766,7 +1766,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (4.9.1):
+  - RNScreens (4.9.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1787,9 +1787,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNScreens/common (= 4.9.1)
+    - RNScreens/common (= 4.9.2)
     - Yoga
-  - RNScreens/common (4.9.1):
+  - RNScreens/common (4.9.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2172,10 +2172,10 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: a1fb08dfdc7ebc387b2e54cfc9decd283ed821d8
   ReactCodegen: 0f8899ac1bad260bf3b362ee848ef67a70b5a306
   ReactCommon: a30b578194de911fbe1698efb8247bfe4cb6abff
-  RealmJS: 9fd51c849eb552ade9f7b11db42a319b4f6cab4c
+  RealmJS: 5b0258b3c04b9f48536b2692965690afe024164c
   RNCAsyncStorage: 58688c66076453d4d5799057f8f236e099dc5690
   RNGoogleSignin: 1a215139c537bb0430abdb9ff9a8e437578e515d
-  RNScreens: fc78b9b5a1274426d7a59b7d07c272bba13604fa
+  RNScreens: 2e4870e8f9cb4a77e5a51530729f2762868316df
   RNVectorIcons: 1743deffb9c4b70f253704075dbac432cc802e74
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   TextToSpeech: 89b239221ec378d213af422d14789a729705360b
