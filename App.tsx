@@ -3,12 +3,15 @@ import { Mode } from "@/core/const/mode"
 import { useAppSelector } from "@/core/hooks"
 import { useInitialTTS } from "@/core/hooks/useInitialTTS"
 import { getTheme } from "@/core/theme/index"
-import { envApp } from "@/core/utils/envConfigs"
+import { envApp } from "@/core/utils"
 import { RootStack } from "@/navigation/stack/RootStack"
 import { persistor, store } from "@/redux/store"
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
+import { initializeApp } from "firebase/app"
+import { getReactNativePersistence, initializeAuth } from "firebase/auth"
 import React from "react"
 import { Appearance } from "react-native"
 import { Provider } from "react-redux"
@@ -21,20 +24,21 @@ const firebaseConfig = {
     storageBucket: "engchatai-8d022.firebasestorage.app",
     messagingSenderId: "797630589124",
 }
-// const app = initializeApp({
-//     apiKey: envApp.API_KEY,
-//     appId: envApp.APP_ID,
-//     ...firebaseConfig,
-// })
-// initializeAuth(app, {
-//     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-// })
+const app = initializeApp({
+    apiKey: envApp.API_KEY,
+    appId: envApp.APP_ID,
+    ...firebaseConfig,
+})
+initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+})
 
-Reactotron.configure({}).useReactNative().connect()
+__DEV__ && Reactotron.configure({}).useReactNative().connect()
 
 GoogleSignin.configure({
     iosClientId: envApp.IOS_CLIENT,
-    webClientId: envApp.ANDROID_CLIENT,
+    webClientId: envApp.WEB_CLIENT,
+    offlineAccess: true,
 })
 
 global.Buffer = require("buffer").Buffer

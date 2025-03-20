@@ -1,6 +1,7 @@
 import { Wrapper } from "@/core/components"
+import { googleAuthentication } from "@/core/func"
 import { fontSize, fontWeight, linearGradientSignIn, padding, spacing } from "@/core/theme"
-import { device } from "@/core/utils"
+import { device, logger } from "@/core/utils"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
@@ -16,18 +17,15 @@ const SignIn = () => {
     const navigation = useNavigation<TabNavigationProp>()
 
     const handleLoginGoogle = useCallback(async () => {
-        // const result = await googleAuthentication()
-        if (true) {
+        const result = await googleAuthentication()
+        logger.object(result)
+        if (result) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: RootStackParamEnum.Tab }],
             })
         }
     }, [])
-
-    // const handleSignOut = useCallback(async () => {
-    //     await logOut()
-    // }, [])
 
     return (
         <Wrapper containerStyle={styles.container}>
