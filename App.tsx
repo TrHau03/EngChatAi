@@ -22,11 +22,10 @@ const firebaseConfig = {
     authDomain: "engchatai-8d022.firebaseapp.com",
     projectId: "engchatai-8d022",
     storageBucket: "engchatai-8d022.firebasestorage.app",
-    messagingSenderId: "797630589124",
 }
 const app = initializeApp({
-    apiKey: envApp.API_KEY,
-    appId: envApp.APP_ID,
+    apiKey: "AIzaSyBlb3F5EA7rQGX7Ko2QkxRtJOKeUyUM6uE",
+    appId: "1:797630589124:web:b0b96e17779bf58617c191",
     ...firebaseConfig,
 })
 initializeAuth(app, {
