@@ -1,24 +1,10 @@
 import { apiService } from "@/redux/apiService"
 
-interface LoginRequest {
-    idToken: string
-}
-
-export class AppEndPoint {
-    static login = "/auth/login"
-}
+export class AppEndPoint {}
 
 export const appService = apiService.injectEndpoints({
-    endpoints: (build) => ({
-        login: build.mutation({
-            query: (body) => ({
-                url: AppEndPoint.login,
-                method: "POST",
-                body,
-            }),
-        }),
-    }),
+    endpoints: (build) => ({}),
     overrideExisting: false,
 })
 
-export const { useLoginMutation } = appService
+export const {} = appService

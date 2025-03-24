@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { configureStore } from "@reduxjs/toolkit"
-import { persistReducer, persistStore } from "redux-persist"
+import { configureStore, Middleware } from "@reduxjs/toolkit"
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist"
+import { apiService } from "./apiService"
 import { rootReducer } from "./rootReducers"
 const persistConfig = {
     key: "root",
     storage: AsyncStorage,
-    blacklist: [],
-    whitelist: ["app", "chat", "auth"],
+    blacklist: ["chat"],
+    whitelist: ["auth"],
     timeout: 10000,
 }
 
@@ -15,11 +16,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = configureStore({
     reducer: {
         root: persistedReducer,
+        [apiService.reducerPath]: apiService.reducer,
     },
-    middleware(getDefaultMiddleware) {
-        return getDefaultMiddleware({
-            serializableCheck: false,
-        })
-    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }).concat(apiService.middleware as Middleware),
 })
 export const persistor = persistStore(store)

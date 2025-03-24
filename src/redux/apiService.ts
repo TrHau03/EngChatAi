@@ -1,9 +1,12 @@
 import { RootState } from "@/core/hooks"
-import { envApp } from "@/core/utils"
+import { envApp, logger } from "@/core/utils"
+import * as auth from "@firebase/auth"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { fetchBaseQuery, retry } from "@reduxjs/toolkit/query"
 import { createApi } from "@reduxjs/toolkit/query/react"
 import { Mutex } from "async-mutex"
+import { authAction } from "./reducers/Auth/authSlice"
 
 const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
@@ -25,12 +28,32 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
             if (!mutex.isLocked()) {
                 const release = await mutex.acquire()
                 try {
-                    const refreshResult = await baseQuery("/auth/refresh", api, extraOptions)
+                    const refreshResult = (await baseQuery(
+                        {
+                            url: "/auth/refresh",
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${(api.getState() as RootState).root.auth.refresh_token}`,
+                            },
+                        },
+                        api,
+                        extraOptions,
+                    )) as any
                     if (refreshResult.data) {
+                        api.dispatch(
+                            authAction.updateState({
+                                access_token: refreshResult.data.access_token,
+                            }),
+                        )
                         result = await baseQuery(args, api, extraOptions)
                     } else {
-                        //FIXME if refresh token is invalid
+                        await GoogleSignin.signOut()
+                        await GoogleSignin.revokeAccess()
+                        await auth.getAuth().signOut()
                     }
+                } catch (error: any) {
+                    logger.error("Refresh token error", error)
                 } finally {
                     // release must be called once the mutex should be released again.
                     release()
@@ -43,7 +66,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
         return result
     },
     {
-        maxRetries: 3,
+        maxRetries: 1,
     },
 )
 

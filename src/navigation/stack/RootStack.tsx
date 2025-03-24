@@ -2,6 +2,8 @@ import { Message } from "@/core/entities/message"
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
 import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
+import * as auth from "@firebase/auth"
+import { useNavigation } from "@react-navigation/native"
 import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
@@ -9,7 +11,7 @@ import {
     NativeStackScreenProps,
 } from "@react-navigation/native-stack"
 import { useTheme } from "@rneui/themed"
-import React from "react"
+import React, { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { List } from "realm"
 import RootTab from "../bottom/RootTab"
@@ -84,6 +86,18 @@ export const RootStack = () => {
         theme: { colors },
     } = useTheme()
     const { t } = useTranslation()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+    useEffect(() => {
+        auth.getAuth().onAuthStateChanged((user) => {
+            if (user) {
+                navigation.navigate(RootStackParamEnum.Tab)
+            } else {
+                navigation.navigate(RootStackParamEnum.Auth)
+            }
+        })
+    }, [auth, navigation])
+
     return (
         <Stack.Navigator
             initialRouteName={RootStackParamEnum.Auth}

@@ -5,15 +5,15 @@ import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
 import { makeStyles, normalize, Text, useTheme } from "@rneui/themed"
 import LottieView from "lottie-react-native"
-import React, { useCallback, useRef } from "react"
+import React, { useCallback, useMemo, useRef } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, View } from "react-native"
+import { FlatList, RefreshControl, View } from "react-native"
 import ChatItem from "./components/ChatItem"
 import { useChat } from "./hooks/useChat"
 
 export interface ChatType {
     _id: string
-    name: string
+    title: string
     messages: Message[]
 }
 
@@ -24,7 +24,7 @@ const Chat = () => {
     const {
         theme: { colors },
     } = useTheme()
-    const { data, isVisible, handleToggle, handleDelete } = useChat()
+    const { data, isVisible, isFetching, isLoading, handleToggle, handleDelete, refetch } = useChat()
     const itemId = useRef<string>("")
     const handleNavigate = useCallback((type: "new" | "view", data?: any) => {
         navigation.navigate(RootStackParamEnum.NewChat, { type: type, messages: data })
@@ -43,30 +43,34 @@ const Chat = () => {
         )
     }, [])
 
-    if (data.length === 0) {
+    const onRefresh = useCallback(() => {
+        refetch()
+    }, [])
+
+    const refreshControl = useMemo(() => {
         return (
-            <Wrapper isSafeArea containerStyle={styles.container}>
-                <AppIcon
-                    name="add"
-                    type="ionicon"
-                    isPaddingIcon
-                    size={32}
-                    containerStyles={styles.addIcon}
-                    color={colors.primary}
-                    onPress={() => handleNavigate("new")}
-                />
-                <View style={styles.containerEmpty}>
-                    <LottieView
-                        source={require("@/assets/animations/empty.json")}
-                        autoPlay
-                        loop
-                        style={{ width: normalize(248), aspectRatio: 1 }}
-                    />
-                    <Text style={styles.textEmpty}>{t("notThings")}</Text>
-                </View>
-            </Wrapper>
+            <RefreshControl
+                refreshing={isFetching}
+                onRefresh={onRefresh}
+                colors={[colors.primary]}
+                tintColor={colors.primary}
+            />
         )
-    }
+    }, [isFetching])
+
+    const renderEmpty = useCallback(() => {
+        return (
+            <View style={styles.containerEmpty}>
+                <LottieView
+                    source={require("@/assets/animations/empty.json")}
+                    autoPlay
+                    loop
+                    style={{ width: normalize(248), aspectRatio: 1 }}
+                />
+                <Text style={styles.textEmpty}>{t("notThings")}</Text>
+            </View>
+        )
+    }, [])
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
@@ -80,12 +84,15 @@ const Chat = () => {
                 onPress={() => handleNavigate("new")}
             />
             <FlatList
-                data={[...data].reverse() ?? []}
+                data={data.length > 0 ? data.reverse() : []}
                 keyExtractor={(item: ChatType, index) => index.toString()}
                 renderItem={renderItem}
                 extraData={data}
                 maxToRenderPerBatch={10}
                 initialNumToRender={10}
+                contentContainerStyle={{ flex: 1 }}
+                ListEmptyComponent={data.length > 0 && (!isLoading || !isFetching) ? null : renderEmpty}
+                refreshControl={refreshControl}
             />
             <AppActionSheet
                 visible={isVisible}
