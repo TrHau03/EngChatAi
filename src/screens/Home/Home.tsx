@@ -17,7 +17,7 @@ const Home = () => {
     const courses = getCourses()
 
     return (
-        <Wrapper containerStyle={styles.container}>
+        <Wrapper containerStyle={styles.container} isSafeArea>
             {/* Header */}
             <View style={styles.header}>
                 <Avatar
