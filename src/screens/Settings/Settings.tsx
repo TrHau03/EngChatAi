@@ -1,60 +1,16 @@
 import { AppIcon, Wrapper } from "@/core/components"
-import { logOut } from "@/core/func"
+import { useSettings } from "@/core/hooks/useSettting"
 import { fontSize, iconSize, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
-import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack"
-import { useNavigation } from "@react-navigation/native"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useCallback, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { Alert, Image, PermissionsAndroid, Platform, Pressable, View } from "react-native"
-import { launchImageLibrary } from "react-native-image-picker"
+import { makeStyles, Text } from "@rneui/themed"
+import React, {  } from "react"
+import { Image, Pressable, View } from "react-native"
 
-const requestPermission = async () => {
-    if (Platform.OS === "android") {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES)
-        return granted === PermissionsAndroid.RESULTS.GRANTED
-    }
-    return true
-}
 
 const Settings = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+    const { avatar, colors, t, handleSelectImage, handleNavigate, handleLogout } = useSettings()
     const styles = useStyles()
-    const {
-        theme: { colors },
-    } = useTheme()
-    const { t } = useTranslation()
-
-    const [avatar, setAvatar] = useState<string | null>(null);
-
-    const handleSelectImage = async () => {
-        const hasPermission = await requestPermission()
-        if (!hasPermission) {
-            Alert.alert("Permission Denied", "You need to allow access to your photos.")
-            return
-        }
-
-        launchImageLibrary({ mediaType: "photo", quality: 1 }, (response) => {
-            if (response.didCancel) {
-                console.log("User cancelled image picker")
-            } else if (response.errorMessage) {
-                console.log("ImagePicker Error: ", response.errorMessage)
-            } else if (response.assets && response.assets.length > 0) {
-                setAvatar(response.assets[0].uri || null)
-            }
-        })
-    }
-
-    const handleNavigate = (screenType: "CustomizeChatUI" | "Speed" | "Language") => {
-        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType });
-    };
-
-    const handleLogout = useCallback(async () => {
-        const result = await logOut()
-        if (result) navigation.navigate(RootStackParamEnum.Auth)
-    }, [])
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
@@ -69,8 +25,8 @@ const Settings = () => {
                             avatar
                                 ? { uri: avatar }
                                 : {
-                                      uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
-                                  }
+                                    uri: "https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg",
+                                }
                         }
                         style={styles.avatar}
                     />
