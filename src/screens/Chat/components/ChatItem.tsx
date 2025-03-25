@@ -23,7 +23,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item, handleToggle, handleNavigate 
         <Pressable style={styles.containerItem} onPress={() => handleNavigate("view", item.messages ?? [])}>
             <View style={styles.content}>
                 <Text style={styles.textItem} numberOfLines={1}>
-                    {item.name?.toString() ?? ""}
+                    {item.title?.toString() ?? ""}
                 </Text>
                 <AppIcon name="ellipsis-horizontal-sharp" type="ionicon" color={colors.black} onPress={handleToggle} />
             </View>

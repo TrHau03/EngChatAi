@@ -1,7 +1,6 @@
 import { Wrapper } from "@/core/components"
-import { googleAuthentication } from "@/core/func"
 import { fontSize, fontWeight, linearGradientSignIn, padding, spacing } from "@/core/theme"
-import { device, logger } from "@/core/utils"
+import { device } from "@/core/utils"
 import { TabNavigationProp } from "@/navigation/bottom/RootTab"
 import { RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
@@ -10,16 +9,17 @@ import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
+import { useSignIn } from "./hooks/useSignIn"
 
 const SignIn = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
     const navigation = useNavigation<TabNavigationProp>()
+    const { data, loginMutation, handleLogin } = useSignIn()
 
     const handleLoginGoogle = useCallback(async () => {
-        const result = await googleAuthentication()
-        logger.object(result)
-        if (result) {
+        const status = await handleLogin()
+        if (status) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: RootStackParamEnum.Tab }],

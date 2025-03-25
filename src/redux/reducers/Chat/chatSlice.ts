@@ -13,6 +13,9 @@ const chatSlice = createSlice({
     initialState: initialState,
     name: "chat",
     reducers: {
+        updateState: (state, action) => {
+            return { ...state, ...action.payload }
+        },
         updateChat: (state, action) => {
             return { ...state, chat: [...state.chat, action.payload] }
         },
