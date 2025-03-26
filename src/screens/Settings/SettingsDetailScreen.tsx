@@ -1,12 +1,12 @@
 import { Wrapper } from "@/core/components"
-import SettingItem from "@/core/components/SettingItem"
-import { useSettings } from "@/core/hooks/useSettting"
 import { fontSize, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
 import { DetailSettingsProps } from "@/navigation/stack/RootStack"
 import { makeStyles } from "@rneui/themed"
 import React, { useCallback, useEffect } from "react"
 import { FlatList } from "react-native"
+import { useSettings } from "./hooks/useSettting"
+import SettingItem from "./components/SettingItem"
 
 const SettingsDetailScreen =  (props: DetailSettingsProps) => {
     const styles = useStyles()

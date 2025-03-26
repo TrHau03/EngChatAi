@@ -1,10 +1,10 @@
 import { AppIcon, Wrapper } from "@/core/components"
-import { useSettings } from "@/core/hooks/useSettting"
 import { fontSize, iconSize, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
 import { makeStyles, Text } from "@rneui/themed"
 import React, {  } from "react"
 import { Image, Pressable, View } from "react-native"
+import { useSettings } from "./hooks/useSettting"
 
 
 const Settings = () => {
@@ -36,7 +36,7 @@ const Settings = () => {
             <Pressable style={styles.row} onPress={() => handleNavigate("CustomizeChatUI")}>
                 <View style={styles.rowLeft}>
                     <AppIcon name="chat" size={iconSize.medium} color={colors.black} type={"material"} />
-                    <Text style={styles.label}>{t("customizechatUI")}</Text>
+                    <Text style={styles.label}>{t("customizechatui")}</Text>
                 </View>
                 <AppIcon name="chevron-right" size={24} color={colors.black} type={"feather"} />
             </Pressable>
