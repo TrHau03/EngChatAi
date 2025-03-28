@@ -6,6 +6,7 @@ import React, { useCallback, useState } from "react"
 import { View } from "react-native"
 import { useAppSelector, useTTS } from "../hooks"
 import AppIcon from "./AppIcon"
+import CustomTooltip from "./CusTomToolTip"
 
 const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated }) => {
     const styles = useStyles(role)
@@ -49,7 +50,7 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
                     isPaddingIcon={false}
                     onPress={handleSpeak}
                 />
-                <Tooltip
+                {/* <Tooltip
                     visible={isTranslated && !!content_translated}
                     onClose={handleTranslate}
                     overlayColor={colors.background}
@@ -70,7 +71,12 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
                         isPaddingIcon={false}
                         onPress={handleTranslate}
                     />
-                </Tooltip>
+                </Tooltip> */}
+                <View>
+                    <CustomTooltip content={content} contentTranslated={content_translated}>
+                        <AppIcon name="g-translate" type="material" />
+                    </CustomTooltip>
+                </View>
             </View>
             <Divider color={colors.primary} />
             <Text style={styles.content}>{content}</Text>
@@ -81,7 +87,7 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
 export default MessageItem
 
 const useStyles = makeStyles(({ colors }, role) => {
-    return {
+   return {
         container: {
             alignSelf: role === Role.USER ? "flex-end" : "flex-start",
             padding: spacing.medium,
@@ -114,4 +120,4 @@ const useStyles = makeStyles(({ colors }, role) => {
             gap: spacing.base,
         },
     }
-})
+}) 
