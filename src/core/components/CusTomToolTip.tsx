@@ -16,11 +16,11 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content, conten
     const { theme } = useTheme();
     const buttonRef = useRef<View>(null);
     const [tooltipVisible, setTooltipVisible] = useState(false);
-    const [top, setTop] = useState(0);
+    const top = useRef(0);
 
     const handlePress = useCallback(() => {
         buttonRef.current?.measureInWindow((x, y, w, h) => {
-            setTop((y + h > height / 2 ? y - 150 : y + h + 10) - (Platform.OS === "ios" ? 105 : 0));
+            top.current = (y + h > height / 2 ? y - 150 : y + h + 10) - (Platform.OS === "ios" ? 105 : 0);
             setTooltipVisible(true);
         });
     }, [buttonRef]);
@@ -38,7 +38,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content, conten
                             style={[
                                 styles.tooltip,
                                 {
-                                    top: top,
+                                    top: top.current,
                                     backgroundColor: theme.colors.grey5,
                                 },
                             ]}
