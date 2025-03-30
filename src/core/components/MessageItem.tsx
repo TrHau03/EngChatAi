@@ -50,28 +50,6 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
                     isPaddingIcon={false}
                     onPress={handleSpeak}
                 />
-                {/* <Tooltip
-                    visible={isTranslated && !!content_translated}
-                    onClose={handleTranslate}
-                    overlayColor={colors.background}
-                    backgroundColor={`${colors.grey5}`}
-                    containerStyle={{ width: "auto", maxWidth: "80%", height: "auto" }}
-                    popover={
-                        <View style={styles.containerTooltip}>
-                            <Text style={styles.content}>{content}</Text>
-                            <Divider color={colors.primary} />
-                            <Text style={styles.content}>{content_translated ?? ""}</Text>
-                        </View>
-                    }
-                >
-                    <AppIcon
-                        name="g-translate"
-                        color={isTranslated ? colors.primary : colors.black}
-                        type="material"
-                        isPaddingIcon={false}
-                        onPress={handleTranslate}
-                    />
-                </Tooltip> */}
                 <View>
                     <CustomTooltip content={content} contentTranslated={content_translated}>
                         <AppIcon name="g-translate" type="material" />

@@ -18,8 +18,8 @@ const SignIn = () => {
     const { data, loginMutation, handleLogin } = useSignIn()
 
     const handleLoginGoogle = useCallback(async () => {
-        const status = await handleLogin()
-        if (status) {
+        // const status = await handleLogin()
+        if (true) {
             navigation.reset({
                 index: 0,
                 routes: [{ name: RootStackParamEnum.Tab }],

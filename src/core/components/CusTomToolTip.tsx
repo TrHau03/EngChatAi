@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Modal, View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { Modal, View, Text, TouchableOpacity, Dimensions, Platform } from "react-native";
 import { Divider, makeStyles, useTheme } from "@rneui/themed";
 import { fontSize, lineHeight } from "../theme";
 import { device } from "../utils";
@@ -16,15 +16,14 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content, conten
     const { theme } = useTheme();
     const buttonRef = useRef<View>(null);
     const [tooltipVisible, setTooltipVisible] = useState(false);
-    const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+    const [top, setTop] = useState(0);
 
     const handlePress = useCallback(() => {
-        buttonRef.current?.measureInWindow((x, y, h) => {
-            const top = y + h > height / 2 ? y - 100 : y + h + 10;
-            setTooltipPos({ top, left: x + width / 2 });
+        buttonRef.current?.measureInWindow((x, y, w, h) => {
+            setTop((y + h > height / 2 ? y - 150 : y + h + 10) - (Platform.OS === "ios" ? 105 : 0));
             setTooltipVisible(true);
         });
-    }, []);
+    }, [buttonRef]);
 
     return (
         <>
@@ -39,9 +38,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content, conten
                             style={[
                                 styles.tooltip,
                                 {
-                                    top: tooltipPos.top,
-                                    left: tooltipPos.left,
-                                    transform: [{ translateX: -(width * 0.21) }],
+                                    top: top,
                                     backgroundColor: theme.colors.grey5,
                                 },
                             ]}
