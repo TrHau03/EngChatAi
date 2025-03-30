@@ -1,35 +1,16 @@
-import { AppActionSheet } from "@/core/components"
-import React, { useState } from "react"
-import { Text, View } from "react-native"
+import { Wrapper } from "@/core/components"
+import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack"
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { Button } from "@rneui/themed"
+import React from "react"
 
 const Home = () => {
-    const [visible, setVisible] = useState(false)
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     return (
-        <View>
-            <Text>Home</Text>
-            <AppActionSheet
-                visible={visible}
-                onBackdropPress={() => setVisible(false)}
-                onClose={() => setVisible(false)}
-                descriptions={{ title: "ActionSheet", description: "Description action sheet" }}
-                actions={[
-                    {
-                        title: "Hello",
-                        type: "default",
-                        onPress: () => {
-                            setVisible(false)
-                        },
-                    },
-                    {
-                        title: "Hello",
-                        type: "destructive",
-                        onPress: () => {
-                            setVisible(false)
-                        },
-                    },
-                ]}
-            />
-        </View>
+        <Wrapper isSafeArea>
+            <Button title={"na"} onPress={() => navigation.navigate(RootStackParamEnum.QuestionAndAnswer)} />
+        </Wrapper>
     )
 }
 

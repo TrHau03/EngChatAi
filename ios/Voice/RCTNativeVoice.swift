@@ -1,180 +1,101 @@
 import Foundation
 import Speech
 
-@objc(SpeechToTextModule)
-class SpeechToTextModule: RCTEventEmitter, SFSpeechRecognizerDelegate {
-  override static func moduleName() -> String! {
-    return "SpeechToTextModule"
-  }
-
-  private var audioEngine: AVAudioEngine?
-  private var speechRecognizer: SFSpeechRecognizer?
-  private var request: SFSpeechAudioBufferRecognitionRequest?
-  private var recognitionTask: SFSpeechRecognitionTask?
-  private var isListening: Bool = false
-  private var idleTimer: Timer?
-  
-  override init() {
-    super.init()
-    speechRecognizer = SFSpeechRecognizer()
-    speechRecognizer?.delegate = self
-    self.requestSpeechAuthorization{result in
+@objc(VoiceModule)
+class VoiceModule: RCTEventEmitter, AVAudioRecorderDelegate {
+    private var recordingSession: AVAudioSession = AVAudioSession.sharedInstance()
+    private var audioRecorder: AVAudioRecorder?
+    private var isRecording: Bool = false
+    private var audioFilePath: URL?
+    
+    override init() {
+        super.init()
+      self.recordingSession = AVAudioSession.sharedInstance()
+      requestPermission()
+    }
+    
+    override static func moduleName() -> String! {
+        return "VoiceModule"
+    }
+    
+    override func supportedEvents() -> [String] {
+        return ["onSpeechResults", "onSpeechStart", "onSpeechEnd", "onSpeechError", "onSpeechAvailabilityChanged"]
+    }
+    
+    override static func requiresMainQueueSetup() -> Bool {
+        return false
+    }
+    
+    @objc
+    func startRecording(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        guard !isRecording else {
+            reject("ALREADY_RECORDING", "Recording is already in progress", nil)
+            return
+        }
+        audioFilePath = getDocumentsDirectory().appendingPathComponent("recording.m4a")
+        guard let audioFilePath = audioFilePath else {
+            reject("FILE_ERROR", "Failed to create file path", nil)
+            return
+        }
         
-    }
-  }
-  
-  @objc
-  override func supportedEvents() -> [String] {
-    return ["onSpeechResults", "onSpeechStart", "onSpeechEnd", "onSpeechError", "onSpeechAvailabilityChanged"]
-  }
-  
-  
-  @objc
-  override static func requiresMainQueueSetup() -> Bool {
-    return false
-  }
-
-  @objc
-  func startListening(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-    
-    //Prevent starting if already listening
-    guard !isListening else {
-      reject("ALREADY_LISTENING", "Speech recognition is already in progress.", nil)
-      return
-    }
-    
-    requestSpeechAuthorization { granted in
-        if granted {
-            self.startRecording(resolve: resolve, reject: reject)
-        } else {
-            reject("PERMISSION_DENIED", "Speech recognition permission was not granted.", nil)
+        let settings: [String: Any] = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFilePath, settings: settings)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+            isRecording = true
+            resolve("Recording started")
+        } catch {
+            reject("RECORDING_ERROR", "Failed to start recording", error)
         }
     }
-  }
     
-  fileprivate func startRecording(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock){
-    do {
-        try self.startAudioEngine()
-        resolve(true) // Indicate successful start
-    } catch {
-        reject("AUDIO_ENGINE_ERROR", "Failed to start audio engine: \(error)", error)
+    @objc
+    func stopRecording(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        guard isRecording else {
+            reject("NOT_RECORDING", "No active recording to stop", nil)
+            return
+        }
+        
+        audioRecorder?.stop()
+        audioRecorder = nil
+        isRecording = false
+        if let filePath = audioFilePath?.path {
+            resolve(["message": "Recording stopped", "filePath": filePath])
+        } else {
+            resolve(["message": "Recording stopped", "filePath": NSNull()])
+        }
     }
-  }
-
-  @objc
-  func stopListening(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-    stopRecording()
-    resolve(true)
-  }
     
-  fileprivate func requestSpeechAuthorization(completion: @escaping (Bool) -> Void){
-        SFSpeechRecognizer.requestAuthorization { authStatus in
-            DispatchQueue.main.async {
-                switch authStatus {
-                case .authorized:
-                    completion(true)
-                case .denied, .restricted, .notDetermined:
-                    completion(false)
-                @unknown default:
-                    completion(false)
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            isRecording = false
+        }
+    }
+    
+    private func requestPermission() {
+        do {
+            try recordingSession.setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission { [weak self] allowed in
+                DispatchQueue.main.async {
+                    if !allowed {
+                        self?.sendEvent(withName: "onSpeechError", body: ["error": "Permission denied"])
+                    }
                 }
             }
+        } catch {
+            sendEvent(withName: "onSpeechError", body: ["error": "Failed to set up session"])
         }
     }
-
-  private func startAudioEngine() throws {
-      if let recognitionTask = recognitionTask {
-        recognitionTask.cancel()
-        self.recognitionTask = nil
-      }
-
-      let audioSession = AVAudioSession.sharedInstance()
-      try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-      try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
-
-      // Create the speech recognition request
-      request = SFSpeechAudioBufferRecognitionRequest()
-      request?.shouldReportPartialResults = true
-
-      // Get the audio engine and input node
-      audioEngine = AVAudioEngine()
-      let inputNode = audioEngine!.inputNode
-
-      // Configure the audio format
-      let recordingFormat = inputNode.outputFormat(forBus: 0)
-      inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
-        self.request?.append(buffer)
-        self.resetIdleTimer() // Reset the idle timer every time audio data is received
-      }
-
-      //Set isListening to true, to prevent multiple start attempts
-      isListening = true
-
-      // Create and start the recognition task
-      recognitionTask = speechRecognizer?.recognitionTask(with: request!) { (result, error) in
-        var isFinal = false
-
-        if let result = result {
-          // Send the transcript to React Native
-          self.sendEvent(withName: "onSpeechResults", body: ["text": result.bestTranscription.formattedString])
-          isFinal = result.isFinal
-        }
-
-        if error != nil || isFinal {
-          self.stopRecording()
-        }
-      }
-
-      // Prepare and start audio engine
-      audioEngine?.prepare()
-      try audioEngine?.start()
-
-      self.sendEvent(withName: "onSpeechStart", body: nil) // Send Start event
-      print("Speech recognition started")
-
-      startIdleTimer() // Start the idle timer when speech recognition begins
-    }
-  
-
-
-   private func startIdleTimer() {
-     idleTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
-   }
-
-   private func resetIdleTimer() {
-     idleTimer?.invalidate()
-     idleTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(idleTimerExceeded), userInfo: nil, repeats: false)
-   }
-
-   @objc private func idleTimerExceeded() {
-     print("5 seconds of silence detected. Stopping recording.")
-     stopRecording()
-   }
-
-
-  private func stopRecording() {
-    audioEngine?.stop()
-    request?.endAudio()
-    audioEngine?.inputNode.removeTap(onBus: 0)
-
-    recognitionTask?.cancel()
-    recognitionTask = nil
     
-    isListening = false
-
-    self.sendEvent(withName: "onSpeechEnd", body: nil) // Send End event
-    print("Speech recognition stopped")
-  }
-
-  func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-    // Handle speech recognizer availability changes (e.g., network connectivity issues)
-    if available {
-      print("Speech recognizer is available.")
-    } else {
-      print("Speech recognizer is unavailable.")
-      self.sendEvent(withName: "onSpeechAvailabilityChanged", body: ["available": available])
+    private func getDocumentsDirectory() -> URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
-  }
-
-
 }

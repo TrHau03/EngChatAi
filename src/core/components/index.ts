@@ -1,6 +1,7 @@
 export { default as AppActionSheet } from "./AppActionSheet"
 export { default as AppIcon } from "./AppIcon"
 export { default as AppLoading } from "./AppLoading"
+export { default as AppMedia } from "./AppMedia"
 export { BottomTab } from "./BottomTab"
 export * from "./ErrorBoundary"
 export { default as I18NProvider } from "./I18NProvider"

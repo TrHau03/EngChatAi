@@ -1,7 +1,5 @@
 import { RootState } from "@/core/hooks"
 import { envApp, logger } from "@/core/utils"
-import * as auth from "@firebase/auth"
-import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { fetchBaseQuery, retry } from "@reduxjs/toolkit/query"
 import { createApi } from "@reduxjs/toolkit/query/react"
@@ -48,9 +46,9 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
                         )
                         result = await baseQuery(args, api, extraOptions)
                     } else {
-                        await GoogleSignin.signOut()
-                        await GoogleSignin.revokeAccess()
-                        await auth.getAuth().signOut()
+                        // await GoogleSignin.signOut()
+                        // await GoogleSignin.revokeAccess()
+                        // await auth.getAuth().signOut()
                     }
                 } catch (error: any) {
                     logger.error("Refresh token error", error)
