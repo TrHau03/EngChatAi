@@ -18,7 +18,6 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     const { theme: { colors } } = useTheme()
 
-    const [avatar, setAvatar] = useState<string | null>(null)
 
     const requestPermission = async () => {
         if (Platform.OS === "android") {
@@ -29,24 +28,30 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
     }
 
     const handleSelectImage = async () => {
-        const hasPermission = await requestPermission()
-        if (!hasPermission) {
-            Alert.alert("Permission Denied", "You need to allow access to your photos.")
-            return
-        }
-
-        launchImageLibrary({ mediaType: "photo", quality: 1 }, (response) => {
-            if (response.didCancel) {
-                console.log("User cancelled image picker")
-            } else if (response.errorMessage) {
-                console.log("ImagePicker Error: ", response.errorMessage)
-            } else if (response.assets && response.assets.length > 0) {
-                const imageUri = response.assets[0]?.uri || null
-                setAvatar(imageUri)
-                dispatch(appActions.updateState({ avatar: imageUri }))
+        try {
+            const hasPermission = await requestPermission();
+            if (!hasPermission) {
+                Alert.alert("Permission Denied", "You need to allow access to your photos.");
+                return;
             }
-        })
-    }
+            const response = await launchImageLibrary({ mediaType: "photo", quality: 1 });
+            if (response.didCancel) {
+                console.log("User cancelled image picker");
+                return;
+            }
+            if (response.errorMessage) {
+                console.log("ImagePicker Error: ", response.errorMessage);
+                return;
+            }
+            const imageUri = response.assets?.[0]?.uri || null;
+            if (imageUri) {
+                dispatch(appActions.updateState({ avatar: imageUri }));
+            }
+        } catch (error) {
+            console.log("Error selecting image: ", error);
+        }
+    };
+    
 
     const handleNavigate = (screenType?: "CustomizeChatUI" | "Speed" | "Language") => {
         if (!screenType) return
@@ -122,7 +127,6 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
 
 
     return {
-        avatar,
         colors,
         t,
         handleSelectImage,

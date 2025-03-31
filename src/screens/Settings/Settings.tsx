@@ -2,15 +2,17 @@ import { AppIcon, Wrapper } from "@/core/components"
 import { fontSize, iconSize, spacing } from "@/core/theme"
 import { device } from "@/core/utils"
 import { makeStyles, Text } from "@rneui/themed"
-import React, {  } from "react"
+import React, { } from "react"
 import { Image, Pressable, View } from "react-native"
 import { useSettings } from "./hooks/useSettting"
+import { useAppSelector } from "@/core/hooks"
 
 
 const Settings = () => {
 
-    const { avatar, colors, t, handleSelectImage, handleNavigate, handleLogout } = useSettings()
+    const { colors, t, handleSelectImage, handleNavigate, handleLogout } = useSettings()
     const styles = useStyles()
+    const avatar = useAppSelector((state) => state.root.app.avatar)
 
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>

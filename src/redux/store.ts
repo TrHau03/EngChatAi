@@ -7,7 +7,7 @@ const persistConfig = {
     key: "root",
     storage: AsyncStorage,
     blacklist: ["chat"],
-    whitelist: ["auth"],
+    whitelist: ["auth" , "app"],
     timeout: 10000,
 }
 

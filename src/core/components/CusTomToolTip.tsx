@@ -25,33 +25,30 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, content, conten
         });
     }, [buttonRef]);
 
+
     return (
         <>
-            <View ref={buttonRef}>
-                <TouchableOpacity onPress={handlePress}>{children}</TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={handlePress} ref={buttonRef}>{children}</TouchableOpacity>
 
-            {tooltipVisible && (
-                <Modal transparent visible animationType="fade">
-                    <TouchableOpacity style={styles.overlay} onPress={() => setTooltipVisible(false)}>
-                        <View
-                            style={[
-                                styles.tooltip,
-                                {
-                                    top: top.current,
-                                    backgroundColor: theme.colors.grey5,
-                                },
-                            ]}
-                        >
-                            <View style={styles.containerTooltip}>
-                                <Text style={styles.content}>{content}</Text>
-                                <Divider color={theme.colors.primary} />
-                                <Text style={styles.content}>{contentTranslated ?? ""}</Text>
-                            </View>
+            <Modal transparent visible={tooltipVisible} animationType="fade">
+                <TouchableOpacity style={styles.overlay} onPress={() => setTooltipVisible(false)}>
+                    <View
+                        style={[
+                            styles.tooltip,
+                            {
+                                top: top.current,
+                                backgroundColor: theme.colors.grey5,
+                            },
+                        ]}
+                    >
+                        <View style={styles.containerTooltip}>
+                            <Text style={styles.content}>{content}</Text>
+                            <Divider color={theme.colors.primary} />
+                            <Text style={styles.content}>{contentTranslated ?? ""}</Text>
                         </View>
-                    </TouchableOpacity>
-                </Modal>
-            )}
+                    </View>
+                </TouchableOpacity>
+            </Modal>
         </>
     );
 };
