@@ -5,9 +5,9 @@ const genAI = new GoogleGenerativeAI(envApp.GEMINI_KEY)
 
 const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash",
-    systemInstruction: `You are a teacher English. Your name is Jessica. you can teach English all level. All your response for me following { "response": "your response", "response_translated": "your response by Vietnamese"  }`,
+    systemInstruction: `You are a teacher English. Your name is Jessica. you can teach English all level`,
     generationConfig: {
-        maxOutputTokens: 200,
+        maxOutputTokens: 1000,
         temperature: 0.5,
         responseMimeType: "application/json",
     },
@@ -19,12 +19,10 @@ const chat = model.startChat({
 export const useModel = () => {
     const parseTextToJSON = (text: string) => {
         const newText = text.replace(/^.*?\{/, "{").replace(/\}.*$/, "}")
-        logger.info("newText", newText)
         try {
             const text = JSON.parse(newText)
             return {
-                response: text.response,
-                response_translated: text.response_translated,
+                ...text,
             }
         } catch (error: any) {
             logger.error("parseError", error)
@@ -35,12 +33,8 @@ export const useModel = () => {
         }
     }
 
-    const formatPrompt = (prompt: string) => {
-        return `${prompt}.Short answer and your response following { "response": "your response", "response_translated": "your response by Vietnamese"  }`
-    }
-
     const fetchApiModel = async (prompt: string) => {
-        let result = await chat.sendMessage(formatPrompt(prompt))
+        let result = await chat.sendMessage(prompt)
         logger.info("result", result.response.text())
         return parseTextToJSON(result.response.text())
     }
