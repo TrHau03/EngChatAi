@@ -9,7 +9,7 @@ import { useSettings } from "./hooks/useSettting"
 import SettingItem from "./components/SettingItem"
 
 
-const SettingsDetailScreen =  (props: DetailSettingsProps) => {
+const SettingsDetailScreen = (props: DetailSettingsProps) => {
     const styles = useStyles()
     const { title, options, handleSelected, isSelected } = useSettings(props.route.params?.screenType)
 
@@ -23,11 +23,14 @@ const SettingsDetailScreen =  (props: DetailSettingsProps) => {
         ),
         [isSelected, handleSelected]
     )
+
+    const keyExtractor = (item: any) => item.value.toString()
+    
     return (
         <Wrapper isSafeArea edges={["bottom"]} containerStyle={styles.container}>
             <FlatList
                 data={options}
-                keyExtractor={(item: any) => item.value.toString()}
+                keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContent}
             />
