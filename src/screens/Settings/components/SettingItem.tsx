@@ -19,7 +19,7 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, isSelected, onPress })
     return (
         <TouchableOpacity style={styles.item} onPress={() => {
             console.log("Item Pressed:", title);
-            if (onPress) onPress(title);
+            onPress?.(title);
         }}>
             <Text style={styles.name}>{t(title)}</Text>
             {isSelected && (

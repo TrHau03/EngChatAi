@@ -12,12 +12,29 @@ import { Mode } from "@/core/const/mode"
 import { useAppDispatch, useAppSelector } from "@/core/hooks"
 import { appActions } from "@/redux/reducers/App/appSlice"
 
-export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language") => {
+type ScreenType = "CustomizeChatUI" | "Speed" | "Language";
+
+export const useSettings = (screenType?: ScreenType) => {
     const { t } = useTranslation()
     const dispatch = useAppDispatch()
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     const { theme: { colors } } = useTheme()
+    let options: any[] = []
+    const mode = useAppSelector((state) => state.root.app.mode)
+    const language = useAppSelector((state) => state.root.app.language)
+    const speed = useAppSelector((state) => state.root.app.speed)
 
+    const handleNavigate = (screenType?: "CustomizeChatUI" | "Speed" | "Language") => {
+        if (!screenType) return
+        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType })
+    }
+
+    const title = useMemo(() => (screenType ? t(screenType.toLowerCase()) : ""), [t, screenType])
+
+    const handleLogout = useCallback(async () => {
+        const result = await logOut()
+        if (result) navigation.navigate(RootStackParamEnum.Auth)
+    }, [navigation])
 
     const requestPermission = async () => {
         if (Platform.OS === "android") {
@@ -28,43 +45,13 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
     }
 
     const handleSelectImage = async () => {
-        try {
-            const hasPermission = await requestPermission();
-            if (!hasPermission) {
-                Alert.alert("Permission Denied", "You need to allow access to your photos.");
-                return;
-            }
-            const response = await launchImageLibrary({ mediaType: "photo", quality: 1 });
-            if (response.didCancel) {
-                console.log("User cancelled image picker");
-                return;
-            }
-            if (response.errorMessage) {
-                console.log("ImagePicker Error: ", response.errorMessage);
-                return;
-            }
-            const imageUri = response.assets?.[0]?.uri || null;
-            if (imageUri) {
-                dispatch(appActions.updateState({ avatar: imageUri }));
-            }
-        } catch (error) {
-            console.log("Error selecting image: ", error);
+        if (!(await requestPermission())) {
+            Alert.alert("Permission Denied", "You need to allow access to your photos.");
+            return;
         }
+        const response = await launchImageLibrary({ mediaType: "photo", quality: 1 });
+        if (response.assets?.[0]?.uri) dispatch(appActions.updateState({ avatar: response.assets[0].uri }));
     };
-    
-
-    const handleNavigate = (screenType?: "CustomizeChatUI" | "Speed" | "Language") => {
-        if (!screenType) return
-        navigation.navigate(RootStackParamEnum.SettingsDetailScreen, { screenType })
-    }
-
-    const handleLogout = useCallback(async () => {
-        const result = await logOut()
-        if (result) navigation.navigate(RootStackParamEnum.Auth)
-    }, [navigation])
-
-    const title = useMemo(() => (screenType ? t(screenType.toLowerCase()) : ""), [t, screenType])
-    let options: any[] = []
 
     if (screenType) {
         switch (screenType) {
@@ -111,10 +98,6 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
         [screenType, dispatch]
     )
 
-    const mode = useAppSelector((state) => state.root.app.mode)
-    const language = useAppSelector((state) => state.root.app.language)
-    const speed = useAppSelector((state) => state.root.app.speed)
-
     const isSelected = (value: string | number) => {
         if (!screenType) return false
         const stateMap = {
@@ -124,7 +107,6 @@ export const useSettings = (screenType?: "CustomizeChatUI" | "Speed" | "Language
         }
         return screenType === "Speed" ? parseFloat(value as string) === stateMap[screenType] : stateMap[screenType] === value
     }
-
 
     return {
         colors,

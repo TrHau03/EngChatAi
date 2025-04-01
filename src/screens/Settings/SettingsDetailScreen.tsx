@@ -8,6 +8,7 @@ import { FlatList } from "react-native"
 import { useSettings } from "./hooks/useSettting"
 import SettingItem from "./components/SettingItem"
 
+
 const SettingsDetailScreen =  (props: DetailSettingsProps) => {
     const styles = useStyles()
     const { title, options, handleSelected, isSelected } = useSettings(props.route.params?.screenType)
@@ -16,19 +17,17 @@ const SettingsDetailScreen =  (props: DetailSettingsProps) => {
         props.navigation.setOptions({ title })
     }, [props.navigation, title])
 
-    const keyExtractor = useCallback((item: any) => item.value.toString(), [])
-
     const renderItem = useCallback(
         ({ item }: any) => (
             <SettingItem title={item.title} isSelected={isSelected(item.value)} onPress={() => handleSelected(item.value)} />
         ),
-        [isSelected, handleSelected],
+        [isSelected, handleSelected]
     )
     return (
         <Wrapper isSafeArea edges={["bottom"]} containerStyle={styles.container}>
             <FlatList
                 data={options}
-                keyExtractor={keyExtractor}
+                keyExtractor={(item: any) => item.value.toString()}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContent}
             />
