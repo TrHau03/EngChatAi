@@ -3,6 +3,7 @@ import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
 import QuestionAndAnswer from "@/screens/Q&A/QuestionAndAnswer"
 import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
+import { Words } from "@/screens/Word"
 import { useNavigation } from "@react-navigation/native"
 import {
     createNativeStackNavigator,
@@ -37,6 +38,7 @@ export enum RootStackParamEnum {
     Settings = "Settings",
     SettingsDetailScreen = "SettingsDetailScreen",
     QuestionAndAnswer = "QuestionAndAnswer",
+    Words = "Words",
 }
 
 export type RootStackParamList = {
@@ -50,6 +52,7 @@ export type RootStackParamList = {
     [RootStackParamEnum.Settings]: undefined
     [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
     [RootStackParamEnum.QuestionAndAnswer]: undefined
+    [RootStackParamEnum.Words]: undefined
 }
 export const screens: ScreenProps[] = [
     {
@@ -83,6 +86,13 @@ export const screens: ScreenProps[] = [
     {
         name: RootStackParamEnum.QuestionAndAnswer,
         component: QuestionAndAnswer,
+        option: {
+            headerShown: false,
+        },
+    },
+    {
+        name: RootStackParamEnum.Words,
+        component: Words,
         option: {
             headerShown: false,
         },

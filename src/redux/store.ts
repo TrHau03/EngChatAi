@@ -6,8 +6,8 @@ import { rootReducer } from "./rootReducers"
 const persistConfig = {
     key: "root",
     storage: AsyncStorage,
-    blacklist: ["chat"],
-    whitelist: ["auth" , "app"],
+    blacklist: ["chat", "word"],
+    whitelist: ["auth", "app"],
     timeout: 10000,
 }
 

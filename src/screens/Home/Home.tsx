@@ -9,7 +9,8 @@ const Home = () => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     return (
         <Wrapper isSafeArea>
-            <Button title={"na"} onPress={() => navigation.navigate(RootStackParamEnum.QuestionAndAnswer)} />
+            <Button title={"Q&A"} onPress={() => navigation.navigate(RootStackParamEnum.QuestionAndAnswer)} />
+            <Button title={"Words"} onPress={() => navigation.navigate(RootStackParamEnum.Words)} />
         </Wrapper>
     )
 }

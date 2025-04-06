@@ -1,9 +1,9 @@
 import { AppIcon, Wrapper } from "@/core/components"
 import { fontSize, padding, spacing } from "@/core/theme"
-import { Button, makeStyles, useTheme } from "@rneui/themed"
+import { Button, makeStyles, Text, useTheme } from "@rneui/themed"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import Answers from "./components/Answers"
 import { useQAndA } from "./hooks/useQ&A"
 
