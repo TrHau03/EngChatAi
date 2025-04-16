@@ -14,12 +14,18 @@ import { useTheme } from "@rneui/themed"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import RootTab from "../bottom/RootTab"
+import Podcasts from "@/screens/Podcasts/Podcasts"
+import PodcastsDetail from "@/screens/Podcasts/PodcastsDetail"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
 export type NewChatProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.NewChat>
 
 export type DetailSettingsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.SettingsDetailScreen>
+
+export type DetailPodCastsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.PodcastDetail>
+
+
 
 export interface ScreenProps {
     name: RootStackParamEnum
@@ -37,6 +43,9 @@ export enum RootStackParamEnum {
     Settings = "Settings",
     SettingsDetailScreen = "SettingsDetailScreen",
     QuestionAndAnswer = "QuestionAndAnswer",
+    Podcasts = "Podcasts",
+    PodcastDetail = "PodcastDetail",
+
 }
 
 export type RootStackParamList = {
@@ -50,6 +59,10 @@ export type RootStackParamList = {
     [RootStackParamEnum.Settings]: undefined
     [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
     [RootStackParamEnum.QuestionAndAnswer]: undefined
+    [RootStackParamEnum.Podcasts]: undefined
+    [RootStackParamEnum.PodcastDetail]: { podcastId: string }
+
+
 }
 export const screens: ScreenProps[] = [
     {
@@ -85,6 +98,20 @@ export const screens: ScreenProps[] = [
         component: QuestionAndAnswer,
         option: {
             headerShown: false,
+        },
+    },
+    {
+        name: RootStackParamEnum.Podcasts,
+        component: Podcasts,
+        option: {
+            headerShown: true,
+        },
+    },
+    {
+        name: RootStackParamEnum.PodcastDetail,
+        component: PodcastsDetail,
+        option: {
+            headerShown: true,
         },
     },
 ]

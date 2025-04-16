@@ -73,6 +73,7 @@ const Settings = () => {
 export default Settings
 
 const useStyles = makeStyles(({ colors }) => ({
+
     container: {
         backgroundColor: colors.background,
     },
