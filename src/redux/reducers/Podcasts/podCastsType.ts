@@ -1,4 +1,4 @@
-import { Segment, Transcript } from "@/core/entities/segments"
+import { Segment } from "@/core/entities/segments"
 
 export type PodcastItemData = {
   _id: string
@@ -6,7 +6,7 @@ export type PodcastItemData = {
   topic: string
   image: string
   audioUrl: string
-  transcript: Transcript[]
+  text: string
   segments: Segment[]
   language: string
 }

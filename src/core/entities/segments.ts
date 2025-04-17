@@ -10,8 +10,3 @@ export type Segment = {
   compression_ratio: number
   no_speech_prob: number
 }
-
-export type Transcript = {
-  speaker: string
-  text: string
-}
