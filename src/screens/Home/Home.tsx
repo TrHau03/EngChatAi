@@ -9,13 +9,14 @@ import { getCourses } from "@/api"
 import { useStyles } from "./styles"
 import { Wrapper } from "@/core/components"
 import LinearGradient from "react-native-linear-gradient"
+import AudioPlayer from "../../core/components/AudioPklayer"
 
 const Home = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
     const learningProgress: number = 0.75
     const courses = getCourses()
-
+    const audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
     return (
         <Wrapper containerStyle={styles.container}>
             {/* Header */}
@@ -34,6 +35,8 @@ const Home = () => {
             <ScrollView contentContainerStyle={{ flexGrow: 1, width: "100%" }}>
                 {/* Body */}
                 <View style={styles.body}>
+                    <Text style={{ fontSize: 18, margin: 16 }}>🔊 Demo Native Audio Player</Text>
+                    <AudioPlayer url={audioUrl} />
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}

@@ -13,6 +13,7 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
 import com.engchatgemini.com.TextToSpeech.TextToSpeechPackage
+import com.engchatgemini.com.voice.VoicePackage
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost =
@@ -23,6 +24,7 @@ class MainApplication : Application(), ReactApplication {
             // add(MyReactNativePackage())
             add(TextToSpeechPackage())
             add(RNCConfigPackage())
+            add(VoicePackage())
         }
 
         override fun getJSMainModuleName(): String = "index"
