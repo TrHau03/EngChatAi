@@ -3,7 +3,7 @@ import { makeStyles, normalize, Skeleton } from "@rneui/themed"
 import React from "react"
 import { View } from "react-native"
 
-const skeleton = new Array(5).fill(0)
+const skeleton = new Array(10).fill(0)
 
 const WordsSkeleton = () => {
     const styles = useStyles()

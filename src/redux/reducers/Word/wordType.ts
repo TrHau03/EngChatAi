@@ -9,4 +9,5 @@ export interface WordsRequest {
 export interface WordsResponse {
     words: Word[]
     cursor: string | null
+    isEndList: boolean
 }

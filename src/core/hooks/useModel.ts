@@ -26,10 +26,7 @@ export const useModel = () => {
             }
         } catch (error: any) {
             logger.error("parseError", error)
-            return {
-                response: newText,
-                response_translated: "",
-            }
+            return newText
         }
     }
 

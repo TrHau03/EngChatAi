@@ -42,6 +42,7 @@ export default QuestionAndAnswer
 const useStyles = makeStyles(({ colors }) => {
     return {
         container: {
+            backgroundColor: colors.background,
             paddingHorizontal: padding.medium,
             paddingVertical: padding.base,
             gap: spacing.medium,

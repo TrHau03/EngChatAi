@@ -1,13 +1,12 @@
-import { AppActionSheet, AppIcon, Wrapper } from "@/core/components"
+import { AppActionSheet, AppIcon, EmptyList, Wrapper } from "@/core/components"
 import { Message } from "@/core/entities/message"
 import { fontSize, margin, padding, spacing } from "@/core/theme"
 import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
-import { makeStyles, normalize, Text, useTheme } from "@rneui/themed"
-import LottieView from "lottie-react-native"
+import { makeStyles, useTheme } from "@rneui/themed"
 import React, { useCallback, useMemo, useRef } from "react"
 import { useTranslation } from "react-i18next"
-import { FlatList, RefreshControl, View } from "react-native"
+import { FlatList, RefreshControl } from "react-native"
 import ChatItem from "./components/ChatItem"
 import { useChat } from "./hooks/useChat"
 
@@ -59,17 +58,7 @@ const Chat = () => {
     }, [isFetching])
 
     const renderEmpty = useCallback(() => {
-        return (
-            <View style={styles.containerEmpty}>
-                <LottieView
-                    source={require("@/assets/animations/empty.json")}
-                    autoPlay
-                    loop
-                    style={{ width: normalize(248), aspectRatio: 1 }}
-                />
-                <Text style={styles.textEmpty}>{t("notThings")}</Text>
-            </View>
-        )
+        return <EmptyList />
     }, [])
 
     return (

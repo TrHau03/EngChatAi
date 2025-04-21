@@ -10,35 +10,32 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		D375263A1A1FD326DD7B1CFA /* Pods_EngChatGemini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DBDA64E956C5F263C6AF3B /* Pods_EngChatGemini.framework */; };
 		D630021C2D7DF9570088F2B4 /* TextToSpeechModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D630021B2D7DF9570088F2B4 /* TextToSpeechModule.m */; };
 		D630021E2D7DF9740088F2B4 /* RCTNativeSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */; };
 		D6863C692D6F734C00052E0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6863C682D6F734C00052E0C /* GoogleService-Info.plist */; };
 		D6FC51E82D78668300B0DAA3 /* RCTNativeVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FC51E72D78668300B0DAA3 /* RCTNativeVoice.swift */; };
 		D6FC51EF2D7873C700B0DAA3 /* SpeechToTextModule.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FC51EE2D7873C700B0DAA3 /* SpeechToTextModule.m */; };
 		E86E19D72EDE825E7B5A9D29 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		F263FE0B1B36AC958794050E /* Pods_EngChatGemini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0090969B81B0CAB10854E5 /* Pods_EngChatGemini.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0A0090969B81B0CAB10854E5 /* Pods_EngChatGemini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngChatGemini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E95F02A8B3674E79374D3CC /* Pods-EngChatGemini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngChatGemini.debug.xcconfig"; path = "Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* EngChatGemini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EngChatGemini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = EngChatGemini/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = EngChatGemini/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = EngChatGemini/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		5F8B3DB22E4A5882B80F538E /* Pods-EngChatGemini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngChatGemini.release.xcconfig"; path = "Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini.release.xcconfig"; sourceTree = "<group>"; };
+		25DBDA64E956C5F263C6AF3B /* Pods_EngChatGemini.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EngChatGemini.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4339DAF3A0151CA4D992FBE9 /* Pods-EngChatGemini.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngChatGemini.debug.xcconfig"; path = "Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini.debug.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = EngChatGemini/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EngChatGemini/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D630021B2D7DF9570088F2B4 /* TextToSpeechModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextToSpeechModule.m; sourceTree = "<group>"; };
 		D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTNativeSpeech.swift; sourceTree = "<group>"; };
 		D630021F2D7DFFFF0088F2B4 /* EngChatGemini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngChatGemini-Bridging-Header.h"; sourceTree = "<group>"; };
 		D6863C682D6F734C00052E0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		D6984C522DA22550004E2B96 /* AudioPlayerModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioPlayerModule.m; sourceTree = "<group>"; };
-		D6984C532DA22550004E2B96 /* EngChatGemini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngChatGemini-Bridging-Header.h"; sourceTree = "<group>"; };
-		D6984C542DA22550004E2B96 /* RCTNativeAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTNativeAudio.swift; sourceTree = "<group>"; };
 		D6FC51E72D78668300B0DAA3 /* RCTNativeVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCTNativeVoice.swift; sourceTree = "<group>"; };
 		D6FC51EE2D7873C700B0DAA3 /* SpeechToTextModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextModule.m; sourceTree = "<group>"; };
 		D6FC51F02D7873EC00B0DAA3 /* EngChatGemini-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EngChatGemini-Bridging-Header.h"; sourceTree = "<group>"; };
+		DADE91A438D0D4FCF60DF188 /* Pods-EngChatGemini.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EngChatGemini.release.xcconfig"; path = "Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -47,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F263FE0B1B36AC958794050E /* Pods_EngChatGemini.framework in Frameworks */,
+				D375263A1A1FD326DD7B1CFA /* Pods_EngChatGemini.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				0A0090969B81B0CAB10854E5 /* Pods_EngChatGemini.framework */,
+				25DBDA64E956C5F263C6AF3B /* Pods_EngChatGemini.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -86,7 +83,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				D6984C512DA22542004E2B96 /* Audio */,
 				D630021A2D7DF9110088F2B4 /* Speech */,
 				D6FC51E62D78662B00B0DAA3 /* Voice */,
 				13B07FAE1A68108700A75B9A /* EngChatGemini */,
@@ -111,8 +107,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0E95F02A8B3674E79374D3CC /* Pods-EngChatGemini.debug.xcconfig */,
-				5F8B3DB22E4A5882B80F538E /* Pods-EngChatGemini.release.xcconfig */,
+				4339DAF3A0151CA4D992FBE9 /* Pods-EngChatGemini.debug.xcconfig */,
+				DADE91A438D0D4FCF60DF188 /* Pods-EngChatGemini.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -125,16 +121,6 @@
 				D630021D2D7DF9740088F2B4 /* RCTNativeSpeech.swift */,
 			);
 			path = Speech;
-			sourceTree = "<group>";
-		};
-		D6984C512DA22542004E2B96 /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-				D6984C522DA22550004E2B96 /* AudioPlayerModule.m */,
-				D6984C532DA22550004E2B96 /* EngChatGemini-Bridging-Header.h */,
-				D6984C542DA22550004E2B96 /* RCTNativeAudio.swift */,
-			);
-			path = Audio;
 			sourceTree = "<group>";
 		};
 		D6FC51E62D78662B00B0DAA3 /* Voice */ = {
@@ -154,13 +140,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "EngChatGemini" */;
 			buildPhases = (
-				67DFE6B60283447DB308546D /* [CP] Check Pods Manifest.lock */,
+				9CABB830721F40AFD9501A59 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				6C30D50785ABA763F0F901CF /* [CP] Embed Pods Frameworks */,
-				4289E2FFAA6854ECB09CF7FE /* [CP] Copy Pods Resources */,
+				DE79EC507FF968181D238B4A /* [CP] Embed Pods Frameworks */,
+				6FE7FBF8EE575E3002965504 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -236,7 +222,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		4289E2FFAA6854ECB09CF7FE /* [CP] Copy Pods Resources */ = {
+		6FE7FBF8EE575E3002965504 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,7 +239,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EngChatGemini/Pods-EngChatGemini-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		67DFE6B60283447DB308546D /* [CP] Check Pods Manifest.lock */ = {
+		9CABB830721F40AFD9501A59 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -275,7 +261,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6C30D50785ABA763F0F901CF /* [CP] Embed Pods Frameworks */ = {
+		DE79EC507FF968181D238B4A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -312,7 +298,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E95F02A8B3674E79374D3CC /* Pods-EngChatGemini.debug.xcconfig */;
+			baseConfigurationReference = 4339DAF3A0151CA4D992FBE9 /* Pods-EngChatGemini.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -342,7 +328,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F8B3DB22E4A5882B80F538E /* Pods-EngChatGemini.release.xcconfig */;
+			baseConfigurationReference = DADE91A438D0D4FCF60DF188 /* Pods-EngChatGemini.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -448,7 +434,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -529,7 +518,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
