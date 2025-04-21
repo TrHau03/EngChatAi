@@ -1,7 +1,9 @@
 import { Message } from "@/core/entities/message"
 import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
+import QuestionAndAnswer from "@/screens/Q&A/QuestionAndAnswer"
 import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
+import { useNavigation } from "@react-navigation/native"
 import {
     createNativeStackNavigator,
     NativeStackNavigationOptions,
@@ -11,7 +13,6 @@ import {
 import { useTheme } from "@rneui/themed"
 import React from "react"
 import { useTranslation } from "react-i18next"
-import { List } from "realm"
 import RootTab from "../bottom/RootTab"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
@@ -35,6 +36,7 @@ export enum RootStackParamEnum {
     Chat = "Chat",
     Settings = "Settings",
     SettingsDetailScreen = "SettingsDetailScreen",
+    QuestionAndAnswer = "QuestionAndAnswer",
 }
 
 export type RootStackParamList = {
@@ -42,11 +44,12 @@ export type RootStackParamList = {
     [RootStackParamEnum.Tab]: undefined
     [RootStackParamEnum.NewChat]: {
         type: "new" | "view"
-        messages?: List<Message>
+        messages?: Message[]
     }
     [RootStackParamEnum.Chat]: undefined
     [RootStackParamEnum.Settings]: undefined
     [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
+    [RootStackParamEnum.QuestionAndAnswer]: undefined
 }
 export const screens: ScreenProps[] = [
     {
@@ -77,6 +80,13 @@ export const screens: ScreenProps[] = [
             headerShown: true,
         },
     },
+    {
+        name: RootStackParamEnum.QuestionAndAnswer,
+        component: QuestionAndAnswer,
+        option: {
+            headerShown: false,
+        },
+    },
 ]
 
 export const RootStack = () => {
@@ -84,6 +94,18 @@ export const RootStack = () => {
         theme: { colors },
     } = useTheme()
     const { t } = useTranslation()
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+    // useEffect(() => {
+    //     auth.getAuth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //             navigation.navigate(RootStackParamEnum.Tab)
+    //         } else {
+    //             navigation.navigate(RootStackParamEnum.Auth)
+    //         }
+    //     })
+    // }, [auth, navigation])
+
     return (
         <Stack.Navigator
             initialRouteName={RootStackParamEnum.Auth}

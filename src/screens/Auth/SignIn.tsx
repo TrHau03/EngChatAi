@@ -9,25 +9,27 @@ import React, { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { View } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
+import { useSignIn } from "./hooks/useSignIn"
 
 const SignIn = () => {
     const styles = useStyles(0)
     const { t } = useTranslation()
     const navigation = useNavigation<TabNavigationProp>()
+    const { data, loginMutation, handleLogin } = useSignIn()
 
     const handleLoginGoogle = useCallback(async () => {
-        // const result = await googleAuthentication()
-        if (true) {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: RootStackParamEnum.Tab }],
-            })
-        }
+        navigation.reset({
+            index: 0,
+            routes: [{ name: RootStackParamEnum.Tab }],
+        })
+        // const status = await handleLogin()
+        // if (status) {
+        //     navigation.reset({
+        //         index: 0,
+        //         routes: [{ name: RootStackParamEnum.Tab }],
+        //     })
+        // }
     }, [])
-
-    // const handleSignOut = useCallback(async () => {
-    //     await logOut()
-    // }, [])
 
     return (
         <Wrapper containerStyle={styles.container}>

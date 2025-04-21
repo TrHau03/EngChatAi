@@ -1,11 +1,10 @@
 import { Message } from "@/core/entities/message"
 import { borderRadius, fontSize, lineHeight, spacing } from "@/core/theme"
 import { logger, Role } from "@/core/utils"
-import { Divider, makeStyles, normalize, Text, Tooltip, useTheme } from "@rneui/themed"
+import { Divider, makeStyles, normalize, Text, useTheme } from "@rneui/themed"
 import React, { useCallback, useState } from "react"
 import { View } from "react-native"
 import { useAppSelector, useTTS } from "../hooks"
-import AppIcon from "./AppIcon"
 
 const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated }) => {
     const styles = useStyles(role)
@@ -42,36 +41,6 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
     }
     return (
         <View style={[styles.container, styles.containerAI]}>
-            <View style={styles.headerAI}>
-                <AppIcon
-                    name={isSpeaking ? "pause" : "play"}
-                    type="ionicon"
-                    isPaddingIcon={false}
-                    onPress={handleSpeak}
-                />
-                <Tooltip
-                    visible={isTranslated && !!content_translated}
-                    onClose={handleTranslate}
-                    overlayColor={colors.background}
-                    backgroundColor={`${colors.grey5}`}
-                    containerStyle={{ width: "auto", maxWidth: "80%", height: "auto" }}
-                    popover={
-                        <View style={styles.containerTooltip}>
-                            <Text style={styles.content}>{content}</Text>
-                            <Divider color={colors.primary} />
-                            <Text style={styles.content}>{content_translated ?? ""}</Text>
-                        </View>
-                    }
-                >
-                    <AppIcon
-                        name="g-translate"
-                        color={isTranslated ? colors.primary : colors.black}
-                        type="material"
-                        isPaddingIcon={false}
-                        onPress={handleTranslate}
-                    />
-                </Tooltip>
-            </View>
             <Divider color={colors.primary} />
             <Text style={styles.content}>{content}</Text>
         </View>
@@ -96,22 +65,14 @@ const useStyles = makeStyles(({ colors }, role) => {
             width: "80%",
             backgroundColor: colors.secondary,
         },
-        content: {
-            fontSize: fontSize.normal,
-            lineHeight: lineHeight.large,
-        },
-        headerAI: {
-            flexDirection: "row",
-            alignItems: "center",
-            gap: spacing.large,
-        },
         logoAI: {
             width: normalize(48),
             height: normalize(48),
             borderRadius: normalize(48),
         },
-        containerTooltip: {
-            gap: spacing.base,
+        content: {
+            fontSize: fontSize.normal,
+            lineHeight: lineHeight.large,
         },
     }
 })
