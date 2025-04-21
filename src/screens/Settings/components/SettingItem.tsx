@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { fontSize, spacing } from '../theme';
 import { makeStyles, useTheme } from '@rneui/themed';
-import AppIcon from './AppIcon';
 import { useTranslation } from 'react-i18next';
+import { AppIcon } from '@/core/components';
+import { fontSize, spacing } from '@/core/theme';
 
 interface SettingItemProps {
     title: string,
@@ -19,7 +19,7 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, isSelected, onPress })
     return (
         <TouchableOpacity style={styles.item} onPress={() => {
             console.log("Item Pressed:", title);
-            if (onPress) onPress(title);
+            onPress?.(title);
         }}>
             <Text style={styles.name}>{t(title)}</Text>
             {isSelected && (

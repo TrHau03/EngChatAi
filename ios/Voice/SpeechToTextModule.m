@@ -1,13 +1,14 @@
-#import <React/RCTBridgeModule.h>
-#import <React/RCTEventEmitter.h>
+ #import <React/RCTBridgeModule.h>
+ #import <React/RCTEventEmitter.h>
 
-@interface SpeechToTextEmitterModule : RCTEventEmitter <RCTBridgeModule>
+ @interface VoiceEmitterModule : RCTEventEmitter <RCTBridgeModule>
 
-@end
+ @end
 
-@interface RCT_EXTERN_MODULE(SpeechToTextModule, NSObject)
-RCT_EXTERN_METHOD(startListening:(RCTPromiseResolveBlock)resolve
-                 reject:(RCTPromiseRejectBlock)reject)
-RCT_EXTERN_METHOD(stopListening:(RCTPromiseResolveBlock)resolve
-                 reject:(RCTPromiseRejectBlock)reject)
-@end
+ @interface RCT_EXTERN_MODULE(VoiceModule, NSObject)
+ RCT_EXTERN_METHOD(startRecording:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+ RCT_EXTERN_METHOD(stopRecording:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+ @end
+	

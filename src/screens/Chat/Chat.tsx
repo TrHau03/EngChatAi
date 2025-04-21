@@ -1,39 +1,64 @@
-import { AppIcon, Wrapper } from "@/core/components"
+import { AppActionSheet, AppIcon, EmptyList, Wrapper } from "@/core/components"
 import { Message } from "@/core/entities/message"
-import { fontSize, padding, spacing } from "@/core/theme"
-import { logger } from "@/core/utils"
+import { fontSize, margin, padding, spacing } from "@/core/theme"
 import { ChatProps, RootStackParamEnum } from "@/navigation/stack/RootStack"
 import { useNavigation } from "@react-navigation/native"
-import { Divider, makeStyles, Text, useTheme } from "@rneui/themed"
-import React, { useCallback } from "react"
-import { FlatList, Pressable } from "react-native"
+import { makeStyles, useTheme } from "@rneui/themed"
+import React, { useCallback, useMemo, useRef } from "react"
+import { useTranslation } from "react-i18next"
+import { FlatList, RefreshControl } from "react-native"
+import ChatItem from "./components/ChatItem"
 import { useChat } from "./hooks/useChat"
 
-interface ItemType {
+export interface ChatType {
     _id: string
+    title: string
     messages: Message[]
 }
 
 const Chat = () => {
     const navigation = useNavigation<ChatProps>()
+    const { t } = useTranslation()
     const styles = useStyles(0)
-    const { data } = useChat()
-    logger.object({ data })
     const {
         theme: { colors },
     } = useTheme()
-
+    const { data, isVisible, isFetching, isLoading, handleToggle, handleDelete, refetch } = useChat()
+    const itemId = useRef<string>("")
     const handleNavigate = useCallback((type: "new" | "view", data?: any) => {
         navigation.navigate(RootStackParamEnum.NewChat, { type: type, messages: data })
     }, [])
 
-    const renderItem = useCallback(({ item }: { item: ItemType }) => {
+    const renderItem = useCallback(({ item }: { item: ChatType }) => {
         return (
-            <Pressable style={styles.containerItem} onPress={() => handleNavigate("view", item.messages ?? [])}>
-                <Text style={styles.textItem}>{item.messages[0]?.content?.toString() ?? ""}</Text>
-                <Divider />
-            </Pressable>
+            <ChatItem
+                item={item}
+                handleToggle={() => {
+                    handleToggle()
+                    itemId.current = item._id
+                }}
+                handleNavigate={handleNavigate}
+            />
         )
+    }, [])
+
+    const onRefresh = useCallback(() => {
+        refetch()
+    }, [])
+
+    const refreshControl = useMemo(() => {
+        return (
+            <RefreshControl
+                refreshing={isFetching}
+                onRefresh={onRefresh}
+                colors={[colors.primary]}
+                tintColor={colors.primary}
+            />
+        )
+    }, [isFetching])
+
+    const renderEmpty = useCallback(() => {
+        return <EmptyList />
     }, [])
 
     return (
@@ -48,9 +73,29 @@ const Chat = () => {
                 onPress={() => handleNavigate("new")}
             />
             <FlatList
-                data={data.reverse() ?? []}
-                keyExtractor={(item: ItemType, index) => index.toString()}
+                data={data.length > 0 ? data.reverse() : []}
+                keyExtractor={(item: ChatType, index) => index.toString()}
                 renderItem={renderItem}
+                extraData={data}
+                maxToRenderPerBatch={10}
+                initialNumToRender={10}
+                contentContainerStyle={{ flex: 1 }}
+                ListEmptyComponent={data.length > 0 && (!isLoading || !isFetching) ? null : renderEmpty}
+                refreshControl={refreshControl}
+            />
+            <AppActionSheet
+                visible={isVisible}
+                onClose={handleToggle}
+                onBackdropPress={handleToggle}
+                actions={[
+                    {
+                        title: t("delete"),
+                        type: "destructive",
+                        onPress: () => {
+                            handleDelete(itemId.current)
+                        },
+                    },
+                ]}
             />
         </Wrapper>
     )
@@ -65,13 +110,13 @@ const useStyles = makeStyles(({ colors }) => {
             paddingHorizontal: padding.base,
         },
         addIcon: { alignSelf: "flex-end" },
-        textItem: {
-            fontSize: fontSize.xl,
-        },
-        containerItem: {
-            paddingHorizontal: padding.base,
-            paddingVertical: padding.small,
+        containerEmpty: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             gap: spacing.base,
+            paddingHorizontal: padding.medium,
         },
+        textEmpty: { fontSize: fontSize.large, fontWeight: "bold", marginBottom: margin.medium },
     }
 })

@@ -1,6 +1,6 @@
 {
     "settings": "Settings",
-    "customizechatUI": "Customize Chat UI",
+    "customizechatui": "Customize Chat UI",
     "language": "Language",
     "speed": "Speed voice",
     "logout": "Logout",
@@ -10,5 +10,8 @@
     "educationIsFree": "Education is free",
     "signInWithGoogle": "Sign in with Google",
     "learnEnglishSmarter": "Learn English Smarter with AI – Your Personal AI Teacher!",
-    "":""
+    "back": "Back",
+    "notThings": "Not things",
+    "newChat": "New Chat",
+    "explain": "Explain"
 }
