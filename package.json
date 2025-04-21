@@ -43,12 +43,9 @@
         "react-native-progress": "^5.0.1",
         "react-native-safe-area-context": "^5.2.0",
         "react-native-screens": "^4.9.1",
-<<<<<<< HEAD
         "react-native-sound": "^0.11.2",
         "react-native-svg": "^15.11.2",
-=======
         "react-native-sound-player": "^0.14.5",
->>>>>>> feat-settings
         "react-native-tts": "^4.1.1",
         "react-native-vector-icons": "^10.2.0",
         "react-redux": "^9.2.0",
