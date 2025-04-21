@@ -2,6 +2,7 @@ import i18next from "i18next"
 import React, { useEffect } from "react"
 import { I18nextProvider } from "react-i18next"
 import { useAppSelector } from "../hooks"
+import { logger } from "../utils"
 
 interface I18NProviderProps {
     children: React.ReactNode

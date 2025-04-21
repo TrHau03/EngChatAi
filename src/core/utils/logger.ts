@@ -6,7 +6,7 @@ export const logger = {
     },
     info: (title: string, message: any) => {
         if (__DEV__) {
-            console.dir(`[INFO] ${title}: ${message}`)
+            console.log(`[INFO] ${title}: ${message}`)
         }
     },
     error: (title: string, message: string) => {

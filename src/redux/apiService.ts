@@ -10,7 +10,7 @@ const mutex = new Mutex()
 const baseQuery = fetchBaseQuery({
     baseUrl: envApp.BASEURL,
     credentials: "include",
-    timeout: 10000,
+    timeout: 20000,
     prepareHeaders(headers, api) {
         headers.set("Content-Type", "application/json")
         headers.set("Accept", "application/json")

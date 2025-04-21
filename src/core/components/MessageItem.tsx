@@ -50,7 +50,7 @@ const MessageItem: React.FC<Message> = ({ _id, role, content, content_translated
 export default MessageItem
 
 const useStyles = makeStyles(({ colors }, role) => {
-    return {
+   return {
         container: {
             alignSelf: role === Role.USER ? "flex-end" : "flex-start",
             padding: spacing.medium,
@@ -75,4 +75,4 @@ const useStyles = makeStyles(({ colors }, role) => {
             lineHeight: lineHeight.large,
         },
     }
-})
+}) 

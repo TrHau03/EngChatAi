@@ -3,6 +3,7 @@ import { Mode } from "@/core/const/mode"
 import { createSlice } from "@reduxjs/toolkit"
 
 interface AppState {
+    avatar: null
     isLoading: boolean
     mode: Mode
     language: Lang
@@ -14,6 +15,7 @@ interface AppState {
 }
 
 const initialState: AppState = {
+    avatar: null,
     isLoading: false,
     mode: Mode.dark,
     language: Lang.vi,
