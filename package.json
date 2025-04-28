@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "-": "^0.0.1",
+        "@dr.pogodin/react-native-fs": "^2.32.1",
         "@google/generative-ai": "^0.22.0",
         "@react-native-async-storage/async-storage": "^1.24.0",
         "@react-native-community/slider": "^4.5.6",
@@ -44,6 +45,7 @@
         "react-native-safe-area-context": "^5.2.0",
         "react-native-screens": "^4.9.1",
         "react-native-sound": "^0.11.2",
+        "react-native-svg": "^15.11.2",
         "react-native-sound-player": "^0.14.5",
         "react-native-tts": "^4.1.1",
         "react-native-vector-icons": "^10.2.0",
