@@ -14,10 +14,12 @@ export const useQAndA = () => {
     const [step, setStep] = useState<number>(1)
 
     useEffect(() => {
-        const prompt = "I need to learn grammar English. Can you ask me a question?"
+        const prompt = "I need to learn grammar English. Can you ask me 10 question?"
         const handleFirstPrompt = async () => {
             try {
-                // const response = await model.fetchApiModel(formatPrompt(prompt))
+                // const responseAI = await model.fetchApiModel(formatPrompt(prompt))
+                // console.log(responseAI)
+
                 const response: Question = {
                     question: "Which of the following sentences uses the correct subject-verb agreement?",
                     question_translated:

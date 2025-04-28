@@ -1,5 +1,5 @@
 import React from "react"
-import { FlatList, Image, Text, TouchableOpacity } from "react-native"
+import { Button, FlatList, Image, Text, TouchableOpacity } from "react-native"
 import { AppLoading, Wrapper } from "@/core/components"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
@@ -62,6 +62,9 @@ const Home = () => {
         <AppLoading isLoading />
       )}
       {/* End PodCasts */}
+
+      <Button title={"Q&A"} onPress={() => navigation.navigate(RootStackParamEnum.QuestionAndAnswer)} />
+      <Button title={"Words"} onPress={() => navigation.navigate(RootStackParamEnum.Words)} />
     </Wrapper>
   )
 }

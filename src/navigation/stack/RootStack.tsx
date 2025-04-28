@@ -3,6 +3,7 @@ import { NewChat } from "@/screens"
 import { SignIn } from "@/screens/Auth"
 import QuestionAndAnswer from "@/screens/Q&A/QuestionAndAnswer"
 import SettingsDetailScreen from "@/screens/Settings/SettingsDetailScreen"
+import { Words } from "@/screens/Word"
 import { useNavigation } from "@react-navigation/native"
 import {
     createNativeStackNavigator,
@@ -47,7 +48,7 @@ export enum RootStackParamEnum {
     QuestionAndAnswer = "QuestionAndAnswer",
     Podcasts = "Podcasts",
     PodcastDetail = "PodcastDetail",
-
+    Words = "Words",
 }
 
 export type RootStackParamList = {
@@ -63,8 +64,7 @@ export type RootStackParamList = {
     [RootStackParamEnum.QuestionAndAnswer]: undefined
     [RootStackParamEnum.Podcasts]: undefined
     [RootStackParamEnum.PodcastDetail]: { podcastId: string }
-
-
+    [RootStackParamEnum.Words]: undefined
 }
 export const screens: ScreenProps[] = [
     {
@@ -116,6 +116,13 @@ export const screens: ScreenProps[] = [
             headerShown: true,
         },
     },
+    {
+        name: RootStackParamEnum.Words,
+        component: Words,
+        option: {
+            headerShown: false,
+        },
+    }
 ]
 
 export const RootStack = () => {
