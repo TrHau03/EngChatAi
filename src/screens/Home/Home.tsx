@@ -1,12 +1,11 @@
 import React from "react"
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, Text, TouchableOpacity } from "react-native"
 import { AppLoading, Wrapper } from "@/core/components"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import dataTest from "../Podcasts/test001.json"
 import { RootStackParamEnum, RootStackParamList } from "@/navigation/stack/RootStack"
 import { useTheme, makeStyles, normalize } from "@rneui/themed"
-import { fontSize, margin, padding, spacing } from "@/core/theme"
+import { fontSize, spacing } from "@/core/theme"
 import { useTranslation } from "react-i18next"
 import { useGetPodCastsQuery } from "@/redux/reducers/Podcasts/podCastsService"
 
@@ -46,20 +45,22 @@ const Home = () => {
     <Wrapper isSafeArea containerStyle={styles.container}>
 
       {/* PodCasts */}
-      {!isLoading && !isFetching && data && data.length > 0 && (
-        <>
-          <TouchableOpacity onPress={navigateToPodcastsDetail} style={styles.viewAllContainer}>
-            <Text style={styles.viewAllText}>{t("seeall")}</Text>
-          </TouchableOpacity>
-          <AppLoading isLoading />
-          <FlatList
-            data={dataTest}
-            keyExtractor={(item) => item._id}
-            renderItem={renderPodcastItem}
-          />
-        </>
+      {!isLoading && !isFetching ? (
+        data && data.length > 0 ? (
+          <>
+            <TouchableOpacity onPress={navigateToPodcastsDetail} style={styles.viewAllContainer}>
+              <Text style={styles.viewAllText}>{t("seeall")}</Text>
+            </TouchableOpacity>
+            <FlatList
+              data={data}
+              keyExtractor={(item) => item._id}
+              renderItem={renderPodcastItem}
+            />
+          </>
+        ) : null
+      ) : (
+        <AppLoading isLoading />
       )}
-      {isLoading || isFetching ? <AppLoading isLoading /> : null}
       {/* End PodCasts */}
     </Wrapper>
   )

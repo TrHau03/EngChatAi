@@ -1,33 +1,47 @@
-import React, { useRef, useState } from 'react'
-import { Image, ScrollView, View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { Image, ScrollView, View, LayoutChangeEvent } from 'react-native'
 import Slider from '@react-native-community/slider'
-import { useGetPodCastByIdQuery } from '@/redux/reducers/Podcasts/podCastsService'
-import { usePodCasts } from './hooks/usePodCasts'
+import Video from 'react-native-video'
 import { AppIcon, Wrapper } from '@/core/components'
 import AppActionSheet from '@/core/components/AppActionSheet'
 import { makeStyles, Text, useTheme } from '@rneui/themed'
+import { usePodCasts } from './hooks/usePodCasts'
+import { useGetPodCastByIdQuery } from '@/redux/reducers/Podcasts/podCastsService'
 
-const PodcastsDetail = ({ podcastId }: { podcastId: string }) => {
-    const { data } = useGetPodCastByIdQuery(podcastId)
+const PodcastsDetail = ({ route }: { route: any }) => {
+    const { podcastId } = route.params
     const styles = useStyles()
     const { theme: { colors } } = useTheme()
+
+    const { data } = useGetPodCastByIdQuery(podcastId)
+
+    const podcast = data;
 
     const [seekMessage, setSeekMessage] = useState<string | null>(null)
     const toastTimeout = useRef<NodeJS.Timeout | null>(null)
     const [showSpeedSheet, setShowSpeedSheet] = useState(false)
+
+    const scrollRef = useRef<ScrollView>(null)
+    const segmentRefs = useRef<Record<string, number>>({})
 
     const {
         currentTime,
         duration,
         isPlaying,
         playbackRate,
+        isBuffering,
+        videoRef,
         togglePlayPause,
         seek,
         onSeek,
         changeSpeed,
-    } = usePodCasts(data?.audioUrl)
+        onProgress,
+        onLoad,
+        onBuffer,
+    } = usePodCasts()
 
-    const segments = data?.segments ?? []
+    const segments = podcast?.segments ?? []
+
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60)
@@ -48,19 +62,51 @@ const PodcastsDetail = ({ podcastId }: { podcastId: string }) => {
         setShowSpeedSheet(false)
     }
 
+    useEffect(() => {
+        const activeSegment = segments.find((seg: any) => currentTime >= seg.start && currentTime < seg.end)
+        if (activeSegment && segmentRefs.current[activeSegment.id] !== undefined) {
+            scrollRef.current?.scrollTo({
+                y: segmentRefs.current[activeSegment.id] - 100,
+                animated: true,
+            })
+        }
+    }, [currentTime])
+
     return (
         <Wrapper isSafeArea containerStyle={styles.container}>
-            <Image
-                source={{ uri: data?.image }}
-                style={styles.img}
+            <Image source={{ uri: podcast?.image }} style={styles.img} />
+
+            <Video
+                ref={videoRef}
+                source={{ uri: podcast?.audioUrl }}
+                paused={!isPlaying}
+                onProgress={onProgress}
+                onLoad={onLoad}
+                onBuffer={onBuffer}
+                playInBackground
+                playWhenInactive
+                ignoreSilentSwitch="ignore"
+                rate={playbackRate}
+                style={{ height: 0, width: 0 }}
             />
-            <ScrollView style={styles.transcriptArea} contentContainerStyle={styles.transcriptContent}>
-                <Text style={styles.title}>{data?.title ?? 'Transcript'}</Text>
-                {segments.map((segment) => {
+
+            <ScrollView
+                ref={scrollRef}
+                style={styles.transcriptArea}
+                contentContainerStyle={styles.transcriptContent}
+            >
+                <Text style={styles.title}>{podcast?.title ?? 'Transcript'}</Text>
+                {segments.map((segment: any) => {
                     const isActive = currentTime >= segment.start && currentTime < segment.end
                     return (
-                        <Text key={segment.id} style={[styles.segment, isActive && styles.activeSegment]}>
-                            {segment.text + ' '}
+                        <Text
+                            key={segment.text}
+                            style={[styles.segment, isActive && styles.activeSegment]}
+                            onLayout={(e: LayoutChangeEvent) => {
+                                segmentRefs.current[segment.id] = e.nativeEvent.layout.y
+                            }}
+                        >
+                            {segment.text}
                         </Text>
                     )
                 })}
@@ -73,9 +119,9 @@ const PodcastsDetail = ({ podcastId }: { podcastId: string }) => {
                     maximumValue={duration}
                     value={currentTime}
                     onSlidingComplete={onSeek}
-                    minimumTrackTintColor="#007AFF"
+                    minimumTrackTintColor={colors.primary}
                     maximumTrackTintColor="#ccc"
-                    thumbTintColor="#007AFF"
+                    thumbTintColor={colors.primary}
                 />
 
                 <Text style={styles.timeLabel}>
@@ -83,17 +129,17 @@ const PodcastsDetail = ({ podcastId }: { podcastId: string }) => {
                 </Text>
 
                 <View style={styles.controls}>
-                    <AppIcon name="play-back" type="ionicon" onPress={() => handleSeek(-5)} color="#000" />
+                    <AppIcon name="play-back" type="ionicon" onPress={() => handleSeek(-5)} color={colors.black} />
                     <AppIcon
                         name={isPlaying ? 'pause-circle' : 'play-circle'}
                         type="ionicon"
                         size={36}
                         onPress={togglePlayPause}
-                        color="#000"
+                        color={colors.black}
                     />
-                    <AppIcon name="play-forward" type="ionicon" onPress={() => handleSeek(5)} color="#000" />
+                    <AppIcon name="play-forward" type="ionicon" onPress={() => handleSeek(5)} color={colors.black} />
                     <View>
-                        <AppIcon name="speed" type="material" onPress={() => setShowSpeedSheet(true)} color="#000" />
+                        <AppIcon name="speed" type="material" onPress={() => setShowSpeedSheet(true)} color={colors.black} />
                         <Text style={styles.speedDisplay}>{playbackRate.toFixed(2)}x</Text>
                     </View>
                 </View>
@@ -122,58 +168,53 @@ const PodcastsDetail = ({ podcastId }: { podcastId: string }) => {
 
 export default PodcastsDetail
 
-const useStyles = makeStyles(() => ({
+
+const useStyles = makeStyles(({ colors }) => ({
     img: {
         width: '100%',
-        height: 200
+        height: 300,
     },
     container: {
-        flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: colors.background,
     },
     transcriptArea: {
         flex: 1,
         marginBottom: 10,
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
     },
     transcriptContent: {
         paddingVertical: 20,
-        flexDirection: 'row',
-        flexWrap: 'wrap'
     },
     title: {
         fontSize: 22,
         fontWeight: 'bold',
-        marginBottom: 16
+        marginBottom: 16,
     },
     segment: {
-        padding: 4,
-        fontSize: 16
+        fontSize: 16,
+        lineHeight: 24,
+        marginBottom: 8,
     },
     activeSegment: {
-        backgroundColor: 'yellow'
+        backgroundColor: 'rgba(255, 255, 0, 0.5)',
+        borderRadius: 6,
+        padding: 4,
     },
     bottomControls: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         borderTopWidth: 1,
         borderColor: '#ccc',
         paddingVertical: 12,
         paddingHorizontal: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 5,
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
     },
     slider: { width: '100%', height: 40 },
     timeLabel: {
         fontSize: 14,
-        color: '#333',
+        color: colors.grey3,
         textAlign: 'center',
         marginBottom: 8,
     },
@@ -187,7 +228,7 @@ const useStyles = makeStyles(() => ({
         position: 'absolute',
         top: '40%',
         alignSelf: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 20,
@@ -202,7 +243,7 @@ const useStyles = makeStyles(() => ({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: '500',
-        color: '#333',
+        color: colors.black,
         marginBottom: 8,
     },
 }))

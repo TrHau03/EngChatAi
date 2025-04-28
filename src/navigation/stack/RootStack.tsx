@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next"
 import RootTab from "../bottom/RootTab"
 import Podcasts from "@/screens/Podcasts/Podcasts"
 import PodcastsDetail from "@/screens/Podcasts/PodcastsDetail"
+import { color } from "@rneui/base"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
@@ -34,6 +35,7 @@ export interface ScreenProps {
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
+
 
 export enum RootStackParamEnum {
     Auth = "Auth",
@@ -139,6 +141,7 @@ export const RootStack = () => {
             screenOptions={{
                 headerShown: false,
                 headerBackTitle: t("back"),
+                headerTintColor: colors.black,
             }}
         >
             {screens.map((screen) => (
