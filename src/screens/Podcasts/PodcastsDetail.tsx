@@ -100,7 +100,7 @@ const PodcastsDetail = ({ route }: { route: any }) => {
                     const isActive = currentTime >= segment.start && currentTime < segment.end
                     return (
                         <Text
-                            key={segment.text}
+                            key={segment.start}
                             style={[styles.segment, isActive && styles.activeSegment]}
                             onLayout={(e: LayoutChangeEvent) => {
                                 segmentRefs.current[segment.id] = e.nativeEvent.layout.y
