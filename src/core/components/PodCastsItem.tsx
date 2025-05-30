@@ -23,7 +23,7 @@ const PodcastItem: React.FC<PodcastItemProps> = ({ title, language, image, topic
             <Text style={styles.title}>{title}</Text>
             <View style={styles.infoContainer}>
                 <Text style={styles.topic}>{topic}</Text>
-                <Text style={styles.language}>{language}</Text>
+                <Text style={styles.language}>{language || 'unknow'}</Text>
             </View>
         </TouchableOpacity>
     )

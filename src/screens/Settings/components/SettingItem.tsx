@@ -28,7 +28,7 @@ const SettingItem: React.FC<SettingItemProps> = ({ title, isSelected, onPress })
                     type="ionicon"
                     isPaddingIcon={false}
                     color={colors.black}
-                    size={spacing.large}
+                    size={spacing.xl}
                 />
             )}
         </TouchableOpacity>
@@ -43,9 +43,10 @@ const useStyles = makeStyles(({ colors }) => ({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: spacing.medium,
         paddingHorizontal: spacing.large,
         borderBottomWidth: 1,
+        borderBottomColor: colors.greyOutline,
+        paddingVertical: spacing.xl,
     },
     name: {
         fontSize: fontSize.medium,

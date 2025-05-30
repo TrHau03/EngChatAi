@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles, useTheme } from "@rneui/themed"
+import { useTheme } from "@rneui/themed"
 import { FlatList } from "react-native"
 import { Wrapper } from "@/core/components"
 import PodcastItem from "@/core/components/PodCastsItem"
@@ -17,7 +17,7 @@ const Podcasts = () => {
   const { data } = useGetPodCastsQuery()
 
   return (
-    <Wrapper isSafeArea containerStyle={{ backgroundColor: colors.background }}>
+    <Wrapper isSafeArea edges={['bottom']} containerStyle={{ backgroundColor: colors.background }}>
       <FlatList
         data={data}
         keyExtractor={(item) => item._id}
@@ -32,7 +32,7 @@ const Podcasts = () => {
             }
           />
         )}
-        contentContainerStyle={{ padding: 16 }}
+        contentContainerStyle={{ padding: 16}}
       />
     </Wrapper>
   )
