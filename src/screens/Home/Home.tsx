@@ -72,7 +72,7 @@ const Home = () => {
 export default Home
 
 
-const usePodcastItemStyles = makeStyles(({ colors }) => {
+const usePodcastItemStyles = makeStyles(({ colors, mode }) => {
   return {
     container: {
       backgroundColor: colors.background
@@ -80,16 +80,17 @@ const usePodcastItemStyles = makeStyles(({ colors }) => {
 
     //PodCasts Styles
     podcastItemContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: mode === 'light' ? '#fff' : '#0B1A2F',
       borderRadius: 6,
+      paddingBottom: 5,
       marginBottom: spacing.small,
       shadowOffset: {
         width: 0,
         height: 1,
       },
-      shadowOpacity: 0.2,
+      shadowOpacity: mode === 'light' ? 0.2 : 0,
       shadowRadius: 2,
-      elevation: 3,
+      elevation: mode === 'light' ? 3 : 0,
       overflow: 'hidden',
       margin: 10,
     },
@@ -103,7 +104,7 @@ const usePodcastItemStyles = makeStyles(({ colors }) => {
       paddingHorizontal: spacing.small,
       fontSize: fontSize.medium,
       fontWeight: 'bold',
-      color: colors.black,
+      color: mode === 'light' ? colors.black : '#fff',
     },
     viewAllContainer: {
       padding: spacing.medium,
@@ -115,5 +116,8 @@ const usePodcastItemStyles = makeStyles(({ colors }) => {
       fontWeight: 'bold',
     },
     // End PodCasts Styles
+
+
+    
   }
 })

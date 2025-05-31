@@ -31,40 +31,52 @@ const PodcastItem: React.FC<PodcastItemProps> = ({ title, language, image, topic
 
 export default PodcastItem
 
-const useStyles = makeStyles(({ colors }) => ({
+const useStyles = makeStyles(({ colors, mode }) => ({
     container: {
-        marginBottom: 40,
+        marginBottom: 20,
+        paddingBottom: 10,
         borderRadius: 16,
-        backgroundColor: colors.background
+        backgroundColor: mode === 'light' ? '#fff' : '#0B1A2F',
+        shadowColor: mode === 'light' ? '#000' : undefined,
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: mode === 'light' ? 0.2 : 0,
+        shadowRadius: 2,
+        elevation: mode === 'light' ? 3 : 0,
+        overflow: 'hidden',
     },
     image: {
         width: "100%",
         marginBottom: 16,
-        borderRadius: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
         height: normalize(200),
     },
     title: {
+
         left: 12,
         fontSize: fontSize.large,
         fontWeight: "800",
-        color: colors.primary,
+        color: mode === 'light' ? colors.black : '#fff',
         textShadowRadius: 2,
     },
     infoContainer: {
         flexDirection: "row",
-        justifyContent: "space-between", 
+        justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 12,
         marginTop: 5,
     },
     topic: {
         fontSize: fontSize.normal,
-        color: colors.primary,
+        color: mode === 'light' ? colors.black : '#fff',
         textShadowRadius: 1,
     },
     language: {
         fontSize: fontSize.medium,
-        color: colors.primary,
+        color: mode === 'light' ? colors.black : '#fff',
         textShadowRadius: 1,
     },
 }))

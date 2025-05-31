@@ -73,7 +73,7 @@ const PodcastsDetail = ({ route }: { route: any }) => {
     }, [currentTime])
 
     return (
-        <Wrapper isSafeArea containerStyle={styles.container}>
+        <Wrapper isSafeArea edges={['bottom']} containerStyle={styles.container}>
             <Image source={{ uri: podcast?.image }} style={styles.img} />
 
             <Video
@@ -171,8 +171,10 @@ export default PodcastsDetail
 
 const useStyles = makeStyles(({ colors }) => ({
     img: {
-        width: '100%',
-        height: 300,
+        width: "auto",
+        height: 200,
+        margin: 10,
+        borderRadius: 20,
     },
     container: {
         backgroundColor: colors.background,
