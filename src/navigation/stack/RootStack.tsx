@@ -18,6 +18,8 @@ import RootTab from "../bottom/RootTab"
 import Podcasts from "@/screens/Podcasts/Podcasts"
 import PodcastsDetail from "@/screens/Podcasts/PodcastsDetail"
 import { color } from "@rneui/base"
+import Topics from "@/screens/Topic/Topics"
+import WordByTopic from "@/screens/Topic/WordByTopic"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
@@ -49,6 +51,8 @@ export enum RootStackParamEnum {
     Podcasts = "Podcasts",
     PodcastDetail = "PodcastDetail",
     Words = "Words",
+    Topics = "Topics",
+    WordByTopic = "WordByTopic",
 }
 
 export type RootStackParamList = {
@@ -65,6 +69,9 @@ export type RootStackParamList = {
     [RootStackParamEnum.Podcasts]: undefined
     [RootStackParamEnum.PodcastDetail]: { podcastId: string }
     [RootStackParamEnum.Words]: undefined
+    [RootStackParamEnum.Topics]: undefined
+    [RootStackParamEnum.WordByTopic]: { title: string }
+
 }
 export const screens: ScreenProps[] = [
     {
@@ -121,6 +128,20 @@ export const screens: ScreenProps[] = [
         component: Words,
         option: {
             headerShown: false,
+        },
+    },
+    {
+        name: RootStackParamEnum.Topics,
+        component: Topics,
+        option: {
+            headerShown: true,
+        },
+    },
+    {
+        name: RootStackParamEnum.WordByTopic,
+        component: WordByTopic,
+        option: {
+            headerShown: true,
         },
     }
 ]

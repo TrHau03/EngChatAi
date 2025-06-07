@@ -1,5 +1,5 @@
-import React from "react"
-import { Button, FlatList, Image, Text, TouchableOpacity } from "react-native"
+import React, { useMemo } from "react"
+import { Button, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import { AppLoading, Wrapper } from "@/core/components"
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
@@ -8,12 +8,16 @@ import { useTheme, makeStyles, normalize } from "@rneui/themed"
 import { fontSize, spacing } from "@/core/theme"
 import { useTranslation } from "react-i18next"
 import { useGetPodCastsQuery } from "@/redux/reducers/Podcasts/podCastsService"
+import { getRandomItems } from "@/core/utils/getRandomItems"
+import { useGetTopicsQuery } from "@/redux/reducers/Topic/topicsService"
+import datatopic from "../../assets/topics.json"
 
-interface PodcastItemData {
+interface ItemData {
   _id: string;
   title: string;
   image: string;
 }
+
 
 const Home = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
@@ -24,13 +28,22 @@ const Home = () => {
   const { t } = useTranslation()
 
   // PodCasts 
-  const { isFetching, data, isLoading } = useGetPodCastsQuery()
+  const {
+    isFetching: isFetchingPodcasts,
+    data: podcastsData,
+    isLoading: isLoadingPodcasts,
+  } = useGetPodCastsQuery()
 
   const navigateToPodcastsDetail = () => {
     navigation.navigate(RootStackParamEnum.Podcasts);
   };
 
-  const renderPodcastItem = ({ item }: { item: PodcastItemData }) => (
+  const randomPodcasts = useMemo(() => {
+    if (!podcastsData) return [];
+    return getRandomItems(podcastsData, 3);
+  }, [podcastsData]);
+
+  const renderPodcastItem = ({ item }: { item: ItemData }) => (
     <TouchableOpacity
       onPress={() => navigation.navigate(RootStackParamEnum.PodcastDetail, { podcastId: item._id })}
       style={styles.podcastItemContainer}
@@ -41,18 +54,45 @@ const Home = () => {
   );
   // End PodCasts
 
+  // Topics
+  const { isFetching: isFetchingTopics, data: topicsData, isLoading: isLoadingTopics } = useGetTopicsQuery()
+
+  const navigateToTopics = () => {
+    navigation.navigate(RootStackParamEnum.Topics);
+  };
+
+  const randomTopics = useMemo(() => {
+    if (!topicsData) return [];
+    return getRandomItems(topicsData, 1);
+  }, [topicsData]);
+
+  const renderTopicItem = ({ item }: { item: ItemData }) => (
+    <TouchableOpacity
+      style={styles.topicItemContainer}
+      onPress={() =>
+        navigation.navigate(RootStackParamEnum.WordByTopic, {
+          title: item.title,
+        })
+      }
+    >
+      <Image source={{ uri: item.image }} style={styles.topicItemImage} />
+      <Text style={styles.topicItemTitle}>{item.title}</Text>
+    </TouchableOpacity>
+  )
+  // End Topics
+
   return (
     <Wrapper isSafeArea containerStyle={styles.container}>
 
       {/* PodCasts */}
-      {!isLoading && !isFetching ? (
-        data && data.length > 0 ? (
+      {!isLoadingPodcasts && !isFetchingPodcasts ? (
+        podcastsData && podcastsData.length > 0 ? (
           <>
             <TouchableOpacity onPress={navigateToPodcastsDetail} style={styles.viewAllContainer}>
               <Text style={styles.viewAllText}>{t("seeall")}</Text>
             </TouchableOpacity>
             <FlatList
-              data={data}
+              data={randomPodcasts}
               keyExtractor={(item) => item._id}
               renderItem={renderPodcastItem}
             />
@@ -62,6 +102,41 @@ const Home = () => {
         <AppLoading isLoading />
       )}
       {/* End PodCasts */}
+
+      {/* Topics */}
+
+      {/* {!isLoadingTopics && !isFetchingTopics ? (
+        topicsData && topicsData.length > 0 ? (
+          <>
+            <TouchableOpacity onPress={navigateToTopics} style={styles.viewAllContainer}>
+              <Text style={styles.viewAllText}>{t("seeall")}</Text>
+            </TouchableOpacity>
+            <View style={styles.topicListContainer}>
+              <FlatList
+                data={datatopic}
+                keyExtractor={(item) => item._id}
+                horizontal
+                renderItem={renderTopicItem}
+              />
+            </View>
+          </>
+        ) : null
+      ) : (
+        <AppLoading isLoading />
+      )} */}
+
+      <TouchableOpacity onPress={navigateToTopics} style={styles.viewAllContainer}>
+        <Text style={styles.viewAllText}>{t("seeall")}</Text>
+      </TouchableOpacity>
+      <View style={styles.topicListContainer}>
+        <FlatList
+          data={datatopic}
+          keyExtractor={(item) => item._id}
+          horizontal
+          renderItem={renderTopicItem}
+        />
+      </View>
+      {/* End Topics */}
 
       <Button title={"Q&A"} onPress={() => navigation.navigate(RootStackParamEnum.QuestionAndAnswer)} />
       <Button title={"Words"} onPress={() => navigation.navigate(RootStackParamEnum.Words)} />
@@ -75,23 +150,24 @@ export default Home
 const usePodcastItemStyles = makeStyles(({ colors, mode }) => {
   return {
     container: {
-      backgroundColor: colors.background
+      backgroundColor: colors.background,
     },
 
-    //PodCasts Styles
+    viewAllContainer: {
+      padding: spacing.medium,
+      alignItems: 'flex-end',
+    },
+    viewAllText: {
+      fontSize: fontSize.medium,
+      color: colors.primary,
+      fontWeight: 'bold',
+    },
+
+    // Podcasts
     podcastItemContainer: {
       backgroundColor: mode === 'light' ? '#fff' : '#0B1A2F',
       borderRadius: 6,
       paddingBottom: 5,
-      marginBottom: spacing.small,
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: mode === 'light' ? 0.2 : 0,
-      shadowRadius: 2,
-      elevation: mode === 'light' ? 3 : 0,
-      overflow: 'hidden',
       margin: 10,
     },
     podcastItemImage: {
@@ -106,18 +182,36 @@ const usePodcastItemStyles = makeStyles(({ colors, mode }) => {
       fontWeight: 'bold',
       color: mode === 'light' ? colors.black : '#fff',
     },
-    viewAllContainer: {
-      padding: spacing.medium,
-      alignItems: 'flex-end',
+
+    // Topics
+    topicListContainer: {
+      paddingHorizontal: spacing.medium,
     },
-    viewAllText: {
+    topicItemContainer: {
+      width: normalize(140),
+      height: normalize(160),
+      backgroundColor: mode === 'light' ? '#fff' : '#0B1A2F',
+      borderRadius: 20,
+      marginRight: spacing.medium,
+      marginBottom: spacing.large,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
+    topicItemImage: {
+      width: '100%',
+      height: normalize(110),
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      resizeMode: 'cover',
+    },
+    topicItemTitle: {
+      padding: spacing.small,
       fontSize: fontSize.medium,
-      color: colors.primary,
       fontWeight: 'bold',
+      textAlign: 'center',
+      color: mode === 'light' ? colors.black : '#fff',
+      flex: 1,
+      textAlignVertical: 'center',
     },
-    // End PodCasts Styles
-
-
-    
   }
 })

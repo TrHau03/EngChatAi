@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "67f2c717bea7d840890b8f3b",
+    "word": "baa",
+    "part_of_speech": "verb",
+    "topic": "Animals",
+    "pronunciation": {
+      "uk": "/media/english/uk_pron/b/baa/baa__/baa__gb_1.mp3",
+      "us": "/media/english/us_pron/b/baa/baa__/baa__us_1_rr.mp3"
+    }
+  },
+  {
+    "_id": "67f2c717bea7d840890b8f43",
+    "word": "beagle",
+    "part_of_speech": "noun",
+    "topic": "Animals",
+    "pronunciation": {
+      "uk": "/media/english/uk_pron/b/bea/beagl/beagle__gb_2.mp3",
+      "us": "/media/english/us_pron/b/bea/beagl/beagle__us_1.mp3"
+    }
+  },
+  {
+    "_id": "67f2c717bea7d840890b8f63",
+    "word": "bull terrier",
+    "part_of_speech": "noun",
+    "topic": "Animals",
+    "pronunciation": {
+      "uk": "/media/english/uk_pron/b/bul/bull_/bull_terrier_1_gb_1.mp3",
+      "us": "/media/english/us_pron/b/bul/bull_/bull_terrier_1_us_1.mp3"
+    }
+  }
+]
