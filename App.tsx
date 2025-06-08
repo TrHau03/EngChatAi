@@ -6,28 +6,31 @@ import { getTheme } from "@/core/theme/index"
 import { envApp } from "@/core/utils"
 import { RootStack } from "@/navigation/stack/RootStack"
 import { persistor, store } from "@/redux/store"
+import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { NavigationContainer } from "@react-navigation/native"
 import { ThemeProvider } from "@rneui/themed"
+import { initializeApp } from "firebase/app"
+import { getReactNativePersistence, initializeAuth } from "firebase/auth"
 import React from "react"
 import { Appearance } from "react-native"
 import { Provider } from "react-redux"
 import Reactotron from "reactotron-react-native"
 import { PersistGate } from "redux-persist/integration/react"
 
-// const firebaseConfig = {
-//     authDomain: "engchatai-8d022.firebaseapp.com",
-//     projectId: "engchatai-8d022",
-//     storageBucket: "engchatai-8d022.firebasestorage.app",
-// }
-// const app = initializeApp({
-//     apiKey: "AIzaSyBlb3F5EA7rQGX7Ko2QkxRtJOKeUyUM6uE",
-//     appId: "1:797630589124:web:b0b96e17779bf58617c191",
-//     ...firebaseConfig,
-// })
-// initializeAuth(app, {
-//     persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-// })
+const firebaseConfig = {
+    authDomain: "engchatai-8d022.firebaseapp.com",
+    projectId: "engchatai-8d022",
+    storageBucket: "engchatai-8d022.firebasestorage.app",
+}
+const app = initializeApp({
+    apiKey: "AIzaSyBlb3F5EA7rQGX7Ko2QkxRtJOKeUyUM6uE",
+    appId: "1:797630589124:web:b0b96e17779bf58617c191",
+    ...firebaseConfig,
+})
+initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+})
 
 __DEV__ && Reactotron.configure({}).useReactNative().connect()
 
