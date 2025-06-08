@@ -1,15 +1,15 @@
 {
-    "educationIsFree" : "Giáo dục cho tất cả",
-    "customizechatui":"Tùy chỉnh giao diện người dùng",
-    "language":"Ngôn ngữ",
-    "logout":"Đăng xuất",
-    "settings":"Cài đặt",
-    "speed":"Tốc độ",
-    "dark":"Tối",
-    "light":"Sáng",
-    "system":"Hệ thống",
+    "educationIsFree": "Giáo dục cho tất cả",
+    "customizechatUI": "Tùy chỉnh giao diện người dùng",
+    "language": "Ngôn ngữ",
+    "logout": "Đăng xuất",
+    "settings": "Cài đặt",
+    "speed": "Tốc độ",
+    "dark": "Tối",
+    "light": "Sáng",
+    "system": "Hệ thống",
     "signInWithGoogle": "Đăng nhập bằng google",
-    "learnEnglishSmarter":"Học Tiếng Anh Thông Minh Hơn Cùng AI Gia Sư AI Cá Nhân Của Bạn!",
+    "learnEnglishSmarter": "Học Tiếng Anh Thông Minh Hơn Cùng AI Gia Sư AI Cá Nhân Của Bạn!",
+    "seeall":"Hiển thị tất cả",
     "":""
-    
 }

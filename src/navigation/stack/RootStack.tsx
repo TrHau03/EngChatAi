@@ -15,12 +15,21 @@ import { useTheme } from "@rneui/themed"
 import React from "react"
 import { useTranslation } from "react-i18next"
 import RootTab from "../bottom/RootTab"
+import Podcasts from "@/screens/Podcasts/Podcasts"
+import PodcastsDetail from "@/screens/Podcasts/PodcastsDetail"
+import { color } from "@rneui/base"
+import Topics from "@/screens/Topic/Topics"
+import WordByTopic from "@/screens/Topic/WordByTopic"
 
 export type ChatProps = NativeStackNavigationProp<RootStackParamList, RootStackParamEnum.Chat>
 
 export type NewChatProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.NewChat>
 
 export type DetailSettingsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.SettingsDetailScreen>
+
+export type DetailPodCastsProps = NativeStackScreenProps<RootStackParamList, RootStackParamEnum.PodcastDetail>
+
+
 
 export interface ScreenProps {
     name: RootStackParamEnum
@@ -30,6 +39,7 @@ export interface ScreenProps {
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
+
 export enum RootStackParamEnum {
     Auth = "Auth",
     Tab = "Tab",
@@ -38,7 +48,11 @@ export enum RootStackParamEnum {
     Settings = "Settings",
     SettingsDetailScreen = "SettingsDetailScreen",
     QuestionAndAnswer = "QuestionAndAnswer",
+    Podcasts = "Podcasts",
+    PodcastDetail = "PodcastDetail",
     Words = "Words",
+    Topics = "Topics",
+    WordByTopic = "WordByTopic",
 }
 
 export type RootStackParamList = {
@@ -52,7 +66,12 @@ export type RootStackParamList = {
     [RootStackParamEnum.Settings]: undefined
     [RootStackParamEnum.SettingsDetailScreen]: { screenType: "CustomizeChatUI" | "Speed" | "Language" }
     [RootStackParamEnum.QuestionAndAnswer]: undefined
+    [RootStackParamEnum.Podcasts]: undefined
+    [RootStackParamEnum.PodcastDetail]: { podcastId: string }
     [RootStackParamEnum.Words]: undefined
+    [RootStackParamEnum.Topics]: undefined
+    [RootStackParamEnum.WordByTopic]: { title: string }
+
 }
 export const screens: ScreenProps[] = [
     {
@@ -91,12 +110,40 @@ export const screens: ScreenProps[] = [
         },
     },
     {
+        name: RootStackParamEnum.Podcasts,
+        component: Podcasts,
+        option: {
+            headerShown: true,
+        },
+    },
+    {
+        name: RootStackParamEnum.PodcastDetail,
+        component: PodcastsDetail,
+        option: {
+            headerShown: true,
+        },
+    },
+    {
         name: RootStackParamEnum.Words,
         component: Words,
         option: {
             headerShown: false,
         },
     },
+    {
+        name: RootStackParamEnum.Topics,
+        component: Topics,
+        option: {
+            headerShown: true,
+        },
+    },
+    {
+        name: RootStackParamEnum.WordByTopic,
+        component: WordByTopic,
+        option: {
+            headerShown: true,
+        },
+    }
 ]
 
 export const RootStack = () => {
@@ -122,6 +169,7 @@ export const RootStack = () => {
             screenOptions={{
                 headerShown: false,
                 headerBackTitle: t("back"),
+                headerTintColor: colors.black,
             }}
         >
             {screens.map((screen) => (

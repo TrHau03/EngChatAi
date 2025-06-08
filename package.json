@@ -17,6 +17,8 @@
         "clean-all": "sudo yarn clean-node && yarn clean-ios && yarn clean-android && yarn clean-watch"
     },
     "dependencies": {
+        "-": "^0.0.1",
+        "@dr.pogodin/react-native-fs": "^2.32.1",
         "@google/generative-ai": "^0.22.0",
         "@react-native-async-storage/async-storage": "^1.24.0",
         "@react-native-community/slider": "^4.5.6",
@@ -42,12 +44,16 @@
         "react-native-progress": "^5.0.1",
         "react-native-safe-area-context": "^5.2.0",
         "react-native-screens": "^4.9.1",
+        "react-native-sound": "^0.11.2",
+        "react-native-svg": "^15.11.2",
         "react-native-sound-player": "^0.14.5",
         "react-native-tts": "^4.1.1",
         "react-native-vector-icons": "^10.2.0",
+        "react-native-video": "^6.13.0",
         "react-redux": "^9.2.0",
         "redux": "^5.0.1",
         "redux-persist": "^6.0.0",
+        "save": "^2.9.0",
         "uuid": "^11.1.0"
     },
     "devDependencies": {

@@ -13,5 +13,7 @@
     "back": "Back",
     "notThings": "Not things",
     "newChat": "New Chat",
-    "explain": "Explain"
+    "explain": "Explain",
+    "dowloadFail": "Dowloading Error",
+    "seeall":"See all"
 }
